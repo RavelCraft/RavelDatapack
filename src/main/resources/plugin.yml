@@ -1,0 +1,14 @@
+name: RavelDatapack
+version: ${project.version}
+main: com.connexal.raveldatapack.RavelDatapack
+api-version: 1.17
+softdepend: [floodgate]
+
+commands:
+  raveldatapack:
+    permission: raveldatapack.normal
+    description: Reload the resource pack
+
+permissions:
+  raveldatapack.raveldatapack:
+    default: true
