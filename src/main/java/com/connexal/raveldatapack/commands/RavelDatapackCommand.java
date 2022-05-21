@@ -1,11 +1,10 @@
 package com.connexal.raveldatapack.commands;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.custom.enchantments.CustomEnchantment;
-import com.connexal.raveldatapack.custom.items.CustomItem;
+import com.connexal.raveldatapack.enchantments.CustomEnchantment;
+import com.connexal.raveldatapack.items.CustomItem;
+import com.connexal.raveldatapack.maps.CustomMapRenderer;
 import com.connexal.raveldatapack.pack.TexturePack;
-
-import com.connexal.raveldatapack.custom.maps.CustomMapRenderer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;

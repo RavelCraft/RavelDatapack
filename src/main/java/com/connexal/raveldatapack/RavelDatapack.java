@@ -1,37 +1,32 @@
 package com.connexal.raveldatapack;
 
 import com.connexal.raveldatapack.commands.RavelDatapackCommand;
-import com.connexal.raveldatapack.custom.items.CustomItem;
-import com.connexal.raveldatapack.managers.EnchantmentManager;
-import com.connexal.raveldatapack.managers.HatManager;
-import com.connexal.raveldatapack.managers.ItemManager;
-import com.connexal.raveldatapack.managers.MapManager;
+import com.connexal.raveldatapack.items.CustomItem;
+import com.connexal.raveldatapack.listeners.EventListener;
+import com.connexal.raveldatapack.managers.*;
 import com.connexal.raveldatapack.pack.TexturePack;
-
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-
 import org.geysermc.floodgate.api.FloodgateApi;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
 import java.lang.reflect.Field;
-
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-public final class RavelDatapack extends JavaPlugin implements PluginMessageListener {
+public final class RavelDatapack extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static RavelDatapack instance = null;
 
+    private static ConfigManager configManager = null;
+    private static PluginMessageManager pluginMessageManager = null;
     private static ItemManager itemManager = null;
     private static HatManager hatManager = null;
     private static EnchantmentManager enchantmentManager = null;
@@ -44,9 +39,9 @@ public final class RavelDatapack extends JavaPlugin implements PluginMessageList
     public void onEnable() {
         instance = this;
 
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
+        configManager = new ConfigManager();
 
+        pluginMessageManager = new PluginMessageManager();
         itemManager = new ItemManager();
         hatManager = new HatManager();
         enchantmentManager = new EnchantmentManager();
@@ -92,14 +87,14 @@ public final class RavelDatapack extends JavaPlugin implements PluginMessageList
         int num = 0;
         for (CustomItem item : itemManager.getItems().values()) {
             this.getServer().removeRecipe(NamespacedKey.minecraft(item.getNamespaceKey()));
-            num ++;
+            num++;
         }
         log.info(String.format("[%s] Unregistered %d custom item recipes", getDescription().getName(), num));
 
         num = 0;
         for (CustomItem item : hatManager.getItems().values()) {
             this.getServer().removeRecipe(NamespacedKey.minecraft(item.getNamespaceKey()));
-            num ++;
+            num++;
         }
         log.info(String.format("[%s] Unregistered %d custom hat recipes", getDescription().getName(), num));
 
@@ -111,9 +106,9 @@ public final class RavelDatapack extends JavaPlugin implements PluginMessageList
             @SuppressWarnings("unchecked")
             HashMap<NamespacedKey, Enchantment> byKey = (HashMap<NamespacedKey, Enchantment>) keyField.get(null);
 
-            for (Enchantment enchantment : enchantmentManager.getEnchantments()){
+            for (Enchantment enchantment : enchantmentManager.getEnchantments()) {
                 byKey.remove(enchantment.getKey());
-                num ++;
+                num++;
             }
 
             Field nameField = Enchantment.class.getDeclaredField("byName");
@@ -122,57 +117,13 @@ public final class RavelDatapack extends JavaPlugin implements PluginMessageList
             @SuppressWarnings("unchecked")
             HashMap<String, Enchantment> byName = (HashMap<String, Enchantment>) nameField.get(null);
 
-            for (Enchantment enchantment : enchantmentManager.getEnchantments()){
+            for (Enchantment enchantment : enchantmentManager.getEnchantments()) {
                 byName.remove(enchantment.getName());
-                num ++;
+                num++;
             }
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
         log.info(String.format("[%s] Unregistered %d custom enchantments", getDescription().getName(), num));
-    }
-
-    @Override
-    public void onPluginMessageReceived(String channel, Player player, byte[] bytes) {
-        if (channel.equalsIgnoreCase("BungeeCord")) {
-            ByteArrayDataInput in = ByteStreams.newDataInput(bytes);
-            String subChannel = in.readUTF();
-            if (subChannel.equalsIgnoreCase("RavelDatapack")) {
-                String cmd = in.readUTF();
-                String data = in.readUTF();
-                this.runBungeeCmd(player, cmd, data);
-            }
-        }
-    }
-
-    private void runBungeeCmd(Player player, String cmd, String data) {
-        if (cmd.equalsIgnoreCase("sendresourcepack")) {
-            Player target = this.getServer().getPlayer(data);
-            if (target != null) {
-                TexturePack.sendTexturePackToPlayer(target);
-            }
-        }
-    }
-
-    /**
-     * Send a command to the BungeeCord server
-     * @param player The {@link Player} to use to send the packet
-     * @param cmd The command to send
-     * @param data The command data to send
-     */
-    public static void sendCmd(Player player, String cmd, String data){
-        ByteArrayOutputStream b = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(b);
-        try {
-            out.writeUTF("RavelDatapack");
-            out.writeUTF(cmd);
-            out.writeUTF(data);
-        } catch (IOException ignored) {}
-
-        player.sendPluginMessage(instance, "BungeeCord", b.toByteArray());
-
-        try {
-            out.close();
-            b.close();
-        } catch (IOException ignored) {}
     }
 
     public static Logger getLog() {
@@ -182,6 +133,9 @@ public final class RavelDatapack extends JavaPlugin implements PluginMessageList
         return instance;
     }
 
+    public static PluginMessageManager getPluginMessageManager() {
+        return pluginMessageManager;
+    }
     public static ItemManager getItemManager() {
         return itemManager;
     }
@@ -193,6 +147,10 @@ public final class RavelDatapack extends JavaPlugin implements PluginMessageList
     }
     public static MapManager getMapManager() {
         return mapManager;
+    }
+
+    public static ConfigManager.YmlConfig getConfig(String name) {
+        return configManager.getConfig(name);
     }
 
     public static boolean isFloodgateAPI() {

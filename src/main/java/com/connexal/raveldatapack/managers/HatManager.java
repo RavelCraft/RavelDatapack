@@ -1,9 +1,8 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.custom.hats.*;
-import com.connexal.raveldatapack.custom.items.CustomItem;
-
+import com.connexal.raveldatapack.items.CustomItem;
+import com.connexal.raveldatapack.items.hats.*;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

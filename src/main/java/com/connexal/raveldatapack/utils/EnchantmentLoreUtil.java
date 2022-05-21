@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.utils;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -8,17 +9,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 public class EnchantmentLoreUtil {
-    public static final String LORE_FIX_PREFIX = "fogus_loren-";
+    public static final String LORE_FIX_PREFIX = "ravel_magic-";
 
     private static final String TAG_SPLITTER = "__x__";
     private static final Map<String, NamespacedKey> LORE_KEYS_CACHE = new HashMap<>();
 
-    public static int addToLore(List<String> lore, int position, String value) {
+    public static int addToLore(List<Component> lore, int position, String value) {
         if (position >= lore.size() || position < 0) {
-            lore.add(value);
-        }
-        else {
-            lore.add(position, value);
+            lore.add(Component.text(value));
+        } else {
+            lore.add(position, Component.text(value));
         }
         return position < 0 ? position : position + 1;
     }
@@ -34,7 +34,7 @@ public class EnchantmentLoreUtil {
             return;
         }
 
-        List<String> lore = meta.getLore();
+        List<Component> lore = meta.lore();
         if (lore == null) lore = new ArrayList<>();
 
         text = StringUtil.color(text);
@@ -49,7 +49,7 @@ public class EnchantmentLoreUtil {
             loreTag.append(line);
         }
 
-        meta.setLore(lore);
+        meta.lore(lore);
         item.setItemMeta(meta);
 
         addLoreTag(item, id, loreTag.toString());
@@ -57,13 +57,18 @@ public class EnchantmentLoreUtil {
 
     public static void delLore(ItemStack item, String id) {
         ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-
-        List<String> lore = meta.getLore();
-        if (lore == null) return;
+        if (meta == null) {
+            return;
+        }
+        List<Component> lore = meta.lore();
+        if (lore == null) {
+            return;
+        }
 
         int index = getLoreIndex(item, id, 0);
-        if (index < 0) return;
+        if (index < 0) {
+            return;
+        }
 
         int lastIndex = getLoreIndex(item, id, 1);
         int diff = lastIndex - index;
@@ -72,7 +77,7 @@ public class EnchantmentLoreUtil {
             lore.remove(index);
         }
 
-        meta.setLore(lore);
+        meta.lore(lore);
         item.setItemMeta(meta);
 
         delLoreTag(item, id);
@@ -98,29 +103,28 @@ public class EnchantmentLoreUtil {
 
         if (type == 0) {
             for (String line : lines) {
-                lastText = line;
-                if (!StringUtil.colorOff(lastText).isEmpty()) {
+                lastText = StringUtil.colorOff(line);
+                if (!lastText.isEmpty()) {
                     break;
                 }
                 count--;
             }
-        }
-        else {
+        } else {
             for (int i = lines.length; i > 0; i--) {
-                lastText = lines[i - 1];
-                if (!StringUtil.colorOff(lastText).isEmpty()) {
+                lastText = StringUtil.colorOff(lines[i - 1]);
+                if (!lastText.isEmpty()) {
                     break;
                 }
                 count++;
             }
         }
 
-        if (lastText == null)
+        if (lastText == null) {
             return -1;
+        }
 
         int index = lore.indexOf(lastText) + count;
 
-        // Clean up invalid lore tags.
         if (index < 0) {
             delLoreTag(item, id);
         }

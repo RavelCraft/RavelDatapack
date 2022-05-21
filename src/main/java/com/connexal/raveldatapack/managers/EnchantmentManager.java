@@ -1,13 +1,13 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.enchantments.BlasingArmorEnchantment;
+import com.connexal.raveldatapack.enchantments.CustomEnchantment;
+import com.connexal.raveldatapack.enchantments.PoisonBladeEnchantment;
+import com.connexal.raveldatapack.enchantments.TelekinesisEnchantment;
 import com.connexal.raveldatapack.utils.EnchantmentLoreUtil;
 import com.connexal.raveldatapack.utils.StringUtil;
-import com.connexal.raveldatapack.custom.enchantments.BlasingArmorEnchantment;
-import com.connexal.raveldatapack.custom.enchantments.CustomEnchantment;
-import com.connexal.raveldatapack.custom.enchantments.PoisonBladeEnchantment;
-import com.connexal.raveldatapack.custom.enchantments.TelekinesisEnchantment;
-
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
@@ -100,8 +100,11 @@ public class EnchantmentManager {
      * @return The enchanted {@link ItemStack}
      */
     public boolean enchantItemStack(ItemStack item, CustomEnchantment enchantment, int level, boolean force) {
-        if (item == null || !item.hasItemMeta()) {
+        if (item == null) {
             return false;
+        }
+        if (!item.hasItemMeta()) {
+            item.setItemMeta(RavelDatapack.getInstance().getServer().getItemFactory().getItemMeta(item.getType()));
         }
         if (!force && !enchantment.canEnchantItem(item)) {
             return false;
@@ -233,8 +236,8 @@ public class EnchantmentManager {
     }
 
     public void updateItemLoreEnchants(ItemStack item) {
-        this.getEnchantments().forEach(ench -> {
-            EnchantmentLoreUtil.delLore(item, ench.getKey().getKey());
+        this.getEnchantments().forEach(enchantment -> {
+            EnchantmentLoreUtil.delLore(item, enchantment.getKey().getKey());
         });
 
         Map<CustomEnchantment, Integer> customEnchantments = getItemCustomEnchants(item).entrySet().stream()

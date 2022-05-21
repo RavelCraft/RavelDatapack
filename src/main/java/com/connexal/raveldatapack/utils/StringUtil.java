@@ -19,52 +19,52 @@ public class StringUtil {
             return "0";
         }
 
-        String roman = "";
+        StringBuilder roman = new StringBuilder();
 
         while (number > 0) {
             if (number >= 1000) {
-                roman += "M";
+                roman.append("M");
                 number -= 1000;
             } else if (number >= 900) {
-                roman += "CM";
+                roman.append("CM");
                 number -= 900;
             } else if (number >= 500) {
-                roman += "D";
+                roman.append("D");
                 number -= 500;
             } else if (number >= 400) {
-                roman += "CD";
+                roman.append("CD");
                 number -= 400;
             } else if (number >= 100) {
-                roman += "C";
+                roman.append("C");
                 number -= 100;
             } else if (number >= 90) {
-                roman += "XC";
+                roman.append("XC");
                 number -= 90;
             } else if (number >= 50) {
-                roman += "L";
+                roman.append("L");
                 number -= 50;
             } else if (number >= 40) {
-                roman += "XL";
+                roman.append("XL");
                 number -= 40;
             } else if (number >= 10) {
-                roman += "X";
+                roman.append("X");
                 number -= 10;
             } else if (number >= 9) {
-                roman += "IX";
+                roman.append("IX");
                 number -= 9;
             } else if (number >= 5) {
-                roman += "V";
+                roman.append("V");
                 number -= 5;
             } else if (number >= 4) {
-                roman += "IV";
+                roman.append("IV");
                 number -= 4;
             } else if (number >= 1) {
-                roman += "I";
+                roman.append("I");
                 number -= 1;
             }
         }
 
-        return roman;
+        return roman.toString();
     }
 
     public static String color(String str) {

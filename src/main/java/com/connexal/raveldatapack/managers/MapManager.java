@@ -1,9 +1,7 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.custom.maps.CustomMapRenderer;
-import com.connexal.raveldatapack.utils.YMLUtils;
-
+import com.connexal.raveldatapack.maps.CustomMapRenderer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.MapInitializeEvent;
@@ -11,12 +9,11 @@ import org.bukkit.map.MapView;
 import org.bukkit.map.MapView.Scale;
 
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class MapManager implements Listener {
-    private YMLUtils dataYML = new YMLUtils("data.yml");
+    private ConfigManager.YmlConfig dataYML = RavelDatapack.getConfig("data");
     private Map<Integer, String> savedImages = new HashMap<>();
 
     /**

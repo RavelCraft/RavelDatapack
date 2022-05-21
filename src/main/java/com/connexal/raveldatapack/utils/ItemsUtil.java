@@ -38,6 +38,7 @@ public class ItemsUtil {
      * @return The custom model data of the item's upgrade or 0 if there is no upgrade
      */
     public static Integer getEnderiteUpgrade(Material item) {
+        //TODO: todo
         if (item == Material.NETHERITE_AXE) {
             return 246060;
         } else if (item == Material.NETHERITE_HOE) {

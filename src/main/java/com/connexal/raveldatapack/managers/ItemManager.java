@@ -1,8 +1,7 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.custom.items.*;
-
+import com.connexal.raveldatapack.items.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
