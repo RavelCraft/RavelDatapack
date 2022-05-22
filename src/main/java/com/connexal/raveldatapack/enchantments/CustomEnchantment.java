@@ -49,11 +49,7 @@ public abstract class CustomEnchantment extends Enchantment {
         ItemMeta meta = book.getItemMeta();
 
         List<Component> lore = new ArrayList<>();
-        if (this.getMaxLevel() == 1) {
-            lore.add(Component.text(ChatColor.GRAY + this.name));
-        } else {
-            lore.add(Component.text(ChatColor.GRAY + this.name + " " + StringUtil.toRoman(level)));
-        }
+        lore.add(Component.text(ChatColor.GRAY + RavelDatapack.getEnchantmentManager().formatEnchantmentName(this, this.getMaxLevel())));
         meta.lore(lore);
 
         book.setItemMeta(meta);

@@ -1,10 +1,7 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.enchantments.BlasingArmorEnchantment;
-import com.connexal.raveldatapack.enchantments.CustomEnchantment;
-import com.connexal.raveldatapack.enchantments.PoisonBladeEnchantment;
-import com.connexal.raveldatapack.enchantments.TelekinesisEnchantment;
+import com.connexal.raveldatapack.enchantments.*;
 import com.connexal.raveldatapack.utils.EnchantmentLoreUtil;
 import com.connexal.raveldatapack.utils.StringUtil;
 import org.bukkit.ChatColor;
@@ -111,7 +108,6 @@ public class EnchantmentManager {
         }
 
         this.removeEnchantItemStack(item, enchantment);
-        EnchantmentLoreUtil.addLore(item, enchantment.getKey().getKey(), this.formatEnchantmentName(enchantment, level), level);
 
         ItemMeta meta = item.getItemMeta();
         if (meta instanceof EnchantmentStorageMeta enchatMeta) {
@@ -124,6 +120,8 @@ public class EnchantmentManager {
             }
         }
         item.setItemMeta(meta);
+
+        this.updateItemLoreEnchants(item);
 
         return true;
     }
@@ -236,16 +234,19 @@ public class EnchantmentManager {
     }
 
     public void updateItemLoreEnchants(ItemStack item) {
-        this.getEnchantments().forEach(enchantment -> {
+        for (CustomEnchantment enchantment : this.getEnchantments()) {
             EnchantmentLoreUtil.delLore(item, enchantment.getKey().getKey());
-        });
+        }
 
         Map<CustomEnchantment, Integer> customEnchantments = getItemCustomEnchants(item).entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (has, add) -> add, LinkedHashMap::new));
 
-        customEnchantments.forEach((enchantment, level) -> {
-            EnchantmentLoreUtil.addLore(item, enchantment.getKey().getKey(), this.formatEnchantmentName(enchantment, level), 0);
-        });
+        for (Map.Entry<CustomEnchantment, Integer> entry : customEnchantments.entrySet()) {
+            CustomEnchantment enchantment = entry.getKey();
+            int level = entry.getValue();
+
+            EnchantmentLoreUtil.addLore(item, enchantment.getKey().getKey(), ChatColor.GRAY + this.formatEnchantmentName(enchantment, level), 0);
+        }
     }
 
     /**

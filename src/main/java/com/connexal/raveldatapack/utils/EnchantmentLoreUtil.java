@@ -2,6 +2,8 @@ package com.connexal.raveldatapack.utils;
 
 import com.connexal.raveldatapack.RavelDatapack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -88,8 +90,8 @@ public class EnchantmentLoreUtil {
     }
 
     public static int getLoreIndex(ItemStack item, String id, int type) {
-        String storedText = PDCUtil.getStringData(item, getLoreKey(id));
-        if (storedText == null) return -1;
+        String storedText = StringUtil.colorOff(PDCUtil.getStringData(item, getLoreKey(id)));
+        if (storedText.isEmpty() || storedText.isBlank()) return -1;
 
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return -1;
@@ -123,7 +125,7 @@ public class EnchantmentLoreUtil {
             return -1;
         }
 
-        int index = lore.indexOf(lastText) + count;
+        int index = lore.indexOf(ChatColor.GRAY + lastText) + count;
 
         if (index < 0) {
             delLoreTag(item, id);
