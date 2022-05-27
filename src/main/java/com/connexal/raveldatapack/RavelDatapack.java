@@ -2,21 +2,16 @@ package com.connexal.raveldatapack;
 
 import com.connexal.raveldatapack.commands.RavelDatapackCommand;
 import com.connexal.raveldatapack.items.CustomItem;
-import com.connexal.raveldatapack.listeners.EventListener;
+import com.connexal.raveldatapack.listeners.DimensionListener;
+import com.connexal.raveldatapack.listeners.EnchantmentListener;
 import com.connexal.raveldatapack.managers.*;
 import com.connexal.raveldatapack.pack.TexturePack;
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteStreams;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.geysermc.floodgate.api.FloodgateApi;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -31,6 +26,7 @@ public final class RavelDatapack extends JavaPlugin {
     private static HatManager hatManager = null;
     private static EnchantmentManager enchantmentManager = null;
     private static MapManager mapManager = null;
+    private static DimensionManager dimensionManager = null;
 
     private static boolean useResourcePack = true;
     private static boolean floodgateAPI = false;
@@ -46,6 +42,7 @@ public final class RavelDatapack extends JavaPlugin {
         hatManager = new HatManager();
         enchantmentManager = new EnchantmentManager();
         mapManager = new MapManager();
+        dimensionManager = new DimensionManager();
 
         if (this.getServer().getPluginManager().getPlugin("floodgate") != null) {
             if (FloodgateApi.getInstance() != null) {
@@ -65,6 +62,7 @@ public final class RavelDatapack extends JavaPlugin {
         log.info(String.format("[%s] Registered %d custom enchantments", getDescription().getName(), enchantmentManager.init()));
         log.info(String.format("[%s] Registered %d custom items", getDescription().getName(), itemManager.init()));
         log.info(String.format("[%s] Registered %d custom hats", getDescription().getName(), hatManager.init()));
+        log.info(String.format("[%s] Registered %d custom dimenstions", getDescription().getName(), dimensionManager.init()));
         mapManager.init();
 
         log.info(String.format("[%s] Adding commands", getDescription().getName()));
@@ -74,7 +72,11 @@ public final class RavelDatapack extends JavaPlugin {
         TexturePack.init();
 
         log.info(String.format("[%s] Registering events", getDescription().getName()));
-        instance.getServer().getPluginManager().registerEvents(new EventListener(), this);
+        instance.getServer().getPluginManager().registerEvents(new EnchantmentListener(), this);
+        instance.getServer().getPluginManager().registerEvents(new DimensionListener(), this);
+
+        log.info(String.format("[%s] Creating custom dimension worlds", getDescription().getName()));
+        dimensionManager.createWorlds();
 
         log.info(String.format("[%s] All done! Enabled Version %s.", getDescription().getName(), getDescription().getVersion()));
     }
@@ -148,6 +150,9 @@ public final class RavelDatapack extends JavaPlugin {
     public static MapManager getMapManager() {
         return mapManager;
     }
+    public static DimensionManager getDimensionManager() {
+        return dimensionManager;
+    }
 
     public static ConfigManager.YmlConfig getConfig(String name) {
         return configManager.getConfig(name);
@@ -158,5 +163,13 @@ public final class RavelDatapack extends JavaPlugin {
     }
     public static boolean shouldResourcePack() {
         return useResourcePack;
+    }
+    public static long getSeed() {
+        World world = instance.getServer().getWorld("world");
+        if (world == null) {
+            return 0;
+        } else {
+            return world.getSeed();
+        }
     }
 }

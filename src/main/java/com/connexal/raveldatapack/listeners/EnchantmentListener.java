@@ -19,7 +19,7 @@ import org.bukkit.inventory.MerchantRecipe;
 
 import java.util.*;
 
-public class EventListener implements Listener {
+public class EnchantmentListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onVillagerAcquireTradeEvent(VillagerAcquireTradeEvent event) {
         if (RavelDatapack.getEnchantmentManager().getEnchantments().size() == 0) {

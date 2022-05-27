@@ -19,6 +19,20 @@ public class ItemsUtil {
     }
 
     /**
+     * Get if an {@link ItemStack} is a weapon
+     * @param item The {@link ItemStack} to check
+     * @return True if the item is a weapon, false if not
+     */
+    public static boolean isItemAWeapon(ItemStack item) {
+        if (item == null) {
+            return false;
+        }
+        String name = item.getType().toString();
+
+        return name.endsWith("_SWORD");
+    }
+
+    /**
      * Get if an {@link ItemStack} is armor
      * @param item The {@link ItemStack} to check
      * @return True if the item is armor, false if not
