@@ -38,6 +38,8 @@ public abstract class CustomDimension {
     }
 
     public abstract static class CustomChunkPopulator extends BlockPopulator {
+        public abstract void setBiomeProvider(BiomeProvider biomeProvider);
+
         public abstract void populate(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull LimitedRegion limitedRegion);
     }
 
@@ -45,9 +47,12 @@ public abstract class CustomDimension {
         protected final BiomeProvider biomeProvider;
         private final List<BlockPopulator> chunkPopulators;
 
-        public CustomChunkGenerator(BiomeProvider biomeProvider, BlockPopulator... chunkPopulators) {
+        public CustomChunkGenerator(BiomeProvider biomeProvider, CustomChunkPopulator... chunkPopulators) {
             this.biomeProvider = biomeProvider;
             this.chunkPopulators = Arrays.asList(chunkPopulators);
+            for (CustomChunkPopulator chunkPopulator : chunkPopulators) {
+                chunkPopulator.setBiomeProvider(this.biomeProvider);
+            }
         }
 
         public CustomChunkGenerator(BiomeProvider biomeProvider) {
@@ -57,9 +62,12 @@ public abstract class CustomDimension {
 
         public abstract void generateWorld(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData);
 
+        public abstract void generateStructure(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData);
+
         @Override
         public void generateNoise(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
             this.generateWorld(worldInfo, random, chunkX, chunkZ, chunkData);
+            this.generateStructure(worldInfo, random, chunkX, chunkZ, chunkData);
         }
 
         @NotNull

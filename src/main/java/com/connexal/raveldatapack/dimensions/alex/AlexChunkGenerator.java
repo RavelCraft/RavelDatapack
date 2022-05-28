@@ -52,6 +52,11 @@ public class AlexChunkGenerator extends CustomDimension.CustomChunkGenerator {
     }
 
     @Override
+    public void generateStructure(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkData chunkData) {
+        //Nothing
+    }
+
+    @Override
     public boolean shouldGenerateSurface() {
         return false;
     }

@@ -5,6 +5,7 @@ import com.connexal.raveldatapack.utils.BlockFaces;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
@@ -12,9 +13,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 
 public class AetherOrePopulator extends CustomDimension.CustomChunkPopulator {
+    private BiomeProvider biomeProvider;
+
+    @Override
+    public void setBiomeProvider(BiomeProvider biomeProvider) {
+        this.biomeProvider = biomeProvider;
+    }
+
     @Override
     public void populate(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull LimitedRegion limitedRegion) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             int startX = random.nextInt(16) + (chunkX * 16);
             int startY = random.nextInt(100);
             int startZ = random.nextInt(16) + (chunkZ * 16);
@@ -37,6 +45,6 @@ public class AetherOrePopulator extends CustomDimension.CustomChunkPopulator {
     }
 
     private boolean isAcceptable(Material material) {
-        return material == Material.STONE || material == Material.COBBLESTONE || material == Material.MOSSY_COBBLESTONE || material == Material.TUFF || material == Material.ANDESITE;
+        return material == Material.STONE || material == Material.COBBLESTONE || material == Material.ANDESITE || material == Material.TUFF;
     }
 }

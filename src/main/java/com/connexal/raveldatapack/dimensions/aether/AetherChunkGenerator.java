@@ -1,11 +1,12 @@
 package com.connexal.raveldatapack.dimensions.aether;
 
 import com.connexal.raveldatapack.dimensions.CustomDimension;
+import com.connexal.raveldatapack.dimensions.aether.biomes.*;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherNaturePopulator;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherOrePopulator;
-import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import org.jetbrains.annotations.NotNull;
@@ -14,20 +15,31 @@ import java.util.Random;
 
 public class AetherChunkGenerator extends CustomDimension.CustomChunkGenerator {
     private SimplexOctaveGenerator generator = null;
-    private SimplexOctaveGenerator heightGenerator = null;
 
     public AetherChunkGenerator(BiomeProvider biomeProvider) {
         super(biomeProvider, new AetherNaturePopulator(), new AetherOrePopulator());
+
+        AetherBiome.registerBiome(new BirchForestBiome());
+        AetherBiome.registerBiome(new DarkForestBiome());
+        AetherBiome.registerBiome(new DarkMesaBiome());
+        AetherBiome.registerBiome(new DesertBiome());
+        AetherBiome.registerBiome(new OakForestBiome());
+        AetherBiome.registerBiome(new JungleBiome());
+        AetherBiome.registerBiome(new MesaBiome());
+        AetherBiome.registerBiome(new OasisBiome());
+        AetherBiome.registerBiome(new PlainsBiome());
+        AetherBiome.registerBiome(new RedDesertBiome());
+        AetherBiome.registerBiome(new RosePlainsBiome());
+        AetherBiome.registerBiome(new SnowyPlainsBiome());
+        AetherBiome.registerBiome(new SnowyTigaBiome());
+        AetherBiome.registerBiome(new TaigaBiome());
+        AetherBiome.registerBiome(new WastelandsBiome());
     }
 
     private void createGenerator(WorldInfo worldInfo) {
         if (generator == null) {
             generator = new SimplexOctaveGenerator(worldInfo.getSeed(), 10);
             generator.setScale(AetherConstants.SACALE);
-        }
-        if (heightGenerator == null) {
-            heightGenerator = new SimplexOctaveGenerator(worldInfo.getSeed(), 8);
-            heightGenerator.setScale(AetherConstants.HEIGHT_SCALE);
         }
     }
 
@@ -43,62 +55,47 @@ public class AetherChunkGenerator extends CustomDimension.CustomChunkGenerator {
                 int localX = worldX + x;
                 int localZ = worldZ + z;
 
-                double heightNoise = heightGenerator.noise(localX, localZ, AetherConstants.HEIGHT_FREQUENCY, AetherConstants.HEIGHT_AMPLITUDE);
-                double noise = generator.noise(localX, localZ, AetherConstants.FREQUENCY, AetherConstants.AMPLITUDE);
-                double noiseAndHeight = noise * AetherConstants.ISLAND_HEIGHT + heightNoise * 15;
+                double noise = generator.noise(localX, localZ, AetherConstants.FREQUENCY, AetherConstants.AMPLITUDE) * AetherConstants.ISLAND_HEIGHT;
 
-                int currentHeight = (int) (noiseAndHeight);
+                int currentHeight = (int) (noise);
                 currentHeight = currentHeight - AetherConstants.START_DRAWING_HEIGHT;
 
                 if (currentHeight > 0) {
                     Biome biome = this.biomeProvider.getBiome(worldInfo, localX, 0, localZ);
 
-                    int bottomHeight = (int) (noiseAndHeight * AetherConstants.ISLAND_BOTTOM_MULTIPLIER);
-                    bottomHeight = bottomHeight - AetherConstants.START_DRAWING_HEIGHT * AetherConstants.ISLAND_BOTTOM_MULTIPLIER;
+                    int bottomHeight = (int) (noise * AetherConstants.ISLAND_BOTTOM_MULTIPLIER);
+                    bottomHeight = (bottomHeight - AetherConstants.START_DRAWING_HEIGHT * AetherConstants.ISLAND_BOTTOM_MULTIPLIER) * -1;
 
-                    int sandstoneRandom = random.nextInt(6) + 3;
-                    int dirtRandom = random.nextInt(3) + 1;
+                    currentHeight += AetherConstants.ISLAND_LEVEL;
+                    bottomHeight += AetherConstants.ISLAND_LEVEL;
+                    bottomHeight -= 1; //Remove the duplicate layer
 
-                    for (int y = (bottomHeight * -1); y < currentHeight; y++) {
-                        Material setMaterial = this.getRandomBaseMaterial(random);
-                        if (setMaterial == Material.MOSSY_COBBLESTONE && y != (bottomHeight * -1)) {
-                            setMaterial = Material.COBBLESTONE;
-                        }
-
-                        if (biome != Biome.BEACH && biome != Biome.DESERT) {
-                            if (y == currentHeight - 1) {
-                                setMaterial = Material.GRASS_BLOCK;
-                            } else if (y > (currentHeight - 1) - dirtRandom) {
-                                setMaterial = Material.DIRT;
-                            }
-                        } else {
-                            if (y > (currentHeight - 1) - 2) {
-                                setMaterial = Material.SAND;
-                            } else if (y > (currentHeight - 1) - sandstoneRandom) {
-                                setMaterial = Material.SANDSTONE;
-                            }
-                        }
-
-                        chunkData.setBlock(x, AetherConstants.ISLAND_LEVEL + y, z, setMaterial);
-                    }
+                    AetherBiome.drawStack(chunkData, x, z, bottomHeight, currentHeight, biome, random);
                 }
             }
         }
     }
 
-    private Material getRandomBaseMaterial(Random random) {
-        int randomMaterial = random.nextInt(101);
-        if (randomMaterial < 50) {
-            return Material.STONE;
-        } else if (randomMaterial < 80) {
-            return Material.COBBLESTONE;
-        } else if (randomMaterial < 90) {
-            return Material.MOSSY_COBBLESTONE;
-        } else if (randomMaterial < 95) {
-            return Material.ANDESITE;
-        } else {
-            return Material.TUFF;
+    @Override
+    public void generateStructure(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
+        int worldX = chunkX * 16;
+        int worldZ = chunkZ * 16;
+
+        Biome biome = this.biomeProvider.getBiome(worldInfo, worldX, 0, worldZ);
+
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                int localX = worldX + x;
+                int localZ = worldZ + z;
+
+                Biome tmpBiome = this.biomeProvider.getBiome(worldInfo, localX, 0, localZ);
+                if (tmpBiome != biome) {
+                    return;
+                }
+            }
         }
+
+        AetherBiome.spawnStructure(chunkData, chunkX, chunkZ, biome, random);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.connexal.raveldatapack.dimensions.alex.AlexConstants;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
+import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 
 public class AlexNaturePopulator extends CustomDimension.CustomChunkPopulator {
+    private BiomeProvider biomeProvider;
+
+    @Override
+    public void setBiomeProvider(BiomeProvider biomeProvider) {
+        this.biomeProvider = biomeProvider;
+    }
+
     @Override
     public void populate(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull LimitedRegion limitedRegion) {
         int amount = random.nextInt(AlexConstants.TREE_DENSITY) + 1;
