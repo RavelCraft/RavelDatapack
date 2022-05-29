@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
+import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.dimensions.aether.AetherConstants;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,13 +48,15 @@ public class SnowyTigaBiome extends AetherBiome {
     @Override
     public void spawnTreeInternal(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
         Location location = new Location(null, x, y, z);
-        limitedRegion.generateTree(location, random, random.nextInt(4) == 0 ? TreeType.REDWOOD : TreeType.TALL_REDWOOD);
+        limitedRegion.setType(x, y - 1, z, Material.DIRT);
+        limitedRegion.setType(x, y, z, Material.AIR);
+        limitedRegion.generateTree(location, random, random.nextInt(6) == 0 ? TreeType.TALL_REDWOOD : TreeType.REDWOOD);
     }
 
     @Override
     public void spawnPlantInternal(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
-        limitedRegion.setType(x, y, z, Material.GRASS);
         limitedRegion.setType(x, y - 1, z, Material.GRASS_BLOCK);
+        limitedRegion.setType(x, y, z, Material.GRASS);
     }
 
     @Override
