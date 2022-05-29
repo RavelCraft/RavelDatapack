@@ -29,7 +29,7 @@ public class SantaHat extends CustomItem {
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape(" S "," R ", "RRR");
+        recipe.shape(" S ", " R ", "RRR");
         recipe.setIngredient('R', Material.RED_WOOL);
         recipe.setIngredient('S', Material.SNOWBALL);
         this.instance.getServer().addRecipe(recipe);

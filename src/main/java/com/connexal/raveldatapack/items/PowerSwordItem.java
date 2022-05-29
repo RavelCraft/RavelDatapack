@@ -38,7 +38,7 @@ public class PowerSwordItem extends CustomItem implements Listener {
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape(" N "," N ", " B ");
+        recipe.shape(" N ", " N ", " B ");
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
         recipe.setIngredient('B', Material.BLAZE_ROD);
         this.instance.getServer().addRecipe(recipe);

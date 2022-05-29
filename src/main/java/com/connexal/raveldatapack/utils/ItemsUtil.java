@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 public class ItemsUtil {
     /**
      * Get if an {@link ItemStack} is a tool
+     *
      * @param item The {@link ItemStack} to check
      * @return True if the item is a tool, false if not
      */
@@ -20,6 +21,7 @@ public class ItemsUtil {
 
     /**
      * Get if an {@link ItemStack} is a weapon
+     *
      * @param item The {@link ItemStack} to check
      * @return True if the item is a weapon, false if not
      */
@@ -34,6 +36,7 @@ public class ItemsUtil {
 
     /**
      * Get if an {@link ItemStack} is armor
+     *
      * @param item The {@link ItemStack} to check
      * @return True if the item is armor, false if not
      */
@@ -48,6 +51,7 @@ public class ItemsUtil {
 
     /**
      * Get the enderite upgrade of an item
+     *
      * @param item The {@link Material} of the item
      * @return The custom model data of the item's upgrade or 0 if there is no upgrade
      */
@@ -70,6 +74,7 @@ public class ItemsUtil {
 
     /**
      * Get the custom model data of an {@link ItemStack}
+     *
      * @param item The {@link ItemStack}
      * @return The custom model data
      */

@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Random;
 
 public abstract class AetherBiome {
-    private static Map<Biome, AetherBiome> biomeMap = new HashMap<>();
+    private static final Map<Biome, AetherBiome> biomeMap = new HashMap<>();
 
     public static void registerBiome(AetherBiome biome) {
         if (biomeMap.containsKey(biome.getBiome())) {

@@ -38,7 +38,7 @@ public class BoltPistolItem extends CustomItem implements Listener {
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape(" IB","III", " I ");
+        recipe.shape(" IB", "III", " I ");
         recipe.setIngredient('B', Material.BLAZE_POWDER);
         recipe.setIngredient('I', Material.IRON_INGOT);
         instance.getServer().addRecipe(recipe);

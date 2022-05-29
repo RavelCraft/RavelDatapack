@@ -2,7 +2,6 @@ package com.connexal.raveldatapack.utils;
 
 import com.connexal.raveldatapack.RavelDatapack;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -134,7 +133,7 @@ public class EnchantmentLoreUtil {
     }
 
     private static NamespacedKey getLoreKey(String id) {
-       String lid = id.toLowerCase();
+        String lid = id.toLowerCase();
         return LORE_KEYS_CACHE.computeIfAbsent(lid, key -> new NamespacedKey(RavelDatapack.getInstance(), LORE_FIX_PREFIX + lid));
     }
 

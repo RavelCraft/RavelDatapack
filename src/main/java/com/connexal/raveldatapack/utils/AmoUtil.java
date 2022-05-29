@@ -8,7 +8,8 @@ import org.bukkit.inventory.ItemStack;
 public class AmoUtil {
     /**
      * Remove one of the given {@link Player}'s custom items from their inventory
-     * @param player The {@link Player} to remove the item from
+     *
+     * @param player          The {@link Player} to remove the item from
      * @param customModelData The custom model data of the item to remove
      * @return True if the item was removed, false if the item was not found
      */
@@ -59,7 +60,8 @@ public class AmoUtil {
 
     /**
      * Remove one of the given {@link Player}'s items from their inventory
-     * @param player The {@link Player} to remove the item from
+     *
+     * @param player   The {@link Player} to remove the item from
      * @param material The {@link Material} of the item to remove
      * @return True if the item was removed, false if the item was not found
      */

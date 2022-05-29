@@ -47,14 +47,15 @@ public class PluginMessageManager implements PluginMessageListener {
         }
     }
 
-    public void sendCmd(Player player, String cmd, String data){
+    public void sendCmd(Player player, String cmd, String data) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(bytes);
         try {
             out.writeUTF("RavelDatapack");
             out.writeUTF(cmd);
             out.writeUTF(data);
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
 
         player.sendPluginMessage(RavelDatapack.getInstance(), CHANNEL_ID, bytes.toByteArray());
         //EasyCraft.getLog().info("Sent plugin message to " + player.getName() + ": " + cmd + " " + data);
@@ -62,6 +63,7 @@ public class PluginMessageManager implements PluginMessageListener {
         try {
             out.close();
             bytes.close();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 }

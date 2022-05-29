@@ -26,6 +26,7 @@ public class HatManager implements Listener {
 
     /**
      * Initialise all the custom hats
+     *
      * @return The number of custom hats initialised
      */
     public int init() {
@@ -46,6 +47,7 @@ public class HatManager implements Listener {
 
     /**
      * Register a custom hat
+     *
      * @param item The custom hat to register
      * @see CustomItem
      */
@@ -131,6 +133,7 @@ public class HatManager implements Listener {
 
     /**
      * Get all the custom hats
+     *
      * @return A {@link Map<String, CustomItem>} of all the custom hats registered (by namespace key)
      */
     public Map<String, CustomItem> getItems() {
@@ -139,6 +142,7 @@ public class HatManager implements Listener {
 
     /**
      * Check if an {@link ItemStack} is a custom hat
+     *
      * @param item The {@link ItemStack} to check
      * @return True if the {@link ItemStack} is a custom hat, false otherwise
      */

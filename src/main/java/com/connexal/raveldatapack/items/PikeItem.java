@@ -34,7 +34,7 @@ public class PikeItem extends CustomItem implements Listener {
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape("DDD","DND", "DDD");
+        recipe.shape("DDD", "DND", "DDD");
         recipe.setIngredient('D', Material.DIAMOND);
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
         instance.getServer().addRecipe(recipe);
@@ -48,7 +48,7 @@ public class PikeItem extends CustomItem implements Listener {
             Player player = (Player) event.getDamager();
             ItemStack item = player.getInventory().getItemInMainHand();
 
-            if (!(event.getEntity() instanceof LivingEntity)){
+            if (!(event.getEntity() instanceof LivingEntity)) {
                 return;
             }
             if (item.getItemMeta() == null) {

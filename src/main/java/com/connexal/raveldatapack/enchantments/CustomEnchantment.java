@@ -1,7 +1,6 @@
 package com.connexal.raveldatapack.enchantments;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.utils.StringUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -41,6 +40,7 @@ public abstract class CustomEnchantment extends Enchantment {
 
     /**
      * Get the enchanted book {@link ItemStack}
+     *
      * @param level The enchantment level
      * @return The enchanted book
      */
@@ -63,6 +63,7 @@ public abstract class CustomEnchantment extends Enchantment {
 
     /**
      * Test to see if an {@link ItemStack} has the enchantment
+     *
      * @param item The item to test
      * @return True if the item has the enchantment
      */
@@ -78,6 +79,7 @@ public abstract class CustomEnchantment extends Enchantment {
 
     /**
      * Get the enchantment level of an enchanted book {@link ItemStack}
+     *
      * @param item The enchanted book
      * @return The enchantment level
      */

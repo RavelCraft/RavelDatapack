@@ -46,7 +46,7 @@ public class AlexNaturePopulator extends CustomDimension.CustomChunkPopulator {
         int startY = worldInfo.getMaxHeight() - 1;
         int startZ = random.nextInt(16) + (chunkZ * 16);
 
-        Location location = new Location(null,  startX, startY, startZ);
+        Location location = new Location(null, startX, startY, startZ);
         if (!limitedRegion.isInRegion(location)) {
             return null;
         }

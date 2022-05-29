@@ -1,9 +1,9 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.dimensions.CustomDimension;
 import com.connexal.raveldatapack.dimensions.aether.AetherDimension;
 import com.connexal.raveldatapack.dimensions.alex.AlexDimension;
-import com.connexal.raveldatapack.dimensions.CustomDimension;
 import org.bukkit.Material;
 
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class DimensionManager {
     }
 
     public Map<String, CustomDimension> getDimensions() {
-    	return dimensions;
+        return dimensions;
     }
 
     public CustomDimension getDimensionFromPortalMaterial(Material material) {

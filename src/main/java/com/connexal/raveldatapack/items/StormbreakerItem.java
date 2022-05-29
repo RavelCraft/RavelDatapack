@@ -40,7 +40,7 @@ public class StormbreakerItem extends CustomItem implements Listener {
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape(" NN"," BN", "B  ");
+        recipe.shape(" NN", " BN", "B  ");
         recipe.setIngredient('N', Material.NETHER_STAR);
         recipe.setIngredient('B', Material.BLAZE_ROD);
         this.instance.getServer().addRecipe(recipe);

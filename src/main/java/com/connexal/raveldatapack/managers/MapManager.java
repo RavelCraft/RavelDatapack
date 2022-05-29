@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapManager implements Listener {
-    private ConfigManager.YmlConfig dataYML = RavelDatapack.getConfig("data");
-    private Map<Integer, String> savedImages = new HashMap<>();
+    private final ConfigManager.YmlConfig dataYML = RavelDatapack.getConfig("data");
+    private final Map<Integer, String> savedImages = new HashMap<>();
 
     /**
      * Initialises the data file.
@@ -41,7 +41,8 @@ public class MapManager implements Listener {
 
     /**
      * When a new map is created, save the ID and Image to data file
-     * @param id Map ID
+     *
+     * @param id  Map ID
      * @param url Image URL
      */
     public void saveImage(Integer id, String url) {

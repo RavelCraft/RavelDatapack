@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
-    private RavelDatapack plugin;
+    private final RavelDatapack plugin;
 
     public RavelDatapackCommand(RavelDatapack plugin) {
         super();

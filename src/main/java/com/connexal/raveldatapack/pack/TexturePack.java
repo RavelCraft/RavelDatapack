@@ -76,7 +76,7 @@ public class TexturePack {
             createTempPackFolder();
             ZipUtil.pack(new File(RavelDatapack.getInstance().getDataFolder(), "tmp"), zip);
         } catch (Exception exception) {
-            RavelDatapack.getLog().severe(String.format("[%s] Unable to export zip file: %s", RavelDatapack.getInstance().getDescription().getName(), exception.toString()));
+            RavelDatapack.getLog().severe(String.format("[%s] Unable to export zip file: %s", RavelDatapack.getInstance().getDescription().getName(), exception));
             if (zip.exists()) {
                 zip.delete();
             }
@@ -136,7 +136,8 @@ public class TexturePack {
                     if (out != null) {
                         out.close();
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             }
         }
     }

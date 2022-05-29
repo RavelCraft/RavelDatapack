@@ -14,6 +14,7 @@ public class ItemManager {
 
     /**
      * Initialise all custom items
+     *
      * @return The number of custom items initialised
      */
     public int init() {
@@ -48,6 +49,7 @@ public class ItemManager {
 
     /**
      * Register a {@link CustomItem}
+     *
      * @param item {@link CustomItem} to register
      */
     public void registerCustomItem(CustomItem item) {
@@ -69,6 +71,7 @@ public class ItemManager {
 
     /**
      * Get all the custom items
+     *
      * @return A {@link Map<String, CustomItem>} of all the custom items registered (by namespace key)
      */
     public HashMap<String, CustomItem> getItems() {
@@ -82,6 +85,7 @@ public class ItemManager {
 
     /**
      * Get an {@link ItemStack} of a {@link CustomItem} by its namespace key
+     *
      * @param namespaceKey Namespace key of the {@link ItemStack}
      * @return The {@link ItemStack}
      */
@@ -96,6 +100,7 @@ public class ItemManager {
 
     /**
      * Get the {@link ItemStack} of a {@link CustomItem} by it's custom model data
+     *
      * @param customModelData Custom model data of the {@link CustomItem}
      * @return The {@link ItemStack}
      */
@@ -111,6 +116,7 @@ public class ItemManager {
 
     /**
      * Get the {@link CustomItem} by its namespace key by it's custom model data
+     *
      * @param customModelData Custom model data of the {@link CustomItem}
      * @return The namespace key
      */
@@ -126,6 +132,7 @@ public class ItemManager {
 
     /**
      * Get if an {@link ItemStack} is a custom item
+     *
      * @param item The {@link ItemStack} to check
      * @return True if the {@link ItemStack} is a custom item
      */

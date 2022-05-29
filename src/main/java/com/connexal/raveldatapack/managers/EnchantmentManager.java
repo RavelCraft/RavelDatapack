@@ -1,7 +1,10 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.enchantments.*;
+import com.connexal.raveldatapack.enchantments.BlasingArmorEnchantment;
+import com.connexal.raveldatapack.enchantments.CustomEnchantment;
+import com.connexal.raveldatapack.enchantments.PoisonBladeEnchantment;
+import com.connexal.raveldatapack.enchantments.TelekinesisEnchantment;
 import com.connexal.raveldatapack.utils.EnchantmentLoreUtil;
 import com.connexal.raveldatapack.utils.StringUtil;
 import org.bukkit.ChatColor;
@@ -24,6 +27,7 @@ public class EnchantmentManager {
 
     /**
      * Initialise all the custom enchantments
+     *
      * @return The number of custom enchantments initialised
      */
     public int init() {
@@ -36,6 +40,7 @@ public class EnchantmentManager {
 
     /**
      * Register a custom enchantment
+     *
      * @param enchantment The {@link CustomEnchantment} to register
      * @return True if the enchantment was registered, false otherwise
      */
@@ -65,6 +70,7 @@ public class EnchantmentManager {
 
     /**
      * Register an enchantment
+     *
      * @param enchantment The {@link Enchantment} to register
      * @return True if the enchantment was registered, false otherwise
      */
@@ -90,10 +96,11 @@ public class EnchantmentManager {
 
     /**
      * Enchants an {@link ItemStack} with the specified {@link Enchantment}
-     * @param item The {@link ItemStack} to enchant
+     *
+     * @param item        The {@link ItemStack} to enchant
      * @param enchantment The {@link Enchantment} to enchant the {@link ItemStack} with
-     * @param level The level of the enchantment
-     * @param force If true, the enchantment will be applied even if the {@link ItemStack} doesn't support it
+     * @param level       The level of the enchantment
+     * @param force       If true, the enchantment will be applied even if the {@link ItemStack} doesn't support it
      * @return The enchanted {@link ItemStack}
      */
     public boolean enchantItemStack(ItemStack item, CustomEnchantment enchantment, int level, boolean force) {
@@ -128,7 +135,8 @@ public class EnchantmentManager {
 
     /**
      * Remove an {@link Enchantment} from an {@link ItemStack}
-     * @param item The {@link ItemStack} to remove the {@link Enchantment} from
+     *
+     * @param item        The {@link ItemStack} to remove the {@link Enchantment} from
      * @param enchantment The {@link Enchantment} to remove
      * @return The {@link ItemStack} with the {@link Enchantment} removed
      */
@@ -156,6 +164,7 @@ public class EnchantmentManager {
 
     /**
      * Remove all {@link Enchantment}s from an {@link ItemStack}
+     *
      * @param item The {@link ItemStack} to remove all {@link Enchantment}s from
      * @return The {@link ItemStack} with all {@link Enchantment}s removed
      */
@@ -173,6 +182,7 @@ public class EnchantmentManager {
 
     /**
      * Convert an {@link Enchantment} to a {@link CustomEnchantment}
+     *
      * @param enchantment The {@link Enchantment} to convert
      * @return The {@link CustomEnchantment} or null if the {@link Enchantment} is not a {@link CustomEnchantment}
      */
@@ -186,6 +196,7 @@ public class EnchantmentManager {
 
     /**
      * Get if an {@link Enchantment} is a {@link CustomEnchantment}
+     *
      * @param enchantment The {@link Enchantment} to check
      * @return True if the {@link Enchantment} is a {@link CustomEnchantment}, false otherwise
      */
@@ -200,6 +211,7 @@ public class EnchantmentManager {
 
     /**
      * Get if an {@link ItemStack} is enchantable
+     *
      * @param item The {@link ItemStack} to check
      * @return True if it can be enchanted, false otherwise
      */
@@ -213,6 +225,7 @@ public class EnchantmentManager {
 
     /**
      * Get the enchantments of an {@link ItemStack}
+     *
      * @param item The {@link ItemStack} to get the enchantments of
      * @return A {@link Map<Enchantment, Integer>}
      */
@@ -223,6 +236,7 @@ public class EnchantmentManager {
 
     /**
      * Gets the {@link CustomEnchantment}s of an {@link ItemStack}
+     *
      * @param item The {@link ItemStack} to get the {@link CustomEnchantment}s of
      * @return A {@link Map<CustomEnchantment, Integer>}
      */
@@ -251,8 +265,9 @@ public class EnchantmentManager {
 
     /**
      * Format an {@link CustomEnchantment} to a {@link String}
+     *
      * @param enchantment The {@link CustomEnchantment} to format
-     * @param level The level of the enchantment
+     * @param level       The level of the enchantment
      * @return The formatted {@link String}
      */
     public String formatEnchantmentName(CustomEnchantment enchantment, int level) {
@@ -269,6 +284,7 @@ public class EnchantmentManager {
 
     /**
      * Get a random {@link CustomEnchantment}
+     *
      * @return A random {@link CustomEnchantment}
      */
     public ItemStack getRandomCustomEnchantment() {
@@ -281,6 +297,7 @@ public class EnchantmentManager {
 
     /**
      * Get all the registered {@link CustomEnchantment}s
+     *
      * @return A {@link List<CustomEnchantment>} of all the registered {@link CustomEnchantment}s
      */
     public List<CustomEnchantment> getEnchantments() {
@@ -289,6 +306,7 @@ public class EnchantmentManager {
 
     /**
      * Get a {@link CustomEnchantment} by its key
+     *
      * @param key The key of the {@link CustomEnchantment}
      * @return The {@link CustomEnchantment} or null if it doesn't exist
      */

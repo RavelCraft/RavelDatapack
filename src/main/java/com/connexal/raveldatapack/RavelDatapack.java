@@ -131,6 +131,7 @@ public final class RavelDatapack extends JavaPlugin {
     public static Logger getLog() {
         return log;
     }
+
     public static RavelDatapack getInstance() {
         return instance;
     }
@@ -138,18 +139,23 @@ public final class RavelDatapack extends JavaPlugin {
     public static PluginMessageManager getPluginMessageManager() {
         return pluginMessageManager;
     }
+
     public static ItemManager getItemManager() {
         return itemManager;
     }
+
     public static HatManager getHatManager() {
         return hatManager;
     }
+
     public static EnchantmentManager getEnchantmentManager() {
         return enchantmentManager;
     }
+
     public static MapManager getMapManager() {
         return mapManager;
     }
+
     public static DimensionManager getDimensionManager() {
         return dimensionManager;
     }
@@ -161,9 +167,11 @@ public final class RavelDatapack extends JavaPlugin {
     public static boolean isFloodgateAPI() {
         return floodgateAPI;
     }
+
     public static boolean shouldResourcePack() {
         return useResourcePack;
     }
+
     public static long getSeed() {
         World world = instance.getServer().getWorld("world");
         if (world == null) {

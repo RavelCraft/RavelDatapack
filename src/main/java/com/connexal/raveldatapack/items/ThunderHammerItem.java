@@ -39,7 +39,7 @@ public class ThunderHammerItem extends CustomItem implements Listener {
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape("  N"," B ", "B  ");
+        recipe.shape("  N", " B ", "B  ");
         recipe.setIngredient('N', Material.NETHERITE_BLOCK);
         recipe.setIngredient('B', Material.BLAZE_ROD);
         this.instance.getServer().addRecipe(recipe);

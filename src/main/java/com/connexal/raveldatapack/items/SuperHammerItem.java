@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SuperHammerItem extends CustomItem implements Listener {
-    private List<Location> blocksToProcessLoc = new ArrayList<>();
+    private final List<Location> blocksToProcessLoc = new ArrayList<>();
 
     public SuperHammerItem(int customModelData) {
         super();
@@ -45,7 +45,7 @@ public class SuperHammerItem extends CustomItem implements Listener {
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape(" NN"," BN", "B  ");
+        recipe.shape(" NN", " BN", "B  ");
         recipe.setIngredient('N', Material.NETHERITE_BLOCK);
         recipe.setIngredient('B', Material.BLAZE_ROD);
         this.instance.getServer().addRecipe(recipe);

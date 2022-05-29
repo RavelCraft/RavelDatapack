@@ -26,6 +26,7 @@ public abstract class CustomItem {
 
     /**
      * Get the generated {@link ItemStack}
+     *
      * @return The item
      */
     public ItemStack getItemStack() {
@@ -34,6 +35,7 @@ public abstract class CustomItem {
 
     /**
      * Get the custom model data
+     *
      * @return The custom model data
      */
     public Integer getCustomModelData() {
@@ -42,6 +44,7 @@ public abstract class CustomItem {
 
     /**
      * Get the namespace key
+     *
      * @return The namespace key
      */
     public String getNamespaceKey() {
@@ -50,6 +53,7 @@ public abstract class CustomItem {
 
     /**
      * Create an {@link ItemMeta}
+     *
      * @return The created {@link ItemMeta}
      */
     public ItemMeta createItemMeta() {
@@ -58,7 +62,8 @@ public abstract class CustomItem {
 
     /**
      * Create an {@link ItemMeta}
-     * @param hideFlags Hide the item information
+     *
+     * @param hideFlags   Hide the item information
      * @param unbreakable Is the item unbreakable
      * @return The created item meta
      */
@@ -80,6 +85,7 @@ public abstract class CustomItem {
 
     /**
      * Get the {@link ItemMeta}
+     *
      * @return The {@link ItemMeta}
      */
     public ItemMeta getItemMeta() {
@@ -88,6 +94,7 @@ public abstract class CustomItem {
 
     /**
      * Set the {@link ItemMeta}
+     *
      * @param itemMeta The {@link ItemMeta}
      */
     public void setItemMeta(ItemMeta itemMeta) {
@@ -96,6 +103,7 @@ public abstract class CustomItem {
 
     /**
      * Set the item's lore
+     *
      * @param meta The {@link ItemMeta}
      * @param lore The lore
      */
@@ -105,9 +113,10 @@ public abstract class CustomItem {
 
     /**
      * Set the item's lore
-     * @param meta The {@link ItemMeta}
+     *
+     * @param meta       The {@link ItemMeta}
      * @param addSpacing Add spacing between the lore and the item name/enchantments
-     * @param lore The lore
+     * @param lore       The lore
      */
     public void setItemLore(ItemMeta meta, boolean addSpacing, String... lore) {
         List<String> lore_array = new ArrayList<>();
@@ -123,9 +132,10 @@ public abstract class CustomItem {
 
     /**
      * Set the item's attack damage
-     * @param meta The {@link ItemMeta}
+     *
+     * @param meta   The {@link ItemMeta}
      * @param damage The damage to set
-     * @param slot The {@link EquipmentSlot} that the item must be in to make this work
+     * @param slot   The {@link EquipmentSlot} that the item must be in to make this work
      */
     public void setAttackDamage(ItemMeta meta, double damage, EquipmentSlot slot) {
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", damage - 2, AttributeModifier.Operation.ADD_NUMBER, slot));
@@ -133,9 +143,10 @@ public abstract class CustomItem {
 
     /**
      * Set the item's attack speed
-     * @param meta The {@link ItemMeta}
+     *
+     * @param meta  The {@link ItemMeta}
      * @param speed The speed to set
-     * @param slot The {@link EquipmentSlot} that the item must be in to make this work
+     * @param slot  The {@link EquipmentSlot} that the item must be in to make this work
      */
     public void setAttackSpeed(ItemMeta meta, double speed, EquipmentSlot slot) {
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", speed - 4, AttributeModifier.Operation.ADD_NUMBER, slot));

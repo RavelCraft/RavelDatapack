@@ -81,7 +81,7 @@ public class DimensionListener implements Listener {
             portalBlock = portalBlock.getRelative(BlockFace.NORTH);
         }
 
-        Block[][] blocks = { new Block[5], new Block[5], new Block[5], new Block[5] }; //Read all the nether portal blocks
+        Block[][] blocks = {new Block[5], new Block[5], new Block[5], new Block[5]}; //Read all the nether portal blocks
         Block tmpBlock = portalBlock;
         if (northSouth) {
             for (int x = 0; x < 4; x++) {
@@ -126,13 +126,13 @@ public class DimensionListener implements Listener {
                 return;
             }
 
-            Block[][] blocksNorth = { new Block[5], new Block[5], new Block[5], new Block[5] }; //Read all the nether portal blocks
+            Block[][] blocksNorth = {new Block[5], new Block[5], new Block[5], new Block[5]}; //Read all the nether portal blocks
             boolean doNorth = false;
-            Block[][] blocksSouth = { new Block[5], new Block[5], new Block[5], new Block[5] }; //Read all the nether portal blocks
+            Block[][] blocksSouth = {new Block[5], new Block[5], new Block[5], new Block[5]}; //Read all the nether portal blocks
             boolean doSouth = false;
-            Block[][] blocksEast = { new Block[5], new Block[5], new Block[5], new Block[5] }; //Read all the nether portal blocks
+            Block[][] blocksEast = {new Block[5], new Block[5], new Block[5], new Block[5]}; //Read all the nether portal blocks
             boolean doEast = false;
-            Block[][] blocksWest = { new Block[5], new Block[5], new Block[5], new Block[5] }; //Read all the nether portal blocks
+            Block[][] blocksWest = {new Block[5], new Block[5], new Block[5], new Block[5]}; //Read all the nether portal blocks
             boolean doWest = false;
 
             Block blockOnTop = event.getClickedBlock().getRelative(BlockFace.UP);

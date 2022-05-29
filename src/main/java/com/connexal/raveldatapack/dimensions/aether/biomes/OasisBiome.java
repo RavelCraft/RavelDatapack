@@ -1,6 +1,5 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
-import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.dimensions.aether.assets.OasisSpawner;
 import com.connexal.raveldatapack.dimensions.aether.assets.PalmTreeSpawner;
 import org.bukkit.Material;

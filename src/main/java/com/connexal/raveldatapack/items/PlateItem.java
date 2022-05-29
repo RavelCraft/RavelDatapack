@@ -27,7 +27,7 @@ public class PlateItem extends CustomItem {
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape(" P ","PPP", " P ");
+        recipe.shape(" P ", "PPP", " P ");
         RecipeChoice planks = new RecipeChoice.MaterialChoice(Material.OAK_PLANKS, Material.SPRUCE_PLANKS, Material.BIRCH_PLANKS, Material.JUNGLE_PLANKS, Material.ACACIA_PLANKS, Material.DARK_OAK_PLANKS, Material.CRIMSON_PLANKS, Material.WARPED_PLANKS);
         recipe.setIngredient('P', planks);
         instance.getServer().addRecipe(recipe);

@@ -34,7 +34,7 @@ public class FireballItem extends CustomItem implements Listener {
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape("FF","FF");
+        recipe.shape("FF", "FF");
         recipe.setIngredient('F', Material.FIRE_CHARGE);
         instance.getServer().addRecipe(recipe);
 

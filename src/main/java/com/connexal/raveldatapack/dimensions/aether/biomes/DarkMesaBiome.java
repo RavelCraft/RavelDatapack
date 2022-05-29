@@ -9,8 +9,8 @@ import org.bukkit.generator.LimitedRegion;
 import java.util.*;
 
 public class DarkMesaBiome extends AetherBiome {
-    private List<Material> layerList = new ArrayList<>();
-    private Map<Integer, Material> layerMap = new HashMap<>();
+    private final List<Material> layerList = new ArrayList<>();
+    private final Map<Integer, Material> layerMap = new HashMap<>();
 
     public DarkMesaBiome() {
         layerList.add(Material.BLACK_TERRACOTTA);
@@ -35,6 +35,7 @@ public class DarkMesaBiome extends AetherBiome {
     private Material getLayerMaterial(int y) {
         return layerMap.getOrDefault(y, Material.BLACK_TERRACOTTA);
     }
+
     @Override
     public Biome getBiome() {
         return Biome.ERODED_BADLANDS;

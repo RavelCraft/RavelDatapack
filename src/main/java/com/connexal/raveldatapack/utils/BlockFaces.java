@@ -13,7 +13,7 @@ public enum BlockFaces {
     NORTH_WEST(BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, false);
 
     private BlockFace face = null;
-    private BlockFace opposite;
+    private final BlockFace opposite;
     private boolean simple = false;
 
     BlockFaces(BlockFace face, BlockFace opposite, boolean simple) {

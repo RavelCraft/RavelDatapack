@@ -16,13 +16,17 @@ import java.util.Random;
 
 public abstract class CustomDimension {
     public abstract Material getPortalFrameMaterial();
+
     public abstract String getName();
+
     public abstract World.Environment getEnvironment();
 
     public abstract Location dimensionToNormal(Location location);
+
     public abstract Location normalToDimension(Location location);
 
     protected abstract BiomeProvider getBiomeProvider();
+
     protected abstract ChunkGenerator getChunkGenerator();
 
     public World createWorld() {

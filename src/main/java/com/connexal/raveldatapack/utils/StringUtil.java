@@ -11,6 +11,7 @@ public class StringUtil {
 
     /**
      * Convert a number to a Roman numeral
+     *
      * @param number The number to convert
      * @return The Roman numeral
      */

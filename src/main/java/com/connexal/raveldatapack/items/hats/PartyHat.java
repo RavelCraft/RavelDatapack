@@ -29,7 +29,7 @@ public class PartyHat extends CustomItem {
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape("   "," R ", "WRW");
+        recipe.shape("   ", " R ", "WRW");
         recipe.setIngredient('R', Material.RED_WOOL);
         recipe.setIngredient('W', Material.WHITE_WOOL);
         this.instance.getServer().addRecipe(recipe);
