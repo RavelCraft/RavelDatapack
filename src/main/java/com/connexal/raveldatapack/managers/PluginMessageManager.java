@@ -6,6 +6,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -24,7 +25,7 @@ public class PluginMessageManager implements PluginMessageListener {
     }
 
     @Override
-    public void onPluginMessageReceived(String channel, Player player, byte[] bytes) {
+    public void onPluginMessageReceived(String channel, @NotNull Player player, byte[] bytes) {
         //EasyCraft.getLog().info("Plugin Message Received " + channel);
 
         if (channel.equalsIgnoreCase(CHANNEL_ID)) {

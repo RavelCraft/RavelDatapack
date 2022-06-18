@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,7 +33,7 @@ public class StormbreakerItem extends CustomItem implements Listener {
 
         this.setItemLore(meta, "Thor's weapon", "- Summon lightning", "- Very strong");
 
-        meta.setDisplayName(ChatColor.RED.toString() + ChatColor.BOLD + "Stormbreaker");
+        meta.displayName(Component.text(ChatColor.RED.toString() + ChatColor.BOLD + "Stormbreaker"));
         meta.addEnchant(Enchantment.DURABILITY, 1, false);
         this.setAttackDamage(meta, 60, EquipmentSlot.HAND);
         meta.setCustomModelData(customModelData);

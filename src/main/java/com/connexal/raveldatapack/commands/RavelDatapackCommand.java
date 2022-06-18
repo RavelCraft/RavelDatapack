@@ -5,6 +5,7 @@ import com.connexal.raveldatapack.enchantments.CustomEnchantment;
 import com.connexal.raveldatapack.items.CustomItem;
 import com.connexal.raveldatapack.maps.CustomMapRenderer;
 import com.connexal.raveldatapack.pack.TexturePack;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -15,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapView;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 0) {
             sendHelp(sender, sender.isOp());
             return true;
@@ -40,8 +42,7 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
 
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
+            if (sender instanceof Player player) {
                 if (TexturePack.sendTexturePackToPlayer(player)) {
                     sender.sendMessage("Texture pack sent.");
                 } else {
@@ -62,8 +63,7 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
 
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
+            if (sender instanceof Player player) {
                 if (!player.isOp()) {
                     sender.sendMessage("You must be an op to do this.");
                     return true;
@@ -77,12 +77,11 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("Failed!");
             }
         } else if (args[0].equalsIgnoreCase("allitems")) {
-            if (!(sender instanceof Player)) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage("You must be a player to do this.");
                 return true;
             }
 
-            Player player = (Player) sender;
             if (!player.isOp()) {
                 sender.sendMessage("You must be an op to do this.");
                 return true;
@@ -100,12 +99,11 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
 
             sender.sendMessage(ChatColor.AQUA + "You were given all the items.");
         } else if (args[0].equalsIgnoreCase("map")) {
-            if (!(sender instanceof Player)) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage("You must be a player to do this.");
                 return true;
             }
 
-            Player player = (Player) sender;
             if (!player.isOp()) {
                 sender.sendMessage("You must be an op to do this.");
                 return true;
@@ -129,9 +127,9 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
             ItemStack map = new ItemStack(Material.FILLED_MAP);
             MapMeta meta = (MapMeta) map.getItemMeta();
             if (args.length == 3) {
-                meta.setDisplayName(ChatColor.AQUA + args[2]);
+                meta.displayName(Component.text(ChatColor.AQUA + args[2]));
             } else {
-                meta.setDisplayName(ChatColor.AQUA + "Custom Map");
+                meta.displayName(Component.text(ChatColor.AQUA + "Custom Map"));
             }
             meta.setMapView(view);
             map.setItemMeta(meta);
@@ -164,7 +162,7 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         List<String> cmd = new ArrayList<>();
         if (args.length == 1) {
             if (RavelDatapack.shouldResourcePack()) {

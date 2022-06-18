@@ -86,6 +86,8 @@ public final class RavelDatapack extends JavaPlugin {
         log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
         this.getServer().getScheduler().cancelTasks(this);
 
+        pluginMessageManager.unregister();
+
         int num = 0;
         for (CustomItem item : itemManager.getItems().values()) {
             this.getServer().removeRecipe(NamespacedKey.minecraft(item.getNamespaceKey()));

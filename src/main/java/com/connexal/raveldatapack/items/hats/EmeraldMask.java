@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.items.hats;
 
 import com.connexal.raveldatapack.items.CustomItem;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -23,7 +24,7 @@ public class EmeraldMask extends CustomItem {
 
         this.setItemLore(meta, "You got that drip");
 
-        meta.setDisplayName(ChatColor.AQUA.toString() + ChatColor.BOLD + "Emerald Mask");
+        meta.displayName(Component.text(ChatColor.AQUA.toString() + ChatColor.BOLD + "Emerald Mask"));
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);

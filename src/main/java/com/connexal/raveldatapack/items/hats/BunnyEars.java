@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.items.hats;
 
 import com.connexal.raveldatapack.items.CustomItem;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -23,7 +24,7 @@ public class BunnyEars extends CustomItem {
 
         this.setItemLore(meta, "Become a bunny");
 
-        meta.setDisplayName(ChatColor.AQUA.toString() + ChatColor.BOLD + "Bunny Ears");
+        meta.displayName(Component.text(ChatColor.AQUA.toString() + ChatColor.BOLD + "Bunny Ears"));
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);

@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.items;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -30,7 +31,7 @@ public class ThunderHammerItem extends CustomItem implements Listener {
 
         this.setItemLore(meta, "Show off", "- Slow but strong", "- Knockback 5");
 
-        meta.setDisplayName(ChatColor.RED.toString() + ChatColor.BOLD + "Thunder Hammer");
+        meta.displayName(Component.text(ChatColor.RED.toString() + ChatColor.BOLD + "Thunder Hammer"));
         meta.addEnchant(Enchantment.KNOCKBACK, 5, true);
         this.setAttackDamage(meta, 35, EquipmentSlot.HAND);
         this.setAttackSpeed(meta, 1, EquipmentSlot.HAND);
@@ -49,8 +50,7 @@ public class ThunderHammerItem extends CustomItem implements Listener {
 
     @EventHandler
     public void handleEvent(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player player = (Player) event.getDamager();
+        if (event.getDamager() instanceof Player player) {
             ItemStack item = player.getInventory().getItemInMainHand();
 
             if (item.getItemMeta() == null) {

@@ -1,6 +1,5 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
-import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.dimensions.aether.AetherConstants;
 import org.bukkit.Location;
 import org.bukkit.Material;

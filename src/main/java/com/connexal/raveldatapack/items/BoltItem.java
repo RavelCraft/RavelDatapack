@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -22,7 +23,7 @@ public class BoltItem extends CustomItem {
 
         this.setItemLore(meta, "Amo for the Bolter");
 
-        meta.setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt");
+        meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt"));
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);

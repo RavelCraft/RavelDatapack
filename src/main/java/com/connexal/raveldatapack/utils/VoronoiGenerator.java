@@ -15,27 +15,20 @@ public class VoronoiGenerator {
     }
 
     private double getDistance(double xDist, double zDist) {
-        switch (distanceMethod) {
-            case 0:
-                return Math.sqrt(xDist * xDist + zDist * zDist) / SQRT_2;
-            case 1:
-                return xDist + zDist;
-            case 2:
-                return Math.pow(Math.E, Math.sqrt(xDist * xDist + zDist * zDist) / SQRT_2) / Math.E;
-            default:
-                return 1.0;
-        }
+        return switch (distanceMethod) {
+            case 0 -> Math.sqrt(xDist * xDist + zDist * zDist) / SQRT_2;
+            case 1 -> xDist + zDist;
+            case 2 -> Math.pow(Math.E, Math.sqrt(xDist * xDist + zDist * zDist) / SQRT_2) / Math.E;
+            default -> 1.0;
+        };
     }
 
     private double getDistance(double xDist, double yDist, double zDist) {
-        switch (distanceMethod) {
-            case 0:
-                return Math.sqrt(xDist * xDist + yDist * yDist + zDist * zDist) / SQRT_3;
-            case 1:
-                return xDist + yDist + zDist;
-            default:
-                return 1.0;
-        }
+        return switch (distanceMethod) {
+            case 0 -> Math.sqrt(xDist * xDist + yDist * yDist + zDist * zDist) / SQRT_3;
+            case 1 -> xDist + yDist + zDist;
+            default -> 1.0;
+        };
     }
 
     public short getDistanceMethod() {
@@ -136,13 +129,13 @@ public class VoronoiGenerator {
     }
 
     public static double valueNoise2D(int x, int z, long seed) {
-        long n = (1619 * x + 6971 * z + 1013 * seed) & 0x7fffffff;
+        long n = (1619L * x + 6971L * z + 1013 * seed) & 0x7fffffff;
         n = (n >> 13) ^ n;
         return 1.0 - ((double) ((n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff) / 1073741824.0);
     }
 
     public static double valueNoise3D(int x, int y, int z, long seed) {
-        long n = (1619 * x + 31337 * y + 6971 * z + 1013 * seed) & 0x7fffffff;
+        long n = (1619L * x + 31337L * y + 6971L * z + 1013 * seed) & 0x7fffffff;
         n = (n >> 13) ^ n;
         return 1.0 - ((double) ((n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff) / 1073741824.0);
     }

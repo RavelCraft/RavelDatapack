@@ -12,7 +12,6 @@ import java.util.Random;
 
 public class AlexChunkGenerator extends CustomDimension.CustomChunkGenerator {
     private SimplexOctaveGenerator generator = null;
-    private int currentHeight;
 
     public AlexChunkGenerator(AlexBiomeProvider biomeProvider) {
         super(biomeProvider, new AlexNaturePopulator(), new AlexOrePopulator());
@@ -36,7 +35,7 @@ public class AlexChunkGenerator extends CustomDimension.CustomChunkGenerator {
             for (int z = 0; z < 16; z++) {
                 int localX = worldX + x;
                 int localZ = worldZ + z;
-                currentHeight = (int) ((generator.noise(localX, localZ, AlexConstants.FREQUENCY, AlexConstants.AMPLITUDE, true) + 1) * AlexConstants.HEIGHT);
+                int currentHeight = (int) ((generator.noise(localX, localZ, AlexConstants.FREQUENCY, AlexConstants.AMPLITUDE, true) + 1) * AlexConstants.HEIGHT);
 
                 chunkData.setBlock(x, currentHeight, z, AlexConstants.COVER_MATERIAL);
                 for (int y = 1; y < AlexConstants.COVER_HEIGHT; y++) {

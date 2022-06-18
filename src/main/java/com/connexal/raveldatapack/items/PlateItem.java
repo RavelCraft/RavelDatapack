@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -21,7 +22,7 @@ public class PlateItem extends CustomItem {
 
         ItemMeta meta = this.createItemMeta();
 
-        meta.setDisplayName(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Plate");
+        meta.displayName(Component.text(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Plate"));
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);

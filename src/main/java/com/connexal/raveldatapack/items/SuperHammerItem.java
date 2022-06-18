@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.items;
 
 import com.connexal.raveldatapack.utils.BlockUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,7 +37,7 @@ public class SuperHammerItem extends CustomItem implements Listener {
 
         this.setItemLore(meta, "Break a 3x3x3 area of blocks");
 
-        meta.setDisplayName(ChatColor.RED.toString() + ChatColor.BOLD + "Super Hammer");
+        meta.displayName(Component.text(ChatColor.RED.toString() + ChatColor.BOLD + "Super Hammer"));
         meta.addEnchant(Enchantment.KNOCKBACK, 2, true);
         this.setAttackDamage(meta, 5, EquipmentSlot.HAND);
         this.setAttackSpeed(meta, 1, EquipmentSlot.HAND);

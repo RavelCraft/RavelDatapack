@@ -42,7 +42,15 @@ public abstract class CustomDimension {
     }
 
     public abstract static class CustomChunkPopulator extends BlockPopulator {
-        public abstract void setBiomeProvider(BiomeProvider biomeProvider);
+        private BiomeProvider biomeProvider;
+
+        protected BiomeProvider getBiomeProvider() {
+            return biomeProvider;
+        }
+
+        public void setBiomeProvider(BiomeProvider biomeProvider) {
+            this.biomeProvider = biomeProvider;
+        }
 
         public abstract void populate(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull LimitedRegion limitedRegion);
     }

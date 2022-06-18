@@ -99,7 +99,7 @@ public class ItemManager {
     }
 
     /**
-     * Get the {@link ItemStack} of a {@link CustomItem} by it's custom model data
+     * Get the {@link ItemStack} of a {@link CustomItem} by its custom model data
      *
      * @param customModelData Custom model data of the {@link CustomItem}
      * @return The {@link ItemStack}
@@ -115,7 +115,7 @@ public class ItemManager {
     }
 
     /**
-     * Get the {@link CustomItem} by its namespace key by it's custom model data
+     * Get the {@link CustomItem} by its namespace key by its custom model data
      *
      * @param customModelData Custom model data of the {@link CustomItem}
      * @return The namespace key

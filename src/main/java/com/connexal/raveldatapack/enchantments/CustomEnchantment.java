@@ -24,7 +24,7 @@ public abstract class CustomEnchantment extends Enchantment {
     protected final RavelDatapack instance;
     protected Enchantment enchantment;
 
-    protected List<Enchantment> conflictingEnchants = new ArrayList<>();
+    protected final List<Enchantment> conflictingEnchants = new ArrayList<>();
 
     public CustomEnchantment(String namespace, String name) {
         super(NamespacedKey.minecraft(namespace));
@@ -97,11 +97,6 @@ public abstract class CustomEnchantment extends Enchantment {
     public abstract boolean canEnchantItemInternal(ItemStack item);
 
     public abstract int getAnvilMergeCost(int level);
-
-    @Override
-    public @NotNull NamespacedKey getKey() {
-        return super.getKey();
-    }
 
     @Override
     public int getStartLevel() {

@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -30,7 +31,7 @@ public class PowerSwordItem extends CustomItem implements Listener {
 
         this.setItemLore(meta, "The sword of the gods", "- Summons lighting", "- Gives blindness");
 
-        meta.setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Power Sword");
+        meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Power Sword"));
         this.setAttackDamage(meta, 18, EquipmentSlot.HAND);
         meta.addEnchant(Enchantment.SWEEPING_EDGE, 1, false);
         meta.setCustomModelData(customModelData);
@@ -48,8 +49,7 @@ public class PowerSwordItem extends CustomItem implements Listener {
 
     @EventHandler
     public void handleEvent(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player player = (Player) event.getDamager();
+        if (event.getDamager() instanceof Player player) {
             ItemStack item = player.getInventory().getItemInMainHand();
 
             if (item.getItemMeta() == null) {
@@ -61,8 +61,7 @@ public class PowerSwordItem extends CustomItem implements Listener {
 
             if (item.getItemMeta().getCustomModelData() == this.getCustomModelData()) {
                 player.getWorld().strikeLightning(event.getEntity().getLocation());
-                if (event.getEntity() instanceof Player) {
-                    Player target = (Player) event.getEntity();
+                if (event.getEntity() instanceof Player target) {
                     target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 3 * 20, 255, false, false));
                 }
             }

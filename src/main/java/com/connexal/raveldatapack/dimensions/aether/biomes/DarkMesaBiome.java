@@ -9,10 +9,10 @@ import org.bukkit.generator.LimitedRegion;
 import java.util.*;
 
 public class DarkMesaBiome extends AetherBiome {
-    private final List<Material> layerList = new ArrayList<>();
     private final Map<Integer, Material> layerMap = new HashMap<>();
 
     public DarkMesaBiome() {
+        List<Material> layerList = new ArrayList<>();
         layerList.add(Material.BLACK_TERRACOTTA);
         layerList.add(Material.BLACK_TERRACOTTA);
         layerList.add(Material.YELLOW_TERRACOTTA);

@@ -12,9 +12,9 @@ public enum BlockFaces {
     WEST(BlockFace.WEST, BlockFace.EAST, true),
     NORTH_WEST(BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, false);
 
-    private BlockFace face = null;
+    private final BlockFace face;
     private final BlockFace opposite;
-    private boolean simple = false;
+    private final boolean simple;
 
     BlockFaces(BlockFace face, BlockFace opposite, boolean simple) {
         this.face = face;

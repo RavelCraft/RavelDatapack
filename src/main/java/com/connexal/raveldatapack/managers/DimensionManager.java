@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DimensionManager {
-    Map<String, CustomDimension> dimensions = new HashMap<>();
+    private final Map<String, CustomDimension> dimensions = new HashMap<>();
 
     public int init() {
         this.registerDimension(new AlexDimension());

@@ -5,7 +5,6 @@ import com.connexal.raveldatapack.utils.BlockFaces;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
@@ -13,13 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 
 public class AetherOrePopulator extends CustomDimension.CustomChunkPopulator {
-    private BiomeProvider biomeProvider;
-
-    @Override
-    public void setBiomeProvider(BiomeProvider biomeProvider) {
-        this.biomeProvider = biomeProvider;
-    }
-
     @Override
     public void populate(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull LimitedRegion limitedRegion) {
         for (int i = 0; i < 20; i++) {

@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.items;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -17,7 +18,7 @@ public abstract class CustomItem {
     protected ItemStack itemStack;
     protected Integer customModelData;
     protected String namespaceKey;
-    protected RavelDatapack instance = RavelDatapack.getInstance();
+    protected final RavelDatapack instance = RavelDatapack.getInstance();
 
     /**
      * Create the {@link ItemStack}
@@ -119,15 +120,15 @@ public abstract class CustomItem {
      * @param lore       The lore
      */
     public void setItemLore(ItemMeta meta, boolean addSpacing, String... lore) {
-        List<String> lore_array = new ArrayList<>();
+        List<Component> loreList = new ArrayList<>();
         if (addSpacing) {
-            lore_array.add("");
+            loreList.add(Component.text(""));
         }
 
         for (String line : lore) {
-            lore_array.add(ChatColor.WHITE + line);
+            loreList.add(Component.text(ChatColor.WHITE + line));
         }
-        meta.setLore(lore_array);
+        meta.lore(loreList);
     }
 
     /**

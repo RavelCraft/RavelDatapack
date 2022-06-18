@@ -89,7 +89,12 @@ public class TexturePack {
         if (zip.exists()) {
             try {
                 String name = RavelDatapack.getInstance().getConfig().getString("pathToExportZip");
-                Files.move(Paths.get(RavelDatapack.getInstance().getDataFolder() + "/pack.zip"), Paths.get(name), StandardCopyOption.REPLACE_EXISTING);
+                if (name != null) {
+                    Files.move(Paths.get(RavelDatapack.getInstance().getDataFolder() + "/pack.zip"), Paths.get(name), StandardCopyOption.REPLACE_EXISTING);
+                } else {
+                    RavelDatapack.getLog().severe(String.format("[%s] You need to set an export path for the file.", RavelDatapack.getInstance().getDescription().getName()));
+                    Files.delete(Paths.get(RavelDatapack.getInstance().getDataFolder() + "/pack.zip"));
+                }
                 exported = true;
             } catch (IOException e) {
                 exception = e;
@@ -117,27 +122,13 @@ public class TexturePack {
     private static void copyOutOfJarIfNotExists(String path, String outpath) {
         File file = new File(RavelDatapack.getInstance().getDataFolder(), outpath);
         if (!file.exists()) {
-            InputStream in = RavelDatapack.getInstance().getResource(path);
-            FileOutputStream out = null;
-            try {
-                out = new FileOutputStream(file);
-
+            try (InputStream in = RavelDatapack.getInstance().getResource(path); FileOutputStream out = new FileOutputStream(file)) {
                 byte[] buf = new byte[1024];
-                int i = 0;
+                int i;
                 while ((i = in.read(buf)) != -1) {
                     out.write(buf, 0, i);
                 }
             } catch (Exception ignored) {
-            } finally {
-                try {
-                    if (in != null) {
-                        in.close();
-                    }
-                    if (out != null) {
-                        out.close();
-                    }
-                } catch (Exception ignored) {
-                }
             }
         }
     }
@@ -147,17 +138,22 @@ public class TexturePack {
         final String newOutpath = RavelDatapack.getInstance().getDataFolder() + "/" + outpath;
 
         File file = new File(newPath);
+        Path of = Path.of(newPath);
         if (file.isDirectory()) {
-            Files.walk(Paths.get(newPath)).forEach(source -> {
-                Path destination = Paths.get(newOutpath, source.toString().substring(newPath.length()));
-                try {
-                    Files.copy(source, destination);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            try {
+                Files.walk(of).forEach(source -> {
+                    Path destination = Paths.get(newOutpath, source.toString().substring(newPath.length()));
+                    try {
+                        Files.copy(source, destination);
+                    } catch (IOException e) {
+                        RavelDatapack.getLog().severe(e.getMessage());
+                    }
+                });
+            } catch (IOException e) {
+                RavelDatapack.getLog().severe(e.getMessage());
+            }
         } else {
-            Files.copy(Paths.get(newPath), Paths.get(newOutpath), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(of, Paths.get(newOutpath), StandardCopyOption.REPLACE_EXISTING);
         }
     }
 

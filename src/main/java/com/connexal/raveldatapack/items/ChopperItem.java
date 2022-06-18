@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.items;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -30,7 +31,7 @@ public class ChopperItem extends CustomItem implements Listener {
 
         this.setItemLore(meta, "Slice up your enemies");
 
-        meta.setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Chopper");
+        meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Chopper"));
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier("generic.attackDamage", 8, AttributeModifier.Operation.ADD_NUMBER));
         meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier("generic.movementSpeed", 1.3, AttributeModifier.Operation.MULTIPLY_SCALAR_1));
         meta.setCustomModelData(customModelData);
@@ -48,8 +49,7 @@ public class ChopperItem extends CustomItem implements Listener {
 
     @EventHandler
     public void handleEvent(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player player = (Player) event.getDamager();
+        if (event.getDamager() instanceof Player player) {
             ItemStack item = player.getInventory().getItemInMainHand();
 
             if (item.getItemMeta() == null) {

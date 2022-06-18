@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.items;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
@@ -28,7 +29,7 @@ public class FireballItem extends CustomItem implements Listener {
 
         this.setItemLore(meta, "Right click to shoot");
 
-        meta.setDisplayName(ChatColor.RESET.toString() + ChatColor.WHITE + "Fireball");
+        meta.displayName(Component.text(ChatColor.RESET.toString() + ChatColor.WHITE + "Fireball"));
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);

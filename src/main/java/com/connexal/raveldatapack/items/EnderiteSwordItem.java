@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.items;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -23,7 +24,7 @@ public class EnderiteSwordItem extends CustomItem {
 
         ItemMeta meta = this.createItemMeta(false, false);
 
-        meta.setDisplayName(ChatColor.RESET.toString() + ChatColor.WHITE + "Enderite Sword");
+        meta.displayName(Component.text(ChatColor.RESET.toString() + ChatColor.WHITE + "Enderite Sword"));
         this.setAttackDamage(meta, 10, EquipmentSlot.HAND);
         this.setAttackSpeed(meta, 1.6, EquipmentSlot.HAND);
         meta.setCustomModelData(customModelData);

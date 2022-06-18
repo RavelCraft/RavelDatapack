@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -20,7 +21,7 @@ public class EnderiteIngotItem extends CustomItem {
 
         ItemMeta meta = this.createItemMeta(false, false);
 
-        meta.setDisplayName(ChatColor.RESET.toString() + ChatColor.WHITE + "Enderite Ingot");
+        meta.displayName(Component.text(ChatColor.RESET.toString() + ChatColor.WHITE + "Enderite Ingot"));
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);

@@ -4,7 +4,6 @@ import com.connexal.raveldatapack.dimensions.CustomDimension;
 import com.connexal.raveldatapack.dimensions.aether.AetherConstants;
 import com.connexal.raveldatapack.dimensions.aether.biomes.AetherBiome;
 import org.bukkit.block.Biome;
-import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
@@ -12,13 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 
 public class AetherNaturePopulator extends CustomDimension.CustomChunkPopulator {
-    private BiomeProvider biomeProvider;
-
-    @Override
-    public void setBiomeProvider(BiomeProvider biomeProvider) {
-        this.biomeProvider = biomeProvider;
-    }
-
     @Override
     public void populate(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull LimitedRegion limitedRegion) {
         int amount = random.nextInt(AetherConstants.TREE_DENSITY) + 1;
@@ -43,7 +35,7 @@ public class AetherNaturePopulator extends CustomDimension.CustomChunkPopulator 
         int y = worldInfo.getMaxHeight();
         int z = random.nextInt(16) + (chunkZ * 16);
 
-        Biome biome = this.biomeProvider.getBiome(worldInfo, x, 0, z);
+        Biome biome = this.getBiomeProvider().getBiome(worldInfo, x, 0, z);
 
         while (y > worldInfo.getMinHeight() + 1) {
             y -= 1;

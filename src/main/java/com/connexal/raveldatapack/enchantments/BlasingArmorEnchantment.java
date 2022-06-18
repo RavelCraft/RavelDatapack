@@ -23,8 +23,7 @@ public class BlasingArmorEnchantment extends CustomEnchantment implements Listen
 
     @EventHandler
     public void onPlayerDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
+        if (event.getEntity() instanceof Player player) {
             ItemStack item1 = player.getInventory().getBoots();
             ItemStack item2 = player.getInventory().getLeggings();
             ItemStack item3 = player.getInventory().getChestplate();

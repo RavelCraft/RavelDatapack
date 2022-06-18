@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtil {
-    public static final Pattern HEX_PATTERN = Pattern.compile("#([A-Fa-f0-9]{6})");
+    public static final Pattern HEX_PATTERN = Pattern.compile("#([A-Fa-f\b]{6})");
 
     /**
      * Convert a number to a Roman numeral
@@ -59,7 +59,7 @@ public class StringUtil {
             } else if (number >= 4) {
                 roman.append("IV");
                 number -= 4;
-            } else if (number >= 1) {
+            } else {
                 roman.append("I");
                 number -= 1;
             }

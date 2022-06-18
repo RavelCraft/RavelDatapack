@@ -2,6 +2,7 @@ package com.connexal.raveldatapack.items;
 
 import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.utils.AmoUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -31,7 +32,7 @@ public class BolterItem extends CustomItem implements Listener {
 
         this.setItemLore(meta, "Shoots fireballs");
 
-        meta.setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolter");
+        meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolter"));
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier("generic.attackDamage", 20, AttributeModifier.Operation.ADD_NUMBER));
         meta.setCustomModelData(customModelData);
 
