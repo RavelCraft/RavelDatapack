@@ -5,8 +5,10 @@ import com.connexal.raveldatapack.enchantments.CustomEnchantment;
 import com.connexal.raveldatapack.items.CustomItem;
 import com.connexal.raveldatapack.maps.CustomMapRenderer;
 import com.connexal.raveldatapack.pack.TexturePack;
+import com.connexal.raveldatapack.utils.schematics.Schematics;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,6 +20,9 @@ import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapView;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,6 +143,66 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
             RavelDatapack.getMapManager().saveImage(view.getId(), args[1]);
 
             sender.sendMessage(ChatColor.AQUA + "You were given the map.");
+        } else if (args[0].equalsIgnoreCase("schematic")) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage("You must be a player to do this.");
+                return true;
+            }
+
+            if (!player.isOp()) {
+                sender.sendMessage("You must be an op to do this.");
+                return true;
+            }
+
+            if (args.length != 8) {
+                sender.sendMessage("Usage: /raveldatapack schematic <x1> <y1> <z1> <x2> <y2> <z2> <filename>");
+                return true;
+            }
+
+            File outFile = new File(RavelDatapack.getInstance().getDataFolder(), "schematics/" + args[7] + ".ravelschem");
+            if (outFile.exists()) {
+                sender.sendMessage(ChatColor.RED + "File already exists.");
+                return true;
+            }
+
+            try {
+                outFile.getParentFile().mkdirs();
+                outFile.createNewFile();
+            } catch (IOException e) {
+                sender.sendMessage(ChatColor.RED + "Failed to create file.");
+                return true;
+            }
+
+            int x1;
+            int y1;
+            int z1;
+
+            int x2;
+            int y2;
+            int z2;
+
+            try {
+                x1 = Integer.parseInt(args[1]);
+                y1 = Integer.parseInt(args[2]);
+                z1 = Integer.parseInt(args[3]);
+
+                x2 = Integer.parseInt(args[4]);
+                y2 = Integer.parseInt(args[5]);
+                z2 = Integer.parseInt(args[6]);
+            } catch (NumberFormatException e) {
+                sender.sendMessage("Usage: /raveldatapack schematic <x1> <y1> <z1> <x2> <y2> <z2> <filename>");
+                return true;
+            }
+
+            Location start = new Location(player.getWorld(), x1, y1, z1);
+            Location end = new Location(player.getWorld(), x2, y2, z2);
+
+            boolean done = Schematics.createSchematic(start, end, outFile);
+            if (done) {
+                sender.sendMessage(ChatColor.AQUA + "Schematic created.");
+            } else {
+                sender.sendMessage(ChatColor.RED + "Failed to create schematic.");
+            }
         } else {
             sendHelp(sender, sender.isOp());
         }
@@ -156,6 +221,7 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
         if (isOp) {
             sendgen += "\n - allitems";
             sendgen += "\n - map <url>";
+            sendgen += "\n - schematic <x1> <y1> <z1> <x2> <y2> <z2> <filename>";
         }
 
         sender.sendMessage("The correct usage is:" + sendgen);
@@ -175,6 +241,7 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
             if (sender.isOp()) {
                 cmd.add("allitems");
                 cmd.add("map");
+                cmd.add("schematic");
             }
         }
         return cmd;

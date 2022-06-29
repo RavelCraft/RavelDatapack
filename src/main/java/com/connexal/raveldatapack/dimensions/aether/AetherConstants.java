@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Snowable;
 import org.bukkit.block.data.Waterlogged;
+import org.bukkit.block.data.type.Bamboo;
 import org.bukkit.block.data.type.Leaves;
 
 public class AetherConstants {
@@ -22,6 +23,7 @@ public class AetherConstants {
     public static final BlockData DEAD_FIRE_CORAL_BLOCK_DATA;
     public static final BlockData SNOWY_GRASS_BLOCK_DATA;
     public static final BlockData JUNGLE_LEAVES_BLOCK_DATA;
+    public static final BlockData BAMBOO_LEAVES_BLOCK_DATA;
 
     static {
         DEAD_FIRE_CORAL_BLOCK_DATA = Material.DEAD_FIRE_CORAL.createBlockData();
@@ -32,5 +34,8 @@ public class AetherConstants {
 
         JUNGLE_LEAVES_BLOCK_DATA = Material.JUNGLE_LEAVES.createBlockData();
         ((Leaves) JUNGLE_LEAVES_BLOCK_DATA).setPersistent(true);
+
+        BAMBOO_LEAVES_BLOCK_DATA = Material.BAMBOO.createBlockData();
+        ((Bamboo) BAMBOO_LEAVES_BLOCK_DATA).setLeaves(Bamboo.Leaves.LARGE);
     }
 }

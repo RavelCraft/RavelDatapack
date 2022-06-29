@@ -1,8 +1,11 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.utils.schematics.Schematic;
+import com.connexal.raveldatapack.utils.schematics.Schematics;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
 
@@ -12,6 +15,7 @@ import java.util.Random;
 
 public abstract class AetherBiome {
     private static final Map<Biome, AetherBiome> biomeMap = new HashMap<>();
+    private static final Map<String, Schematic> schematicCache = new HashMap<>();
 
     public static void registerBiome(AetherBiome biome) {
         if (biomeMap.containsKey(biome.getBiome())) {
@@ -104,5 +108,40 @@ public abstract class AetherBiome {
         }
 
         return null;
+    }
+
+    public void pasteSchematic(LimitedRegion limitedRegion, int placeX, int placeY, int placeZ, int rotX, int rotY, int rotZ, String schematicName) {
+        Schematic schematic;
+        if (schematicCache.containsKey(schematicName)) {
+            schematic = schematicCache.get(schematicName);
+        } else {
+            schematic = Schematics.loadSchematic(schematicName);
+            schematicCache.put(schematicName, schematic);
+        }
+        if (schematic == null) {
+            RavelDatapack.getLog().warning("Could not load schematic " + schematicName);
+            return;
+        }
+
+        BlockData[] blocks = schematic.getBlocks();
+        int width = schematic.getWidth();
+        int height = schematic.getHeight();
+        int depth = schematic.getDepth();
+
+        int index = 0;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                for (int z = 0; z < depth; z++) {
+                    if (blocks[index].getMaterial() != Material.AIR) {
+                        limitedRegion.setBlockData(placeX + x, placeY + y, placeZ + z, blocks[index]);
+                    }
+                    index++;
+                }
+            }
+        }
+    }
+
+    public void pasteSchematic(LimitedRegion limitedRegion, int placeX, int placeY, int placeZ, String schematicName) {
+        this.pasteSchematic(limitedRegion, placeX, placeY, placeZ, 0, 0, 0, schematicName);
     }
 }

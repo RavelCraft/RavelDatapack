@@ -120,6 +120,13 @@ public class DimensionListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null) {
+            if (event.getItem() == null || event.getItem().getType() != Material.FLINT_AND_STEEL) {
+                return;
+            }
+            if (event.getBlockFace() != BlockFace.UP) {
+                return;
+            }
+
             Material portalMaterial = event.getClickedBlock().getType();
             CustomDimension dimension = RavelDatapack.getDimensionManager().getDimensionFromPortalMaterial(portalMaterial);
             if (dimension == null) {

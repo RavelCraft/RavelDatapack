@@ -6,6 +6,7 @@ import com.connexal.raveldatapack.listeners.DimensionListener;
 import com.connexal.raveldatapack.listeners.EnchantmentListener;
 import com.connexal.raveldatapack.managers.*;
 import com.connexal.raveldatapack.pack.TexturePack;
+import com.connexal.raveldatapack.utils.schematics.Schematics;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;

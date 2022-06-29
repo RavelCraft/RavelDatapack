@@ -1,6 +1,6 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
-import com.connexal.raveldatapack.dimensions.aether.assets.TowerSpawner;
+import com.connexal.raveldatapack.utils.schematics.Schematics;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
@@ -79,7 +79,5 @@ public class WastelandsBiome extends AetherBiome {
                 }
             }
         }
-
-        TowerSpawner.spawnTower(0, 0, 0, chunkData, random);
     }
 }

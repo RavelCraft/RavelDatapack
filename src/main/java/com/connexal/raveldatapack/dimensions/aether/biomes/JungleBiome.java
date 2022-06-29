@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
+import com.connexal.raveldatapack.dimensions.aether.AetherConstants;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
@@ -60,10 +61,19 @@ public class JungleBiome extends AetherBiome {
     public void spawnPlantInternal(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
         int randomPlant = random.nextInt(6);
         if (randomPlant <= 2) {
-            int tmpY = y + random.nextInt(5) + 4;
-            for (int i = y; i < tmpY; i++) {
+            int baseY = y + random.nextInt(2) + 4;
+            int topY = baseY + random.nextInt(2) + 1;
+
+            for (int i = y; i < baseY; i++) {
                 if (limitedRegion.getType(x, i, z) == Material.AIR || limitedRegion.getType(x, i, z) == Material.GRASS) {
                     limitedRegion.setType(x, i, z, Material.BAMBOO);
+                } else {
+                    break;
+                }
+            }
+            for (int i = baseY; i < topY; i++) {
+                if (limitedRegion.getType(x, i, z) == Material.AIR || limitedRegion.getType(x, i, z) == Material.GRASS) {
+                    limitedRegion.setBlockData(x, i, z, AetherConstants.BAMBOO_LEAVES_BLOCK_DATA);
                 } else {
                     break;
                 }
