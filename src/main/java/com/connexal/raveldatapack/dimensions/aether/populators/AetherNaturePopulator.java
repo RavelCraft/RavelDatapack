@@ -1,8 +1,10 @@
 package com.connexal.raveldatapack.dimensions.aether.populators;
 
-import com.connexal.raveldatapack.dimensions.CustomDimension;
+import com.connexal.raveldatapack.dimensions.CustomChunkPopulator;
 import com.connexal.raveldatapack.dimensions.aether.AetherConstants;
 import com.connexal.raveldatapack.dimensions.aether.biomes.AetherBiome;
+import org.bukkit.Location;
+import org.bukkit.TreeType;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -10,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class AetherNaturePopulator extends CustomDimension.CustomChunkPopulator {
+public class AetherNaturePopulator extends CustomChunkPopulator {
     @Override
     public void populate(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull LimitedRegion limitedRegion) {
         int amount = random.nextInt(AetherConstants.TREE_DENSITY) + 1;
@@ -39,7 +41,7 @@ public class AetherNaturePopulator extends CustomDimension.CustomChunkPopulator 
 
         while (y > worldInfo.getMinHeight() + 1) {
             y -= 1;
-            if (AetherBiome.isSurfaceMaterial(limitedRegion.getType(x, y, z), limitedRegion.getType(x, y - 1, z), biome)) {
+            if (AetherBiome.canReplaceMaterial(limitedRegion.getType(x, y, z), limitedRegion.getType(x, y - 1, z), biome)) {
                 return new LocationData(x, y, z, biome);
             }
         }

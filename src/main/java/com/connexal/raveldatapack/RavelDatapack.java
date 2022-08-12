@@ -1,12 +1,12 @@
 package com.connexal.raveldatapack;
 
 import com.connexal.raveldatapack.commands.RavelDatapackCommand;
+import com.connexal.raveldatapack.commands.RavelSchematicCommand;
 import com.connexal.raveldatapack.items.CustomItem;
 import com.connexal.raveldatapack.listeners.DimensionListener;
 import com.connexal.raveldatapack.listeners.EnchantmentListener;
 import com.connexal.raveldatapack.managers.*;
 import com.connexal.raveldatapack.pack.TexturePack;
-import com.connexal.raveldatapack.utils.schematics.Schematics;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
@@ -68,6 +68,7 @@ public final class RavelDatapack extends JavaPlugin {
 
         log.info(String.format("[%s] Adding commands", getDescription().getName()));
         this.getCommand("raveldatapack").setExecutor(new RavelDatapackCommand(this));
+        this.getCommand("ravelschematic").setExecutor(new RavelSchematicCommand());
 
         log.info(String.format("[%s] Initialising texture pack", getDescription().getName()));
         TexturePack.init();

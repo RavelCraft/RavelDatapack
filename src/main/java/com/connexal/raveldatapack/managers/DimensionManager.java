@@ -3,7 +3,6 @@ package com.connexal.raveldatapack.managers;
 import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.dimensions.CustomDimension;
 import com.connexal.raveldatapack.dimensions.aether.AetherDimension;
-import com.connexal.raveldatapack.dimensions.alex.AlexDimension;
 import org.bukkit.Material;
 
 import java.util.HashMap;
@@ -13,7 +12,6 @@ public class DimensionManager {
     private final Map<String, CustomDimension> dimensions = new HashMap<>();
 
     public int init() {
-        this.registerDimension(new AlexDimension());
         this.registerDimension(new AetherDimension());
 
         return dimensions.size();

@@ -1,34 +1,41 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
-import com.connexal.raveldatapack.utils.schematics.Schematics;
+import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.dimensions.aether.assets.OasisSpawner;
+import com.connexal.raveldatapack.utils.RavelMath;
+import com.connexal.raveldatapack.utils.schematics.Schematic;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.EntityType;
+import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
+import org.bukkit.generator.WorldInfo;
 
 import java.util.Random;
 
 public class WastelandsBiome extends AetherBiome {
     @Override
-    public Biome getBiome() {
+    public Biome getVanillaBiome() {
         return Biome.WOODED_BADLANDS;
     }
 
     @Override
-    public void drawStackInternal(ChunkGenerator.ChunkData chunkData, int x, int z, int minY, int maxY, Random random) {
+    public void generateStack(ChunkGenerator.ChunkData chunkData, int x, int z, int minY, int maxY, Random random) {
         int underCoverDepth = random.nextInt(3) + 3;
 
         for (int y = minY; y < maxY; y++) {
             if (y > maxY - underCoverDepth) {
                 chunkData.setBlock(x, y, z, random.nextBoolean() ? Material.GRAVEL : Material.COARSE_DIRT);
             } else {
-                chunkData.setBlock(x, y, z, AetherBiome.getRandomBaseMaterial(random));
+                chunkData.setBlock(x, y, z, AetherBiome.getRandomGroundMaterial(random));
             }
         }
     }
 
     @Override
-    public boolean isSurfaceMaterialInternal(Material replaceable, Material ground) {
+    public boolean canReplaceMaterial(Material replaceable, Material ground) {
         boolean replaceableOk = replaceable == Material.AIR ||
                 replaceable == Material.DEAD_BUSH ||
                 replaceable == Material.DEAD_FIRE_CORAL;
@@ -40,44 +47,27 @@ public class WastelandsBiome extends AetherBiome {
     }
 
     @Override
-    public void spawnTreeInternal(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
+    public void spawnTree(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
         //No trees
     }
 
     @Override
-    public void spawnPlantInternal(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
+    public void spawnPlant(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
         //No plants
     }
 
     @Override
-    public void spawnStructureInternal(ChunkGenerator.ChunkData chunkData, int chunkX, int chunkZ, Random random) {
-        if (random.nextBoolean()) {
-            int x = random.nextInt(16);
-            int z = random.nextInt(16);
-            Integer y = this.getSurfaceLevel(chunkData, x, z);
+    public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
+        if (random.nextInt(4) == 0) {
+            Schematic schematic = this.getSchematicFromCache("illusionerTower");
 
-            if (y != null) {
-                for (int i = 0; i < random.nextInt(3) + 2; i++) {
-                    chunkData.setBlock(x, y + i, z, Material.BONE_BLOCK);
-                }
+            Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, schematic.getWidth(), schematic.getDepth(), 1, this.getVanillaBiome());
+            if (location == null) {
+                return;
             }
 
-            int diffX = 0;
-            int diffZ = 0;
-            if (random.nextBoolean()) {
-                diffX = random.nextInt(3) + 2;
-            }
-            if (random.nextBoolean()) {
-                diffZ = random.nextInt(3) + 2;
-            }
-            if (diffX != 0 && diffZ != 0) {
-                Integer y2 = this.getSurfaceLevel(chunkData, x + diffX, z + diffZ);
-                if (y2 != null) {
-                    for (int i = 0; i < random.nextInt(3) + 2; i++) {
-                        chunkData.setBlock(x + diffX, y2 + i, z + diffZ, Material.BONE_BLOCK);
-                    }
-                }
-            }
+            schematic.pasteSchematic(limitedRegion, location.getBlockX(), location.getBlockY(), location.getBlockZ());
+            limitedRegion.spawnEntity(location, EntityType.ILLUSIONER);
         }
     }
 }

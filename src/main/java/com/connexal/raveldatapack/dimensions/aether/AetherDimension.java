@@ -9,8 +9,13 @@ import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 
 public class AetherDimension extends CustomDimension {
-    private final AetherBiomeProvider biomeProvider = new AetherBiomeProvider();
-    private final AetherChunkGenerator chunkGenerator = new AetherChunkGenerator(biomeProvider);
+    private final AetherBiomeProvider biomeProvider;
+    private final AetherChunkGenerator chunkGenerator;
+
+    public AetherDimension() {
+        this.biomeProvider = new AetherBiomeProvider();
+        this.chunkGenerator = new AetherChunkGenerator(this.biomeProvider);
+    }
 
     @Override
     public Material getPortalFrameMaterial() {

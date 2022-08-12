@@ -6,9 +6,16 @@ softdepend: [floodgate]
 
 commands:
   raveldatapack:
-    permission: raveldatapack.normal
+    permission: raveldatapack.raveldatapack
+    description: Ravel datapack command
+  ravelschematic:
+    permission: raveldatapack.ravelschematic
     description: Reload the resource pack
 
 permissions:
   raveldatapack.raveldatapack:
+    description: Allows the player to use the Ravel datapack command
     default: true
+  raveldatapack.ravelschematic:
+    description: Allows the player to use the Ravel schematic command
+    default: op

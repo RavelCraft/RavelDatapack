@@ -1,6 +1,6 @@
 package com.connexal.raveldatapack.dimensions.aether.populators;
 
-import com.connexal.raveldatapack.dimensions.CustomDimension;
+import com.connexal.raveldatapack.dimensions.CustomChunkPopulator;
 import com.connexal.raveldatapack.utils.BlockFaces;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class AetherOrePopulator extends CustomDimension.CustomChunkPopulator {
+public class AetherOrePopulator extends CustomChunkPopulator {
     @Override
     public void populate(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull LimitedRegion limitedRegion) {
         for (int i = 0; i < 20; i++) {

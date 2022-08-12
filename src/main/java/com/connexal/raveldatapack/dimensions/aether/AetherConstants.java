@@ -10,7 +10,7 @@ import org.bukkit.block.data.type.Leaves;
 public class AetherConstants {
     public static final double AMPLITUDE = 0.5;
     public static final double FREQUENCY = 0.9;
-    public static final double SACALE = 0.015D;
+    public static final double SACALE = 0.010D;
     public static final int START_DRAWING_HEIGHT = 5;
 
     public static final int ISLAND_HEIGHT = 15;

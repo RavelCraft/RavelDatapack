@@ -11,7 +11,7 @@ import org.bukkit.generator.LimitedRegion;
 import java.util.Random;
 
 public class PalmTreeSpawner {
-    public static void spawnPalmTree(int x, int y, int z, LimitedRegion limitedRegion, Random random) {
+    public static void spawn(int x, int y, int z, LimitedRegion limitedRegion, Random random) {
         int xDiff = 0;
         int zDiff = 0;
 

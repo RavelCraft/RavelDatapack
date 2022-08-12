@@ -5,7 +5,10 @@ import com.connexal.raveldatapack.utils.nbt.*;
 import org.bukkit.Location;
 import org.bukkit.block.data.BlockData;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +41,20 @@ public class Schematics {
         int height = getChildTag(schematic, "Height", IntTag.class).getValue();
         int depth = getChildTag(schematic, "Depth", IntTag.class).getValue();
 
+        int baseWidth = getChildTag(schematic, "BaseWidth", IntTag.class).getValue();
+        int baseDepth = getChildTag(schematic, "BaseDepth", IntTag.class).getValue();
+
+        List<Tag> baseOffsetList = getChildTag(schematic, "BaseOffset", ListTag.class).getValue();
+        int[] baseOffset = new int[3];
+
+        if (baseOffsetList.size() != 3) {
+            RavelDatapack.getLog().warning("BaseOffset list has wrong size");
+            return null;
+        }
+        for (int i = 0; i < 3; i++) {
+            baseOffset[i] = ((IntTag) baseOffsetList.get(i)).getValue();
+        }
+
         List<Tag> blockData = getChildTag(schematic, "Blocks", ListTag.class).getValue();
         BlockData[] blocks = new BlockData[blockData.size()];
 
@@ -46,10 +63,10 @@ public class Schematics {
             blocks[i] = RavelDatapack.getInstance().getServer().createBlockData(data);
         }
 
-        return new Schematic(blocks, width, height, depth);
+        return new Schematic(blocks, width, height, depth, baseWidth, baseDepth, baseOffset);
     }
 
-    public static boolean createSchematic(Location start, Location end, File file) {
+    public static boolean createSchematic(Location start, Location end, Location baseStart, Location baseEnd, File file) {
         if (!start.getWorld().getName().equals(end.getWorld().getName())) {
             return false;
         }
@@ -65,6 +82,17 @@ public class Schematics {
         int width = (Math.max(startX, endX) - Math.min(startX, endX)) + 1;
         int height = (Math.max(startY, endY) - Math.min(startY, endY)) + 1;
         int depth = (Math.max(startZ, endZ) - Math.min(startZ, endZ)) + 1;
+
+        int baseStartX = baseStart.getBlockX();
+        int baseStartY = baseStart.getBlockY();
+        int baseStartZ = baseStart.getBlockZ();
+
+        int baseEndX = baseEnd.getBlockX();
+        int baseEndY = baseEnd.getBlockY();
+        int baseEndZ = baseEnd.getBlockZ();
+
+        int baseWidth = (Math.max(baseStartX, baseEndX) - Math.min(baseStartX, baseEndX)) + 1;
+        int baseDepth = (Math.max(baseStartZ, baseEndZ) - Math.min(baseStartZ, baseEndZ)) + 1;
 
         boolean modifyX = startX > endX;
         boolean modifyY = startY > endY;
@@ -106,6 +134,29 @@ public class Schematics {
         schematicMap.put("Width", new IntTag("Width", width));
         schematicMap.put("Height", new IntTag("Height", height));
         schematicMap.put("Depth",  new IntTag("Depth", depth));
+
+        schematicMap.put("BaseWidth", new IntTag("BaseWidth", baseWidth));
+        schematicMap.put("BaseDepth", new IntTag("BaseDepth", baseDepth));
+
+        List<Tag> baseOffsetList = new ArrayList<>();
+        if (modifyX) {
+            baseOffsetList.add(new IntTag("X", baseStartX - endX));
+        } else {
+            baseOffsetList.add(new IntTag("X", baseStartX - startX));
+        }
+        if (modifyY) {
+            baseOffsetList.add(new IntTag("Y", baseStartY - endY));
+        } else {
+            baseOffsetList.add(new IntTag("Y", baseStartY - startY));
+        }
+        if (modifyZ) {
+            baseOffsetList.add(new IntTag("Z", baseStartZ - endZ));
+        } else {
+            baseOffsetList.add(new IntTag("Z", baseStartZ - startZ));
+        }
+
+        schematicMap.put("BaseOffset", new ListTag("BaseOffset", IntTag.class, baseOffsetList));
+
         schematicMap.put("Blocks", new ListTag("Blocks", StringTag.class, blockDataList));
 
         CompoundTag schematic = new CompoundTag("Schematic", schematicMap);
