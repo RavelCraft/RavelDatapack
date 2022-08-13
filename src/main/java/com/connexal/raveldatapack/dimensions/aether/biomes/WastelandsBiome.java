@@ -1,14 +1,10 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
-import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.dimensions.aether.assets.OasisSpawner;
-import com.connexal.raveldatapack.utils.RavelMath;
 import com.connexal.raveldatapack.utils.schematics.Schematic;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.EntityType;
-import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -61,7 +57,7 @@ public class WastelandsBiome extends AetherBiome {
         if (random.nextInt(4) == 0) {
             Schematic schematic = this.getSchematicFromCache("illusionerTower");
 
-            Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, schematic.getWidth(), schematic.getDepth(), 1, this.getVanillaBiome());
+            Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, schematic.getBaseWidth(), schematic.getBaseDepth(), 1);
             if (location == null) {
                 return;
             }

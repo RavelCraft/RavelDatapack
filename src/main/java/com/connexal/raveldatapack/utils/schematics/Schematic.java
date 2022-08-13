@@ -4,7 +4,6 @@ import com.connexal.raveldatapack.RavelDatapack;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
 
 public class Schematic {

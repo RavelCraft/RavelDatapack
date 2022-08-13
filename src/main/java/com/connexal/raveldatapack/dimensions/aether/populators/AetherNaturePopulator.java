@@ -3,8 +3,6 @@ package com.connexal.raveldatapack.dimensions.aether.populators;
 import com.connexal.raveldatapack.dimensions.CustomChunkPopulator;
 import com.connexal.raveldatapack.dimensions.aether.AetherConstants;
 import com.connexal.raveldatapack.dimensions.aether.biomes.AetherBiome;
-import org.bukkit.Location;
-import org.bukkit.TreeType;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;

@@ -7,7 +7,6 @@ import com.connexal.raveldatapack.utils.schematics.Schematics;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
-import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -105,7 +104,7 @@ public abstract class AetherBiome {
 
         while (y > worldInfo.getMinHeight() + 1) {
             y -= 1;
-            if (AetherBiome.canReplaceMaterial(limitedRegion.getType(x, y, z), limitedRegion.getType(x, y - 1, z), this.getVanillaBiome())) {
+            if (this.canReplaceMaterial(limitedRegion.getType(x, y, z), limitedRegion.getType(x, y - 1, z))) {
                 return y;
             }
         }
@@ -128,15 +127,27 @@ public abstract class AetherBiome {
         return schematic;
     }
 
-    public Location getAcceptableStructureSpawn(WorldInfo worldInfo, LimitedRegion limitedRegion, int worldX, int worldZ, int width, int depth, int heightTolerance, Biome biome) {
-        int startX = -1;
-        int startY = -1;
-        int startZ = -1;
+    public Location getAcceptableStructureSpawn(WorldInfo worldInfo, LimitedRegion limitedRegion, int worldX, int worldZ, int width, int depth, int heightTolerance) {
+        Biome biome = this.getVanillaBiome();
 
-        firstLoop:
-        for (int x = worldX; x < worldX + (16 - width); x++) {
+        if (width > 16 || depth > 16) {
+            RavelDatapack.getLog().warning("Checking bigger than 16x16 is not possible.");
+            return null;
+        }
+
+        int endX = worldX + (16 - width);
+        if (endX == worldX) {
+            endX += 1;
+        }
+
+        int endZ = worldZ + (16 - depth);
+        if (endZ == worldZ) {
+            endZ += 1;
+        }
+
+        for (int x = worldX; x < endX; x++) {
             secondLoop:
-            for (int z = worldZ; z < worldZ + (16 - depth); z++) {
+            for (int z = worldZ; z < endZ; z++) {
                 Integer y1 = this.getSurfaceLevel(worldInfo, limitedRegion, x, z);
                 Integer y2 = this.getSurfaceLevel(worldInfo, limitedRegion, x, z + depth);
                 Integer y3 = this.getSurfaceLevel(worldInfo, limitedRegion, x + width, z);
@@ -147,7 +158,9 @@ public abstract class AetherBiome {
 
                 int minY = RavelMath.min(y1, y2, y3, y4);
                 int maxY = RavelMath.max(y1, y2, y3, y4);
-                if (maxY - minY > heightTolerance) {
+
+                int heightDiff = maxY - minY;
+                if (heightDiff > heightTolerance) {
                     continue;
                 }
 
@@ -158,29 +171,31 @@ public abstract class AetherBiome {
                             continue secondLoop;
                         }
 
-                        if (tmpY < minY - 1 || tmpY > maxY) {
+                        if (tmpY < minY - (heightTolerance - heightDiff)) {
                             continue secondLoop;
+                        } else if (tmpY < minY) {
+                            minY = tmpY;
+                            heightDiff = maxY - minY;
                         }
 
-                        Biome tmpBiome = limitedRegion.getBiome(x2, tmpY, z2);
+                        if (tmpY > maxY + (heightTolerance - heightDiff)) {
+                            continue secondLoop;
+                        } else if (tmpY > maxY) {
+                            maxY = tmpY;
+                            heightDiff = maxY - minY;
+                        }
+
+                        Biome tmpBiome = limitedRegion.getBiome(x2, 0, z2);
                         if (tmpBiome != biome) {
-                            RavelDatapack.getLog().info("Not right biome");
                             continue secondLoop;
                         }
                     }
                 }
 
-                startX = x;
-                startY = maxY;
-                startZ = z;
-                break firstLoop;
+                return new Location(null, x, maxY, z);
             }
         }
 
-        if (startX == -1) {
-            return null;
-        }
-
-        return new Location(null, startX, startY, startZ);
+        return null;
     }
 }

@@ -2,7 +2,6 @@ package com.connexal.raveldatapack.dimensions.aether.biomes;
 
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
-import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;

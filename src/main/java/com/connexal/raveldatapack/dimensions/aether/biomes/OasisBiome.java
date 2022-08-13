@@ -5,7 +5,6 @@ import com.connexal.raveldatapack.dimensions.aether.assets.PalmTreeSpawner;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
-import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -58,7 +57,7 @@ public class OasisBiome extends AetherBiome {
     @Override
     public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
         if (random.nextInt(6) == 0) {
-            Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, OasisSpawner.DIAMETER, OasisSpawner.DIAMETER, 2, this.getVanillaBiome());
+            Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, OasisSpawner.DIAMETER, OasisSpawner.DIAMETER, 2);
             if (location == null) {
                 return;
             }

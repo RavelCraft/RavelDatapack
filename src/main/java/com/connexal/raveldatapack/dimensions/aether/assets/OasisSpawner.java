@@ -1,10 +1,7 @@
 package com.connexal.raveldatapack.dimensions.aether.assets;
 
 import org.bukkit.Material;
-import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
-
-import java.util.Random;
 
 public class OasisSpawner {
     public static final int DIAMETER = 8;
