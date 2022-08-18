@@ -4,20 +4,32 @@ import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.pack.TexturePack;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.UUID;
 
 public class PluginMessageManager implements PluginMessageListener {
-    public static final String CHANNEL_ID = "imdabigboss:main";
+    private static final String CHANNEL_ID = "imdabigboss:main";
+    private static final String CHANNEL_NAME = "RavelDatapack";
+
+    private final Queue<PluginMessageData> pluginMessageQueue = new LinkedList<>();
 
     public PluginMessageManager() {
-        RavelDatapack.getInstance().getServer().getMessenger().registerIncomingPluginChannel(RavelDatapack.getInstance(), PluginMessageManager.CHANNEL_ID, this);
-        RavelDatapack.getInstance().getServer().getMessenger().registerOutgoingPluginChannel(RavelDatapack.getInstance(), PluginMessageManager.CHANNEL_ID);
+        RavelDatapack.getInstance().getServer().getMessenger().registerIncomingPluginChannel(RavelDatapack.getInstance(), CHANNEL_ID, this);
+        RavelDatapack.getInstance().getServer().getMessenger().registerOutgoingPluginChannel(RavelDatapack.getInstance(), CHANNEL_ID);
     }
 
     public void unregister() {
@@ -25,46 +37,61 @@ public class PluginMessageManager implements PluginMessageListener {
     }
 
     @Override
-    public void onPluginMessageReceived(String channel, @NotNull Player player, byte[] bytes) {
-        //EasyCraft.getLog().info("Plugin Message Received " + channel);
-
+    public void onPluginMessageReceived(String channel, Player player, byte[] bytes) {
         if (channel.equalsIgnoreCase(CHANNEL_ID)) {
             ByteArrayDataInput in = ByteStreams.newDataInput(bytes);
             String subChannel = in.readUTF();
-            if (subChannel.equalsIgnoreCase("RavelDatapack")) {
+            if (subChannel.equalsIgnoreCase(CHANNEL_NAME)) {
                 String cmd = in.readUTF();
                 String data = in.readUTF();
-                this.runBungeeCmd(cmd, data);
+                UUID uuid = UUID.fromString(in.readUTF());
+
+                PluginMessageData messageData = new PluginMessageData(cmd, data, uuid);
+                Player target = RavelDatapack.getInstance().getServer().getPlayer(uuid);
+                if (target == null) {
+                    this.pluginMessageQueue.add(messageData);
+                } else {
+                    this.runVelocityCmd(messageData);
+                }
             }
         }
     }
 
-    private void runBungeeCmd(String cmd, String data) {
-        if (cmd.equalsIgnoreCase("sendresourcepack")) {
-            Player target = RavelDatapack.getInstance().getServer().getPlayer(data);
-            if (target != null) {
-                TexturePack.sendTexturePackToPlayer(target);
-            }
+    private void runVelocityCmd(PluginMessageData data) {
+        if (data.cmd().equalsIgnoreCase("sendresourcepack")) {
+            Player target = RavelDatapack.getInstance().getServer().getPlayer(data.uuid());
+            TexturePack.sendTexturePackToPlayer(target);
         }
     }
 
-    public void sendCmd(Player player, String cmd, String data) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(bytes);
-        try {
-            out.writeUTF("RavelDatapack");
-            out.writeUTF(cmd);
-            out.writeUTF(data);
-        } catch (IOException ignored) {
+    public void readQueuedPluginMessages() {
+        while (!this.pluginMessageQueue.isEmpty()) {
+            PluginMessageManager.PluginMessageData data = this.pluginMessageQueue.poll();
+            this.runVelocityCmd(data);
+        }
+    }
+
+    private static class PluginMessageData {
+        private final String cmd;
+        private final String data;
+        private final UUID uuid;
+
+        public PluginMessageData(String cmd, String data, UUID uuid) {
+            this.cmd = cmd;
+            this.data = data;
+            this.uuid = uuid;
         }
 
-        player.sendPluginMessage(RavelDatapack.getInstance(), CHANNEL_ID, bytes.toByteArray());
-        //EasyCraft.getLog().info("Sent plugin message to " + player.getName() + ": " + cmd + " " + data);
+        public String cmd() {
+            return this.cmd;
+        }
 
-        try {
-            out.close();
-            bytes.close();
-        } catch (IOException ignored) {
+        public String data() {
+            return this.data;
+        }
+
+        public UUID uuid() {
+            return this.uuid;
         }
     }
 }

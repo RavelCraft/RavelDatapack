@@ -2,6 +2,8 @@ package com.connexal.raveldatapack.dimensions.aether.biomes;
 
 import com.connexal.raveldatapack.dimensions.aether.AetherConstants;
 import com.connexal.raveldatapack.dimensions.aether.assets.CactusSpawner;
+import com.connexal.raveldatapack.utils.schematics.Schematic;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
@@ -63,6 +65,13 @@ public class DesertBiome extends AetherBiome {
 
     @Override
     public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
-        //No structures
+        Schematic schematic = this.getSchematicFromCache("travellerHouse");
+
+        Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, schematic.getBaseWidth(), schematic.getBaseDepth(), 1);
+        if (location == null) {
+            return;
+        }
+
+        schematic.pasteSchematic(limitedRegion, location.getBlockX(), location.getBlockY(), location.getBlockZ());
     }
 }

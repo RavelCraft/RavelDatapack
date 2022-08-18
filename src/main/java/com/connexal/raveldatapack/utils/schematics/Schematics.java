@@ -88,7 +88,6 @@ public class Schematics {
         int baseStartZ = baseStart.getBlockZ();
 
         int baseEndX = baseEnd.getBlockX();
-        int baseEndY = baseEnd.getBlockY();
         int baseEndZ = baseEnd.getBlockZ();
 
         int baseWidth = (Math.max(baseStartX, baseEndX) - Math.min(baseStartX, baseEndX)) + 1;

@@ -15,20 +15,21 @@ import java.util.Random;
 
 public abstract class CustomChunkGenerator extends ChunkGenerator {
     protected final BiomeProvider biomeProvider;
-    private final List<BlockPopulator> chunkPopulators;
+    private final List<BlockPopulator> blockPopulators;
 
     public CustomChunkGenerator(BiomeProvider biomeProvider, CustomChunkPopulator... chunkPopulators) {
         this.biomeProvider = biomeProvider;
-        this.chunkPopulators = Arrays.asList(chunkPopulators);
 
         for (CustomChunkPopulator chunkPopulator : chunkPopulators) {
             chunkPopulator.setBiomeProvider(this.biomeProvider);
         }
+
+        this.blockPopulators = Arrays.asList(new CustomBlockPopulator(chunkPopulators));
     }
 
     public CustomChunkGenerator(BiomeProvider biomeProvider) {
         this.biomeProvider = biomeProvider;
-        this.chunkPopulators = new ArrayList<>();
+        this.blockPopulators = new ArrayList<>();
     }
 
     @Override
@@ -36,7 +37,7 @@ public abstract class CustomChunkGenerator extends ChunkGenerator {
 
     @NotNull
     public List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
-        return this.chunkPopulators;
+        return this.blockPopulators;
     }
 
     @Override
