@@ -21,10 +21,6 @@ import java.util.Map;
 public class RavelSchematicCommand implements CommandExecutor, TabExecutor {
     private final Map<Player, SchematicData> playerData = new HashMap<>();
 
-    public RavelSchematicCommand() {
-        super();
-    }
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 0) {

@@ -34,13 +34,18 @@ public class MesaBiome extends AetherBiome {
         }
     }
 
-    private Material getLayerMaterial(int y) {
-        return layerMap.getOrDefault(y, Material.TERRACOTTA);
-    }
-
     @Override
     public Biome getVanillaBiome() {
         return Biome.BADLANDS;
+    }
+
+    @Override
+    public String getName() {
+        return "Mesa";
+    }
+
+    private Material getLayerMaterial(int y) {
+        return layerMap.getOrDefault(y, Material.TERRACOTTA);
     }
 
     @Override

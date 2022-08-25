@@ -9,7 +9,7 @@ public class VoronoiGenerator {
     private long seed;
     private short distanceMethod;
 
-    public VoronoiGenerator(long seed, short distanceMethod /*TODO: int octaves*/) {
+    public VoronoiGenerator(long seed, short distanceMethod) {
         this.seed = seed;
         this.distanceMethod = distanceMethod;
     }

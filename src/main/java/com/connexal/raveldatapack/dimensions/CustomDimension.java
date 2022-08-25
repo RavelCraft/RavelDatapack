@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -22,6 +23,8 @@ public abstract class CustomDimension {
     protected abstract BiomeProvider getBiomeProvider();
 
     protected abstract ChunkGenerator getChunkGenerator();
+
+    public abstract String getBiomeName(Biome biome);
 
     public World createWorld() {
         WorldCreator worldCreator = new WorldCreator(this.getName());

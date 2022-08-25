@@ -19,6 +19,11 @@ public class DesertBiome extends AetherBiome {
     }
 
     @Override
+    public String getName() {
+        return "Desert";
+    }
+
+    @Override
     public void generateStack(ChunkGenerator.ChunkData chunkData, int x, int z, int minY, int maxY, Random random) {
         int underCoverDepth = random.nextInt(3) + 3;
 
@@ -48,6 +53,9 @@ public class DesertBiome extends AetherBiome {
     @Override
     public void spawnTree(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
         if (random.nextInt(4) == 0) {
+            if (limitedRegion.getType(x, y - 1, z) != Material.SAND) { //Cactus can only go on sand
+                limitedRegion.setType(x, y - 1, z, Material.SAND);
+            }
             CactusSpawner.spawn(x, y, z, limitedRegion, random);
         }
     }
@@ -65,7 +73,12 @@ public class DesertBiome extends AetherBiome {
 
     @Override
     public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
-        Schematic schematic = this.getSchematicFromCache("travellerHouse");
+        Schematic schematic;
+        if (random.nextBoolean()) {
+            schematic = this.getSchematicFromCache("desertHouse1");
+        } else {
+            schematic = this.getSchematicFromCache("desertHouse2");
+        }
 
         Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, schematic.getBaseWidth(), schematic.getBaseDepth(), 1);
         if (location == null) {

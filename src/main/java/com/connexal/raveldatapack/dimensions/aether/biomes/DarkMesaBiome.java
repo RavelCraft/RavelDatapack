@@ -14,32 +14,37 @@ public class DarkMesaBiome extends AetherBiome {
 
     public DarkMesaBiome() {
         List<Material> layerList = new ArrayList<>();
-        layerList.add(Material.BLACK_TERRACOTTA);
-        layerList.add(Material.BLACK_TERRACOTTA);
-        layerList.add(Material.YELLOW_TERRACOTTA);
-        layerList.add(Material.YELLOW_TERRACOTTA);
-        layerList.add(Material.YELLOW_TERRACOTTA);
-        layerList.add(Material.BROWN_TERRACOTTA);
-        layerList.add(Material.BROWN_TERRACOTTA);
-        layerList.add(Material.WHITE_TERRACOTTA);
-        layerList.add(Material.BLACK_TERRACOTTA);
-        layerList.add(Material.WHITE_TERRACOTTA);
-        layerList.add(Material.BLACK_TERRACOTTA);
-        layerList.add(Material.BLACK_TERRACOTTA);
-        layerList.add(Material.ORANGE_TERRACOTTA);
+        layerList.add(Material.PACKED_MUD);
+        layerList.add(Material.PACKED_MUD);
+        layerList.add(Material.SOUL_SOIL);
+        layerList.add(Material.SOUL_SOIL);
+        layerList.add(Material.SOUL_SOIL);
+        layerList.add(Material.COARSE_DIRT);
+        layerList.add(Material.COARSE_DIRT);
+        layerList.add(Material.SOUL_SAND);
+        layerList.add(Material.PACKED_MUD);
+        layerList.add(Material.SOUL_SAND);
+        layerList.add(Material.PACKED_MUD);
+        layerList.add(Material.PACKED_MUD);
+        layerList.add(Material.DIRT);
 
         for (int i = 0; i < layerList.size(); i++) {
             layerMap.put(AetherConstants.ISLAND_LEVEL + i, layerList.get(i));
         }
     }
 
-    private Material getLayerMaterial(int y) {
-        return layerMap.getOrDefault(y, Material.BLACK_TERRACOTTA);
-    }
-
     @Override
     public Biome getVanillaBiome() {
         return Biome.ERODED_BADLANDS;
+    }
+
+    @Override
+    public String getName() {
+        return "Dark Mesa";
+    }
+
+    private Material getLayerMaterial(int y) {
+        return layerMap.getOrDefault(y, Material.PACKED_MUD);
     }
 
     @Override
@@ -60,11 +65,11 @@ public class DarkMesaBiome extends AetherBiome {
         boolean replaceableOk = replaceable == Material.AIR ||
                 replaceable == Material.DEAD_BUSH;
 
-        boolean groundOk = ground == Material.BLACK_TERRACOTTA ||
-                ground == Material.WHITE_TERRACOTTA ||
-                ground == Material.ORANGE_TERRACOTTA ||
-                ground == Material.YELLOW_TERRACOTTA ||
-                ground == Material.BROWN_TERRACOTTA;
+        boolean groundOk = ground == Material.PACKED_MUD ||
+                ground == Material.SOUL_SOIL ||
+                ground == Material.COARSE_DIRT ||
+                ground == Material.SOUL_SAND ||
+                ground == Material.DIRT;
 
         return replaceableOk && groundOk;
     }

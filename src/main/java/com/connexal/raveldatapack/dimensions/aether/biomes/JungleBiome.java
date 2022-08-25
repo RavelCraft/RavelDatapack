@@ -18,6 +18,11 @@ public class JungleBiome extends AetherBiome {
     }
 
     @Override
+    public String getName() {
+        return "Jungle";
+    }
+
+    @Override
     public void generateStack(ChunkGenerator.ChunkData chunkData, int x, int z, int minY, int maxY, Random random) {
         int underCoverDepth = random.nextInt(3) + 3;
 

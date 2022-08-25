@@ -1,6 +1,9 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
 import com.connexal.raveldatapack.dimensions.aether.assets.CactusSpawner;
+import com.connexal.raveldatapack.utils.schematics.Schematic;
+
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
@@ -13,6 +16,11 @@ public class RedDesertBiome extends AetherBiome {
     @Override
     public Biome getVanillaBiome() {
         return Biome.SAVANNA_PLATEAU;
+    }
+
+    @Override
+    public String getName() {
+        return "Red Desert";
     }
 
     @Override
@@ -44,6 +52,9 @@ public class RedDesertBiome extends AetherBiome {
     @Override
     public void spawnTree(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
         if (random.nextInt(4) == 0) {
+            if (limitedRegion.getType(x, y - 1, z) != Material.RED_SAND) { //Cactus can only go on sand
+                limitedRegion.setType(x, y - 1, z, Material.RED_SAND);
+            }
             CactusSpawner.spawn(x, y, z, limitedRegion, random);
         }
     }
@@ -57,6 +68,18 @@ public class RedDesertBiome extends AetherBiome {
 
     @Override
     public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
-        //No structures
+        Schematic schematic;
+        if (random.nextBoolean()) {
+            schematic = this.getSchematicFromCache("redDesertHouse1");
+        } else {
+            schematic = this.getSchematicFromCache("redDesertHouse2");
+        }
+
+        Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, schematic.getBaseWidth(), schematic.getBaseDepth(), 1);
+        if (location == null) {
+            return;
+        }
+
+        schematic.pasteSchematic(limitedRegion, location.getBlockX(), location.getBlockY(), location.getBlockZ());
     }
 }

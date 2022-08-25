@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack;
 
+import com.connexal.raveldatapack.commands.RavelBiomeCommand;
 import com.connexal.raveldatapack.commands.RavelDatapackCommand;
 import com.connexal.raveldatapack.commands.RavelSchematicCommand;
 import com.connexal.raveldatapack.items.CustomItem;
@@ -69,6 +70,7 @@ public final class RavelDatapack extends JavaPlugin {
         log.info(String.format("[%s] Adding commands", getDescription().getName()));
         this.getCommand("raveldatapack").setExecutor(new RavelDatapackCommand(this));
         this.getCommand("ravelschematic").setExecutor(new RavelSchematicCommand());
+        this.getCommand("ravelbiome").setExecutor(new RavelBiomeCommand());
 
         log.info(String.format("[%s] Initialising texture pack", getDescription().getName()));
         TexturePack.init();

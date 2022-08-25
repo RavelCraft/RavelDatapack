@@ -26,6 +26,19 @@ public abstract class AetherBiome {
         biomeMap.put(biome.getVanillaBiome(), biome);
     }
 
+    public abstract Biome getVanillaBiome();
+
+    public abstract String getName();
+
+    public static String getBiomeName(Biome biome) {
+        if (biomeMap.containsKey(biome)) {
+            return biomeMap.get(biome).getName();
+        }
+
+        RavelDatapack.getLog().warning("Unknown biome " + biome.toString());
+        return "Unknown biome";
+    }
+
     public static void generateStack(ChunkGenerator.ChunkData chunkData, int x, int z, int minY, int maxY, Biome biome, Random random) {
         if (biomeMap.containsKey(biome)) {
             biomeMap.get(biome).generateStack(chunkData, x, z, minY, maxY, random);
@@ -83,8 +96,6 @@ public abstract class AetherBiome {
     }
 
     public abstract void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ);
-
-    public abstract Biome getVanillaBiome();
 
     public static Material getRandomGroundMaterial(Random random) {
         int randomMaterial = random.nextInt(101);

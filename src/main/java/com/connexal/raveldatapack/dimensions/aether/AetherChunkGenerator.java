@@ -1,8 +1,10 @@
 package com.connexal.raveldatapack.dimensions.aether;
 
+import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.dimensions.CustomChunkGenerator;
 import com.connexal.raveldatapack.dimensions.aether.biomes.*;
 import com.connexal.raveldatapack.dimensions.aether.populators.*;
+import com.connexal.raveldatapack.utils.RavelMath;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.WorldInfo;
@@ -12,7 +14,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 
 public class AetherChunkGenerator extends CustomChunkGenerator {
-    private SimplexOctaveGenerator generator = null;
+    private SimplexOctaveGenerator generator1 = null;
+    private SimplexOctaveGenerator generator2 = null;
 
     public AetherChunkGenerator(BiomeProvider biomeProvider) {
         super(biomeProvider, new AetherStructurePopulator(), new AetherTreePopulator(), new AetherPlantPopulator(), new AetherOrePopulator());
@@ -28,16 +31,20 @@ public class AetherChunkGenerator extends CustomChunkGenerator {
         AetherBiome.registerBiome(new PlainsBiome());
         AetherBiome.registerBiome(new RedDesertBiome());
         AetherBiome.registerBiome(new RosePlainsBiome());
-        AetherBiome.registerBiome(new SnowyPlainsBiome());
-        AetherBiome.registerBiome(new SnowyTigaBiome());
+        AetherBiome.registerBiome(new IceMushroomForestBiome());
+        AetherBiome.registerBiome(new JibstoneBiome());
         AetherBiome.registerBiome(new TaigaBiome());
         AetherBiome.registerBiome(new WastelandsBiome());
     }
 
     private void createGenerator(WorldInfo worldInfo) {
-        if (generator == null) {
-            generator = new SimplexOctaveGenerator(worldInfo.getSeed(), 10);
-            generator.setScale(AetherConstants.SACALE);
+        if (generator1 == null) {
+            generator1 = new SimplexOctaveGenerator(worldInfo.getSeed(), 10);
+            generator1.setScale(AetherConstants.SACALE_1);
+        }
+        if (generator2 == null) {
+            generator2 = new SimplexOctaveGenerator(worldInfo.getSeed(), 8);
+            generator2.setScale(AetherConstants.SACALE_2);
         }
     }
 
@@ -53,10 +60,13 @@ public class AetherChunkGenerator extends CustomChunkGenerator {
                 int localX = worldX + x;
                 int localZ = worldZ + z;
 
-                double noise = generator.noise(localX, localZ, AetherConstants.FREQUENCY, AetherConstants.AMPLITUDE) * AetherConstants.ISLAND_HEIGHT;
+                double noise = generator1.noise(localX, localZ, AetherConstants.FREQUENCY_1, AetherConstants.AMPLITUDE_1) * AetherConstants.ISLAND_HEIGHT;
+                double noise2 = generator2.noise(localX, localZ, AetherConstants.FREQUENCY_2, AetherConstants.AMPLITUDE_2) * 1.5;
+                if (noise2 >= 1) {
+                    noise = noise * noise2;
+                }
 
-                int currentHeight = (int) (noise);
-                currentHeight = currentHeight - AetherConstants.START_DRAWING_HEIGHT;
+                int currentHeight = ((int) noise) - AetherConstants.START_DRAWING_HEIGHT;
 
                 if (currentHeight > 0) {
                     Biome biome = this.biomeProvider.getBiome(worldInfo, localX, 0, localZ);
@@ -65,11 +75,10 @@ public class AetherChunkGenerator extends CustomChunkGenerator {
                     bottomHeight = (bottomHeight - AetherConstants.START_DRAWING_HEIGHT * AetherConstants.ISLAND_BOTTOM_MULTIPLIER) * -1;
 
                     currentHeight += AetherConstants.ISLAND_LEVEL;
-                    bottomHeight += AetherConstants.ISLAND_LEVEL;
-                    bottomHeight -= 1; //Remove the duplicate layer
+                    bottomHeight += AetherConstants.ISLAND_LEVEL - 1;
 
-                    currentHeight = Math.min(currentHeight, worldInfo.getMaxHeight());
-                    bottomHeight = Math.min(bottomHeight, worldInfo.getMaxHeight());
+                    currentHeight = RavelMath.clamp(currentHeight, worldInfo.getMinHeight(), worldInfo.getMaxHeight());
+                    bottomHeight = RavelMath.clamp(bottomHeight, worldInfo.getMinHeight(), worldInfo.getMaxHeight());
 
                     AetherBiome.generateStack(chunkData, x, z, bottomHeight, currentHeight, biome, random);
                 }

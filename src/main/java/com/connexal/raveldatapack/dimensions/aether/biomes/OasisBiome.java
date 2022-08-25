@@ -1,10 +1,11 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
-import com.connexal.raveldatapack.dimensions.aether.assets.OasisSpawner;
 import com.connexal.raveldatapack.dimensions.aether.assets.PalmTreeSpawner;
+import com.connexal.raveldatapack.utils.schematics.Schematic;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.EntityType;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -15,6 +16,11 @@ public class OasisBiome extends AetherBiome {
     @Override
     public Biome getVanillaBiome() {
         return Biome.BEACH;
+    }
+
+    @Override
+    public String getName() {
+        return "Oasis";
     }
 
     @Override
@@ -56,13 +62,15 @@ public class OasisBiome extends AetherBiome {
 
     @Override
     public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
-        if (random.nextInt(6) == 0) {
-            Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, OasisSpawner.DIAMETER, OasisSpawner.DIAMETER, 2);
+        if (random.nextInt(4) == 0) {
+            Schematic schematic = this.getSchematicFromCache("oasisPool");
+
+            Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, schematic.getBaseWidth(), schematic.getBaseDepth(), 1);
             if (location == null) {
                 return;
             }
 
-            OasisSpawner.spawn(location.getBlockX(), location.getBlockY(), location.getBlockZ(), limitedRegion);
+            schematic.pasteSchematic(limitedRegion, location.getBlockX(), location.getBlockY(), location.getBlockZ());
         }
     }
 }

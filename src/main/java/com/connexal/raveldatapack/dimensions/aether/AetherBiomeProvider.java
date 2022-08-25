@@ -32,7 +32,7 @@ public class AetherBiomeProvider extends BiomeProvider {
         double voronoi = voronoiGenerator.noise(x, 0, z, 0.001);
 
         if (noise < 0.1) { // Snowy
-            if (voronoi < 0.5) {
+            if (voronoi < 0.3) {
                 return Biome.SNOWY_TAIGA;
             } else {
                 return Biome.SNOWY_PLAINS;
@@ -64,7 +64,7 @@ public class AetherBiomeProvider extends BiomeProvider {
                 return Biome.ERODED_BADLANDS; //Dark mesa
             }
         } else { // Desert
-            if (voronoi < 0.1) {
+            if (voronoi < 0.2) {
                 return Biome.WOODED_BADLANDS; //Wasteland
             } else if (voronoi < 0.4) {
                 return Biome.DESERT;

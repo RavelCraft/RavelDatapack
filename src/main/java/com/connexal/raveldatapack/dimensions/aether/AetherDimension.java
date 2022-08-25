@@ -2,9 +2,11 @@ package com.connexal.raveldatapack.dimensions.aether;
 
 import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.dimensions.CustomDimension;
+import com.connexal.raveldatapack.dimensions.aether.biomes.AetherBiome;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -60,5 +62,10 @@ public class AetherDimension extends CustomDimension {
     @Override
     protected ChunkGenerator getChunkGenerator() {
         return this.chunkGenerator;
+    }
+
+    @Override
+    public String getBiomeName(Biome biome) {
+        return AetherBiome.getBiomeName(biome);
     }
 }

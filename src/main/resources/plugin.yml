@@ -1,7 +1,7 @@
 name: RavelDatapack
 version: ${project.version}
 main: com.connexal.raveldatapack.RavelDatapack
-api-version: 1.17
+api-version: 1.19
 softdepend: [floodgate]
 
 commands:
@@ -10,7 +10,10 @@ commands:
     description: Ravel datapack command
   ravelschematic:
     permission: raveldatapack.ravelschematic
-    description: Reload the resource pack
+    description: Create schematics for the Ravel datapack
+  ravelbiome:
+    permission: raveldatapack.ravelbiome
+    description: Get what biome you're currently in
 
 permissions:
   raveldatapack.raveldatapack:
@@ -19,3 +22,6 @@ permissions:
   raveldatapack.ravelschematic:
     description: Allows the player to use the Ravel schematic command
     default: op
+  raveldatapack.ravelbiome:
+    description: Allows the player to use the Ravel biome command
+    default: true

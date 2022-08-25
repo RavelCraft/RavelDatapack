@@ -7,6 +7,8 @@ import com.connexal.raveldatapack.enchantments.PoisonBladeEnchantment;
 import com.connexal.raveldatapack.enchantments.TelekinesisEnchantment;
 import com.connexal.raveldatapack.utils.EnchantmentLoreUtil;
 import com.connexal.raveldatapack.utils.StringUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -261,6 +263,44 @@ public class EnchantmentManager {
 
             EnchantmentLoreUtil.addLore(item, enchantment.getKey().getKey(), ChatColor.GRAY + this.formatEnchantmentName(enchantment, level), 0);
         }
+    }
+
+    public void reformatItemNameColours(ItemStack original, ItemStack result) {
+        if (!original.hasItemMeta() || !result.hasItemMeta()) {
+            return;
+        }
+        ItemMeta originalMeta = original.getItemMeta();
+        ItemMeta resultMeta = result.getItemMeta();
+
+        if (!originalMeta.hasDisplayName()) {
+            return;
+        }
+
+        LegacyComponentSerializer serializer = LegacyComponentSerializer.builder().build();
+        String originalName = serializer.serialize(originalMeta.displayName());
+
+        String name;
+        if (resultMeta.hasDisplayName()) {
+            String tmpName = originalName;
+            name = serializer.serialize(resultMeta.displayName());
+
+            while (tmpName.contains(ChatColor.COLOR_CHAR + "")) {
+                int index = tmpName.indexOf(ChatColor.COLOR_CHAR + "");
+
+                if (index == 0) {
+                    tmpName = tmpName.substring(2);
+                    name = name.substring(1);
+                } else {
+                    tmpName = tmpName.substring(0, index) + name.substring(index + 2);
+                    name = name.substring(0, index) + name.substring(index + 1);
+                }
+            }
+        } else {
+            name = ChatColor.stripColor(originalName);
+        }
+
+        resultMeta.displayName(Component.text(name));
+        result.setItemMeta(resultMeta);
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.connexal.raveldatapack.utils;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.ChatColor;
 
 import java.util.List;
@@ -90,5 +92,26 @@ public class StringUtil {
     public static String colorOff(String str) {
         String off = ChatColor.stripColor(str);
         return off == null ? "" : off;
+    }
+
+    public static String componentToString(Component text) {
+        if (text == null) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        if (text.children().isEmpty()) {
+            sb.append(((TextComponent) text.compact()).content());
+        }
+
+        for (Component component : text.children()) {
+            if (component.compact().style().color() != null) {
+                sb.append("&").append((component.compact()).style().color().asHexString())
+                        .append(((TextComponent) component.compact()).content());
+            } else {
+                sb.append(((TextComponent) component.compact()).content());
+            }
+        }
+        return sb.toString();
     }
 }

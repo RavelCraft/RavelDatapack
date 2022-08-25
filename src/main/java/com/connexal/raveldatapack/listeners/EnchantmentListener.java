@@ -68,6 +68,7 @@ public class EnchantmentListener implements Listener {
             RavelDatapack.getEnchantmentManager().getItemCustomEnchants(first).forEach((hasEach, hasLevel) -> {
                 RavelDatapack.getEnchantmentManager().enchantItemStack(newResult, hasEach, hasLevel, true);
             });
+            RavelDatapack.getEnchantmentManager().reformatItemNameColours(first, newResult);
             event.setResult(newResult);
             return;
         }
@@ -103,6 +104,7 @@ public class EnchantmentListener implements Listener {
 
         if (!first.equals(result)) {
             RavelDatapack.getEnchantmentManager().updateItemLoreEnchants(result);
+            RavelDatapack.getEnchantmentManager().reformatItemNameColours(first, result);
             event.setResult(result);
 
             int newRepairCost = repairCost;

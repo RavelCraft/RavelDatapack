@@ -17,6 +17,11 @@ public class BirchForestBiome extends AetherBiome {
     }
 
     @Override
+    public String getName() {
+        return "Birch Forest";
+    }
+
+    @Override
     public void generateStack(ChunkGenerator.ChunkData chunkData, int x, int z, int minY, int maxY, Random random) {
         int underCoverDepth = random.nextInt(3) + 3;
 
