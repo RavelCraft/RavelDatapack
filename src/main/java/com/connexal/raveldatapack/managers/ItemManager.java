@@ -5,7 +5,6 @@ import com.connexal.raveldatapack.items.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class ItemManager {
     private final HashMap<String, CustomItem> items = new HashMap<>();

@@ -28,8 +28,10 @@ public class Schematics {
             schematicTag = (CompoundTag) nbtStream.readTag();
             if (!schematicTag.getName().equals("Schematic")) {
                 RavelDatapack.getLog().warning("Tag \"Schematic\" does not exist or is not first");
+                nbtStream.close();
                 return null;
             }
+            nbtStream.close();
         } catch (IOException e) {
             e.printStackTrace();
             return null;

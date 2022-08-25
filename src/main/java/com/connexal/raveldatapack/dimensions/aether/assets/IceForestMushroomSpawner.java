@@ -51,35 +51,33 @@ public class IceForestMushroomSpawner {
             limitedRegion.setType(x, y + i, z, Material.WHITE_CONCRETE);
         }
 
-        int tmpX = x;
-        int tmpZ = z;
         switch (random.nextInt(4)) {
-            case 0 -> tmpX = x + 1;
-            case 1 -> tmpX = x - 1;
-            case 2 -> tmpZ = z + 1;
-            case 3 -> tmpZ = z - 1;
+            case 0 -> x = x + 1;
+            case 1 -> x = x - 1;
+            case 2 -> z = z + 1;
+            case 3 -> z = z - 1;
         }
 
-        int secondSegHeight = random.nextInt(1) + 3;
-        for (int i = -1; i < secondSegHeight - 1; i++) {
-            limitedRegion.setType(tmpX, firstSegHeight + y + i, tmpZ, Material.WHITE_CONCRETE);
+        int secondSegHeight = random.nextInt(1) + 2;
+        for (int i = -1; i < secondSegHeight; i++) {
+            limitedRegion.setType(x, firstSegHeight + y + i, z, Material.WHITE_CONCRETE);
         }
 
         int trunkHeight = firstSegHeight + secondSegHeight;
 
         int tmpY = y + trunkHeight;
-        for (tmpX = -1; tmpX <= 1; tmpX++) {
-            for (tmpZ = -1; tmpZ <= 1; tmpZ++) {
+        for (int tmpX = -1; tmpX <= 1; tmpX++) {
+            for (int tmpZ = -1; tmpZ <= 1; tmpZ++) {
                 limitedRegion.setType(x + tmpX, tmpY, z + tmpZ, getRandomTopMaterial(random));
             }
         }
 
         tmpY--;
-        for (tmpZ = -1; tmpZ <= 1; tmpZ++) {
+        for (int tmpZ = -1; tmpZ <= 1; tmpZ++) {
             limitedRegion.setType(x + 2, tmpY, z + tmpZ, getRandomTopMaterial(random));
             limitedRegion.setType(x - 2, tmpY, z + tmpZ, getRandomTopMaterial(random));
         }
-        for (tmpX = -1; tmpX <= 1; tmpX++) {
+        for (int tmpX = -1; tmpX <= 1; tmpX++) {
             limitedRegion.setType(x + tmpX, tmpY, z + 2, getRandomTopMaterial(random));
             limitedRegion.setType(x + tmpX, tmpY, z - 2, getRandomTopMaterial(random));
         }

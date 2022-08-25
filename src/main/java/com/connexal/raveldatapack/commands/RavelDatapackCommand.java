@@ -38,7 +38,7 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
 
         if (args[0].equalsIgnoreCase("send")) {
             if (!RavelDatapack.shouldResourcePack()) {
-                sender.sendMessage("This server does not use the resource pack.");
+                sender.sendMessage("This server does not use the resource pack. Try doing this in the lobby.");
                 return true;
             }
 

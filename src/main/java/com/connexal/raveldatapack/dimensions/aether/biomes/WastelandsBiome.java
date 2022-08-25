@@ -59,7 +59,7 @@ public class WastelandsBiome extends AetherBiome {
 
     @Override
     public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
-        if (random.nextInt(4) == 0) {
+        if (random.nextInt(6) == 0) {
             Schematic schematic = this.getSchematicFromCache("illusionerTower");
 
             Location location = this.getAcceptableStructureSpawn(worldInfo, limitedRegion, chunkX * 16, chunkZ * 16, schematic.getBaseWidth(), schematic.getBaseDepth(), 1);

@@ -1,9 +1,11 @@
 package com.connexal.raveldatapack.dimensions.aether;
 
-import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.dimensions.CustomChunkGenerator;
 import com.connexal.raveldatapack.dimensions.aether.biomes.*;
-import com.connexal.raveldatapack.dimensions.aether.populators.*;
+import com.connexal.raveldatapack.dimensions.aether.populators.AetherOrePopulator;
+import com.connexal.raveldatapack.dimensions.aether.populators.AetherPlantPopulator;
+import com.connexal.raveldatapack.dimensions.aether.populators.AetherStructurePopulator;
+import com.connexal.raveldatapack.dimensions.aether.populators.AetherTreePopulator;
 import com.connexal.raveldatapack.utils.RavelMath;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
@@ -26,7 +28,7 @@ public class AetherChunkGenerator extends CustomChunkGenerator {
         AetherBiome.registerBiome(new DesertBiome());
         AetherBiome.registerBiome(new OakForestBiome());
         AetherBiome.registerBiome(new JungleBiome());
-        AetherBiome.registerBiome(new MesaBiome());
+        AetherBiome.registerBiome(new CrimsonFungusRocksBiome());
         AetherBiome.registerBiome(new OasisBiome());
         AetherBiome.registerBiome(new PlainsBiome());
         AetherBiome.registerBiome(new RedDesertBiome());

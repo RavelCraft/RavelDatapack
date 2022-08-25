@@ -1,12 +1,11 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
+import com.connexal.raveldatapack.dimensions.aether.AetherConstants;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
-
-import com.connexal.raveldatapack.dimensions.aether.AetherConstants;
 
 import java.util.Random;
 

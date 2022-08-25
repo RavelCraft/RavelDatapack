@@ -35,7 +35,7 @@ public class DarkMesaBiome extends AetherBiome {
 
     @Override
     public Biome getVanillaBiome() {
-        return Biome.ERODED_BADLANDS;
+        return Biome.BADLANDS;
     }
 
     @Override

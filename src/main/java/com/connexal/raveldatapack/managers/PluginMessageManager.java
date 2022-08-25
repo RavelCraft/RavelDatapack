@@ -4,19 +4,9 @@ import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.pack.TexturePack;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
-import org.bukkit.scoreboard.Team;
-import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.UUID;
@@ -41,6 +31,7 @@ public class PluginMessageManager implements PluginMessageListener {
         if (channel.equalsIgnoreCase(CHANNEL_ID)) {
             ByteArrayDataInput in = ByteStreams.newDataInput(bytes);
             String subChannel = in.readUTF();
+            RavelDatapack.getLog().info("Received subchannel: " + subChannel);
             if (subChannel.equalsIgnoreCase(CHANNEL_NAME)) {
                 String cmd = in.readUTF();
                 String data = in.readUTF();

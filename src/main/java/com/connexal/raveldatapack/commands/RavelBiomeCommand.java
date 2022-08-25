@@ -2,25 +2,12 @@ package com.connexal.raveldatapack.commands;
 
 import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.dimensions.CustomDimension;
-import com.connexal.raveldatapack.enchantments.CustomEnchantment;
-import com.connexal.raveldatapack.items.CustomItem;
-import com.connexal.raveldatapack.maps.CustomMapRenderer;
-import com.connexal.raveldatapack.pack.TexturePack;
-import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.MapMeta;
-import org.bukkit.map.MapView;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RavelBiomeCommand implements CommandExecutor {
     @Override
