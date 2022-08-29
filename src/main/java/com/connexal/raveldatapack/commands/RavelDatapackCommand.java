@@ -4,8 +4,6 @@ import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.enchantments.CustomEnchantment;
 import com.connexal.raveldatapack.items.CustomItem;
 import com.connexal.raveldatapack.maps.CustomMapRenderer;
-import com.connexal.raveldatapack.pack.TexturePack;
-import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -22,13 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
-    private final RavelDatapack plugin;
-
-    public RavelDatapackCommand(RavelDatapack plugin) {
-        super();
-        this.plugin = plugin;
-    }
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 0) {
@@ -36,47 +27,7 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
             return true;
         }
 
-        if (args[0].equalsIgnoreCase("send")) {
-            if (!RavelDatapack.shouldResourcePack()) {
-                sender.sendMessage("This server does not use the resource pack. Try doing this in the lobby.");
-                return true;
-            }
-
-            if (sender instanceof Player player) {
-                if (TexturePack.sendTexturePackToPlayer(player)) {
-                    sender.sendMessage("Texture pack sent.");
-                } else {
-                    sender.sendMessage("Texture pack was not sent because of an error.");
-                }
-            } else {
-                for (Player player : plugin.getServer().getOnlinePlayers()) {
-                    if (TexturePack.sendTexturePackToPlayer(player)) {
-                        sender.sendMessage("Sent texture pack to " + player.getName());
-                    } else {
-                        sender.sendMessage("An error occurred sending the texture pack to " + player.getName());
-                    }
-                }
-            }
-        } else if (args[0].equalsIgnoreCase("generate")) {
-            if (!RavelDatapack.shouldResourcePack()) {
-                sender.sendMessage("This server does not use the resource pack.");
-                return true;
-            }
-
-            if (sender instanceof Player player) {
-                if (!player.isOp()) {
-                    sender.sendMessage("You must be an op to do this.");
-                    return true;
-                }
-            }
-
-            sender.sendMessage("Regenerating texture pack...");
-            if (TexturePack.generatePack()) {
-                sender.sendMessage("Done!");
-            } else {
-                sender.sendMessage("Failed!");
-            }
-        } else if (args[0].equalsIgnoreCase("allitems")) {
+        if (args[0].equalsIgnoreCase("allitems")) {
             if (!(sender instanceof Player player)) {
                 sender.sendMessage("You must be a player to do this.");
                 return true;
@@ -109,7 +60,7 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
 
-            if (args.length != 2 && args.length != 3) {
+            if (args.length != 2) {
                 sender.sendMessage("Usage: /raveldatapack map <url>");
                 return true;
             }
@@ -126,11 +77,6 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
 
             ItemStack map = new ItemStack(Material.FILLED_MAP);
             MapMeta meta = (MapMeta) map.getItemMeta();
-            if (args.length == 3) {
-                meta.displayName(Component.text(ChatColor.AQUA + args[2]));
-            } else {
-                meta.displayName(Component.text(ChatColor.AQUA + "Custom Map"));
-            }
             meta.setMapView(view);
             map.setItemMeta(meta);
 
@@ -147,12 +93,6 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
 
     private void sendHelp(CommandSender sender, boolean isOp) {
         String sendgen = "";
-        if (RavelDatapack.shouldResourcePack()) {
-            sendgen = "\n - send";
-            if (isOp) {
-                sendgen += "\n - generate";
-            }
-        }
         if (isOp) {
             sendgen += "\n - allitems";
             sendgen += "\n - map <url>";
@@ -165,13 +105,6 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         List<String> cmd = new ArrayList<>();
         if (args.length == 1) {
-            if (RavelDatapack.shouldResourcePack()) {
-                cmd.add("send");
-                if (sender.isOp()) {
-                    cmd.add("generate");
-                }
-            }
-
             if (sender.isOp()) {
                 cmd.add("allitems");
                 cmd.add("map");

@@ -6,13 +6,12 @@ import com.connexal.raveldatapack.commands.RavelSchematicCommand;
 import com.connexal.raveldatapack.items.CustomItem;
 import com.connexal.raveldatapack.listeners.DimensionListener;
 import com.connexal.raveldatapack.listeners.EnchantmentListener;
+import com.connexal.raveldatapack.listeners.EventListener;
 import com.connexal.raveldatapack.managers.*;
-import com.connexal.raveldatapack.pack.TexturePack;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.geysermc.floodgate.api.FloodgateApi;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -30,9 +29,6 @@ public final class RavelDatapack extends JavaPlugin {
     private static MapManager mapManager = null;
     private static DimensionManager dimensionManager = null;
 
-    private static boolean useResourcePack = true;
-    private static boolean floodgateAPI = false;
-
     @Override
     public void onEnable() {
         instance = this;
@@ -46,20 +42,7 @@ public final class RavelDatapack extends JavaPlugin {
         mapManager = new MapManager();
         dimensionManager = new DimensionManager();
 
-        if (this.getServer().getPluginManager().getPlugin("floodgate") != null) {
-            if (FloodgateApi.getInstance() != null) {
-                floodgateAPI = true;
-            }
-        }
-
         this.saveDefaultConfig();
-
-        if (this.getConfig().contains("useResourcePack")) {
-            useResourcePack = this.getConfig().getBoolean("useResourcePack");
-        } else {
-            this.getConfig().set("useResourcePack", true);
-            this.saveConfig();
-        }
 
         log.info(String.format("[%s] Registered %d custom enchantments", getDescription().getName(), enchantmentManager.init()));
         log.info(String.format("[%s] Registered %d custom items", getDescription().getName(), itemManager.init()));
@@ -68,14 +51,12 @@ public final class RavelDatapack extends JavaPlugin {
         mapManager.init();
 
         log.info(String.format("[%s] Adding commands", getDescription().getName()));
-        this.getCommand("raveldatapack").setExecutor(new RavelDatapackCommand(this));
+        this.getCommand("raveldatapack").setExecutor(new RavelDatapackCommand());
         this.getCommand("ravelschematic").setExecutor(new RavelSchematicCommand());
         this.getCommand("ravelbiome").setExecutor(new RavelBiomeCommand());
 
-        log.info(String.format("[%s] Initialising texture pack", getDescription().getName()));
-        TexturePack.init();
-
         log.info(String.format("[%s] Registering events", getDescription().getName()));
+        instance.getServer().getPluginManager().registerEvents(new EventListener(), this);
         instance.getServer().getPluginManager().registerEvents(new EnchantmentListener(), this);
         instance.getServer().getPluginManager().registerEvents(new DimensionListener(), this);
 
@@ -168,14 +149,6 @@ public final class RavelDatapack extends JavaPlugin {
 
     public static ConfigManager.YmlConfig getConfig(String name) {
         return configManager.getConfig(name);
-    }
-
-    public static boolean isFloodgateAPI() {
-        return floodgateAPI;
-    }
-
-    public static boolean shouldResourcePack() {
-        return useResourcePack;
     }
 
     public static long getSeed() {

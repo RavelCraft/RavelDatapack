@@ -1,7 +1,6 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.pack.TexturePack;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import org.bukkit.entity.Player;
@@ -49,10 +48,7 @@ public class PluginMessageManager implements PluginMessageListener {
     }
 
     private void runVelocityCmd(PluginMessageData data) {
-        if (data.cmd().equalsIgnoreCase("sendresourcepack")) {
-            Player target = RavelDatapack.getInstance().getServer().getPlayer(data.uuid());
-            TexturePack.sendTexturePackToPlayer(target);
-        }
+
     }
 
     public void readQueuedPluginMessages() {

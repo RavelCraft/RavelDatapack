@@ -1,4 +1,0 @@
-useResourcePack: true
-pathToExportZip: /var/www/html/texturepack.zip
-webServerTexturePackPath: https://example.com/texturepack.zip
-packVersion: 0
