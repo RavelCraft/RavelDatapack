@@ -14,6 +14,7 @@ public class PartyHat extends CustomItem {
         super();
         this.customModelData = customModelData;
         this.namespaceKey = "party_hat";
+        this.isHat = true;
     }
 
     @Override

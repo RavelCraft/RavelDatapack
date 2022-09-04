@@ -14,6 +14,7 @@ public class Antlers extends CustomItem {
         super();
         this.customModelData = customModelData;
         this.namespaceKey = "antlers";
+        this.isHat = true;
     }
 
     @Override

@@ -22,12 +22,12 @@ public class AetherChunkGenerator extends CustomChunkGenerator {
     public AetherChunkGenerator(BiomeProvider biomeProvider) {
         super(biomeProvider, new AetherStructurePopulator(), new AetherTreePopulator(), new AetherPlantPopulator(), new AetherOrePopulator());
 
-        AetherBiome.registerBiome(new BirchForestBiome());
+        AetherBiome.registerBiome(new TntHavenBiome());
         AetherBiome.registerBiome(new DarkForestBiome());
         AetherBiome.registerBiome(new DarkMesaBiome());
         AetherBiome.registerBiome(new DesertBiome());
-        AetherBiome.registerBiome(new OakForestBiome());
-        AetherBiome.registerBiome(new JungleBiome());
+        AetherBiome.registerBiome(new PrismarineHillsBiome());
+        AetherBiome.registerBiome(new CrystalFieldsBiome());
         AetherBiome.registerBiome(new CrimsonFungusRocksBiome());
         AetherBiome.registerBiome(new OasisBiome());
         AetherBiome.registerBiome(new PlainsBiome());
@@ -35,7 +35,7 @@ public class AetherChunkGenerator extends CustomChunkGenerator {
         AetherBiome.registerBiome(new RosePlainsBiome());
         AetherBiome.registerBiome(new IceMushroomForestBiome());
         AetherBiome.registerBiome(new JibstoneBiome());
-        AetherBiome.registerBiome(new TaigaBiome());
+        AetherBiome.registerBiome(new BurnedForestBiome());
         AetherBiome.registerBiome(new WastelandsBiome());
     }
 

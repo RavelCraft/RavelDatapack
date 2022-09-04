@@ -14,6 +14,7 @@ public class ElfEars extends CustomItem {
         super();
         this.customModelData = customModelData;
         this.namespaceKey = "elf_ears";
+        this.isHat = true;
     }
 
     @Override

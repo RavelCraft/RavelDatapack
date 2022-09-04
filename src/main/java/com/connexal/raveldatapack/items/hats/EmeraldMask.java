@@ -14,6 +14,7 @@ public class EmeraldMask extends CustomItem {
         super();
         this.customModelData = customModelData;
         this.namespaceKey = "emerald_mask";
+        this.isHat = true;
     }
 
     @Override

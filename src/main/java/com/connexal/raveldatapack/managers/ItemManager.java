@@ -5,17 +5,13 @@ import com.connexal.raveldatapack.items.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ItemManager {
-    private final HashMap<String, CustomItem> items = new HashMap<>();
+    private final Map<Integer, CustomItem> items = new HashMap<>();
 
     private int registeredCount = 0;
 
-    /**
-     * Initialise all custom items
-     *
-     * @return The number of custom items initialised
-     */
     public int init() {
         this.registerCustomItem(new BolterItem(295304));
         this.registerCustomItem(new BoltItem(450256));
@@ -46,11 +42,6 @@ public class ItemManager {
         return registeredCount;
     }
 
-    /**
-     * Register a {@link CustomItem}
-     *
-     * @param item {@link CustomItem} to register
-     */
     public void registerCustomItem(CustomItem item) {
         if (RavelDatapack.getInstance().getConfig().contains("item." + item.getNamespaceKey())) {
             if (!RavelDatapack.getInstance().getConfig().getBoolean("item." + item.getNamespaceKey())) {
@@ -62,50 +53,34 @@ public class ItemManager {
             return;
         }
 
+        if (this.items.containsKey(item.getCustomModelData())) {
+            RavelDatapack.getInstance().getLogger().warning("Custom model data " + item.getCustomModelData() + " is already registered for " + item.getNamespaceKey() + "!");
+            return;
+        }
+
         item.create();
 
-        this.items.put(item.getNamespaceKey(), item);
+        this.items.put(item.getCustomModelData(), item);
         registeredCount++;
     }
 
-    /**
-     * Get all the custom items
-     *
-     * @return A {@link Map<String, CustomItem>} of all the custom items registered (by namespace key)
-     */
-    public HashMap<String, CustomItem> getItems() {
+    public Map<Integer, CustomItem> getItems() {
         return this.items;
     }
 
     public Integer getCustomModelData(String namespaceKey) {
-        CustomItem item = this.items.get(namespaceKey);
-        return item.getCustomModelData();
-    }
-
-    /**
-     * Get an {@link ItemStack} of a {@link CustomItem} by its namespace key
-     *
-     * @param namespaceKey Namespace key of the {@link ItemStack}
-     * @return The {@link ItemStack}
-     */
-    public ItemStack getItem(String namespaceKey) {
-        if (!this.items.containsKey(namespaceKey)) {
-            return null;
+        for (CustomItem item : this.items.values()) {
+            if (item.getNamespaceKey().equals(namespaceKey)) {
+                return item.getCustomModelData();
+            }
         }
 
-        CustomItem item = this.items.get(namespaceKey);
-        return item.getItemStack();
+        return null;
     }
 
-    /**
-     * Get the {@link ItemStack} of a {@link CustomItem} by its custom model data
-     *
-     * @param customModelData Custom model data of the {@link CustomItem}
-     * @return The {@link ItemStack}
-     */
-    public ItemStack getItem(Integer customModelData) {
+    public ItemStack getItem(String namespaceKey) {
         for (CustomItem item : this.items.values()) {
-            if (item.getCustomModelData().equals(customModelData)) {
+            if (item.getNamespaceKey().equals(namespaceKey)) {
                 return item.getItemStack();
             }
         }
@@ -113,43 +88,8 @@ public class ItemManager {
         return null;
     }
 
-    /**
-     * Get the {@link CustomItem} by its namespace key by its custom model data
-     *
-     * @param customModelData Custom model data of the {@link CustomItem}
-     * @return The namespace key
-     */
-    public String getNamespaceKey(Integer customModelData) {
-        for (CustomItem item : this.items.values()) {
-            if (item.getCustomModelData().equals(customModelData)) {
-                return item.getNamespaceKey();
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Get if an {@link ItemStack} is a custom item
-     *
-     * @param item The {@link ItemStack} to check
-     * @return True if the {@link ItemStack} is a custom item
-     */
-    public boolean isCustomItem(ItemStack item) {
-        if (!item.hasItemMeta()) {
-            return false;
-        }
-        if (!item.getItemMeta().hasCustomModelData()) {
-            return false;
-        }
-        Integer customModelData = item.getItemMeta().getCustomModelData();
-
-        for (CustomItem customItem : this.items.values()) {
-            if (customItem.getCustomModelData().equals(customModelData)) {
-                return true;
-            }
-        }
-
-        return false;
+    public ItemStack getItem(Integer customModelData) {
+        CustomItem item = this.items.get(customModelData);
+        return item == null ? null : item.getItemStack();
     }
 }

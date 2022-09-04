@@ -14,6 +14,7 @@ public class TopHat extends CustomItem {
         super();
         this.customModelData = customModelData;
         this.namespaceKey = "top_hat";
+        this.isHat = true;
     }
 
     @Override

@@ -16,58 +16,33 @@ import java.util.UUID;
 
 public abstract class CustomItem {
     protected ItemStack itemStack;
-    protected Integer customModelData;
+    protected int customModelData;
     protected String namespaceKey;
+    protected boolean isHat = false;
     protected final RavelDatapack instance = RavelDatapack.getInstance();
 
-    /**
-     * Create the {@link ItemStack}
-     */
     public abstract void create();
 
-    /**
-     * Get the generated {@link ItemStack}
-     *
-     * @return The item
-     */
     public ItemStack getItemStack() {
         return this.itemStack;
     }
 
-    /**
-     * Get the custom model data
-     *
-     * @return The custom model data
-     */
-    public Integer getCustomModelData() {
+    public int getCustomModelData() {
         return this.customModelData;
     }
 
-    /**
-     * Get the namespace key
-     *
-     * @return The namespace key
-     */
     public String getNamespaceKey() {
         return this.namespaceKey;
     }
 
-    /**
-     * Create an {@link ItemMeta}
-     *
-     * @return The created {@link ItemMeta}
-     */
+    public boolean isHat() {
+        return this.isHat;
+    }
+
     public ItemMeta createItemMeta() {
         return this.createItemMeta(true, true);
     }
 
-    /**
-     * Create an {@link ItemMeta}
-     *
-     * @param hideFlags   Hide the item information
-     * @param unbreakable Is the item unbreakable
-     * @return The created item meta
-     */
     public ItemMeta createItemMeta(boolean hideFlags, boolean unbreakable) {
         ItemMeta meta = this.itemStack.getItemMeta();
 
@@ -84,41 +59,18 @@ public abstract class CustomItem {
         return meta;
     }
 
-    /**
-     * Get the {@link ItemMeta}
-     *
-     * @return The {@link ItemMeta}
-     */
     public ItemMeta getItemMeta() {
         return this.itemStack.getItemMeta();
     }
 
-    /**
-     * Set the {@link ItemMeta}
-     *
-     * @param itemMeta The {@link ItemMeta}
-     */
     public void setItemMeta(ItemMeta itemMeta) {
         this.itemStack.setItemMeta(itemMeta);
     }
 
-    /**
-     * Set the item's lore
-     *
-     * @param meta The {@link ItemMeta}
-     * @param lore The lore
-     */
     public void setItemLore(ItemMeta meta, String... lore) {
         this.setItemLore(meta, true, lore);
     }
 
-    /**
-     * Set the item's lore
-     *
-     * @param meta       The {@link ItemMeta}
-     * @param addSpacing Add spacing between the lore and the item name/enchantments
-     * @param lore       The lore
-     */
     public void setItemLore(ItemMeta meta, boolean addSpacing, String... lore) {
         List<Component> loreList = new ArrayList<>();
         if (addSpacing) {
@@ -131,24 +83,10 @@ public abstract class CustomItem {
         meta.lore(loreList);
     }
 
-    /**
-     * Set the item's attack damage
-     *
-     * @param meta   The {@link ItemMeta}
-     * @param damage The damage to set
-     * @param slot   The {@link EquipmentSlot} that the item must be in to make this work
-     */
     public void setAttackDamage(ItemMeta meta, double damage, EquipmentSlot slot) {
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", damage - 2, AttributeModifier.Operation.ADD_NUMBER, slot));
     }
 
-    /**
-     * Set the item's attack speed
-     *
-     * @param meta  The {@link ItemMeta}
-     * @param speed The speed to set
-     * @param slot  The {@link EquipmentSlot} that the item must be in to make this work
-     */
     public void setAttackSpeed(ItemMeta meta, double speed, EquipmentSlot slot) {
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", speed - 4, AttributeModifier.Operation.ADD_NUMBER, slot));
     }

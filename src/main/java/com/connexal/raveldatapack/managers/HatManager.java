@@ -5,11 +5,13 @@ import com.connexal.raveldatapack.items.CustomItem;
 import com.connexal.raveldatapack.items.hats.*;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -20,15 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HatManager implements Listener {
-    private final Map<String, CustomItem> hats = new HashMap<>();
+    private final Map<Integer, CustomItem> hats = new HashMap<>();
 
     private int registeredCount = 0;
 
-    /**
-     * Initialise all the custom hats
-     *
-     * @return The number of custom hats initialised
-     */
     public int init() {
         this.registerCustomHat(new PartyHat(175207));
         this.registerCustomHat(new SantaHat(528514));
@@ -45,12 +42,6 @@ public class HatManager implements Listener {
         return registeredCount;
     }
 
-    /**
-     * Register a custom hat
-     *
-     * @param item The custom hat to register
-     * @see CustomItem
-     */
     public void registerCustomHat(CustomItem item) {
         if (RavelDatapack.getInstance().getConfig().contains("hat." + item.getNamespaceKey())) {
             if (!RavelDatapack.getInstance().getConfig().getBoolean("hat." + item.getNamespaceKey())) {
@@ -62,9 +53,14 @@ public class HatManager implements Listener {
             return;
         }
 
+        if (this.hats.containsKey(item.getCustomModelData())) {
+            RavelDatapack.getInstance().getLogger().warning("Custom model data " + item.getCustomModelData() + " is already registered for " + item.getNamespaceKey() + "!");
+            return;
+        }
+
         item.create();
 
-        this.hats.put(item.getNamespaceKey(), item);
+        this.hats.put(item.getCustomModelData(), item);
         registeredCount++;
     }
 
@@ -97,55 +93,49 @@ public class HatManager implements Listener {
     }
 
     @EventHandler
-    public void onInventoryClickEvent(InventoryClickEvent inventoryClickEvent) {
-        Inventory inventory = inventoryClickEvent.getClickedInventory();
-        ItemStack cursor = inventoryClickEvent.getCursor();
+    public void onInventoryCreativeEvent(InventoryCreativeEvent event) {
+        event.setCancelled(this.onInventoryClickEventInternal(event.getClickedInventory(), event.getCursor(), event.getSlotType(), event.getSlot(), event.getCurrentItem(), event.getWhoClicked()));
+    }
+
+    @EventHandler
+    public void onInventoryClickEvent(InventoryClickEvent event) {
+        event.setCancelled(this.onInventoryClickEventInternal(event.getClickedInventory(), event.getCursor(), event.getSlotType(), event.getSlot(), event.getCurrentItem(), event.getWhoClicked()));
+    }
+
+    private boolean onInventoryClickEventInternal(Inventory inventory, ItemStack cursor, InventoryType.SlotType slotType, int slot, ItemStack current, HumanEntity whoClicked) {
         if (inventory == null) {
-            return;
+            return false;
         }
-        if (!inventory.getType().equals(InventoryType.PLAYER) || inventoryClickEvent.getSlotType() != InventoryType.SlotType.ARMOR) {
-            return;
+        if (!inventory.getType().equals(InventoryType.PLAYER) || slotType != InventoryType.SlotType.ARMOR) {
+            return false;
         }
         if (cursor == null) {
-            return;
+            return false;
         }
         if (!this.isCustomHat(cursor)) {
-            return;
+            return false;
         }
 
-        if (inventoryClickEvent.getSlot() != 39) {
-            inventoryClickEvent.setCancelled(true);
-            return;
+        if (slot != 39) {
+            return true;
         }
-
-        ItemStack current = inventoryClickEvent.getCurrentItem();
-        inventoryClickEvent.setCancelled(true);
 
         if (current == null || current.getType() == Material.AIR) {
-            inventoryClickEvent.getWhoClicked().getInventory().setHelmet(cursor.clone());
+            whoClicked.getInventory().setHelmet(cursor.clone());
             cursor.setAmount(0);
         } else {
             ItemStack newCursor = current.clone();
-            inventoryClickEvent.getWhoClicked().getInventory().setHelmet(cursor.clone());
-            inventoryClickEvent.getWhoClicked().setItemOnCursor(newCursor);
+            whoClicked.getInventory().setHelmet(cursor.clone());
+            whoClicked.setItemOnCursor(newCursor);
         }
+
+        return true;
     }
 
-    /**
-     * Get all the custom hats
-     *
-     * @return A {@link Map<String, CustomItem>} of all the custom hats registered (by namespace key)
-     */
-    public Map<String, CustomItem> getItems() {
+    public Map<Integer, CustomItem> getItems() {
         return this.hats;
     }
 
-    /**
-     * Check if an {@link ItemStack} is a custom hat
-     *
-     * @param item The {@link ItemStack} to check
-     * @return True if the {@link ItemStack} is a custom hat, false otherwise
-     */
     public boolean isCustomHat(ItemStack item) {
         if (!item.hasItemMeta()) {
             return false;
@@ -153,10 +143,10 @@ public class HatManager implements Listener {
         if (!item.getItemMeta().hasCustomModelData()) {
             return false;
         }
-        Integer customModelData = item.getItemMeta().getCustomModelData();
 
+        int customModelData = item.getItemMeta().getCustomModelData();
         for (CustomItem customItem : this.hats.values()) {
-            if (customItem.getCustomModelData().equals(customModelData)) {
+            if (customItem.getCustomModelData() == customModelData) {
                 return true;
             }
         }

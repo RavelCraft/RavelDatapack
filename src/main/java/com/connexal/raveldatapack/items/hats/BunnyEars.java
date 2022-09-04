@@ -14,6 +14,7 @@ public class BunnyEars extends CustomItem {
         super();
         this.customModelData = customModelData;
         this.namespaceKey = "bunny_ears";
+        this.isHat = true;
     }
 
     @Override

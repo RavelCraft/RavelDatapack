@@ -1,8 +1,7 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
-import org.bukkit.Location;
+import com.connexal.raveldatapack.dimensions.aether.assets.CrystalTreeSpawner;
 import org.bukkit.Material;
-import org.bukkit.TreeType;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
@@ -10,15 +9,15 @@ import org.bukkit.generator.WorldInfo;
 
 import java.util.Random;
 
-public class OakForestBiome extends AetherBiome {
+public class CrystalFieldsBiome extends AetherBiome {
     @Override
     public Biome getVanillaBiome() {
-        return Biome.FOREST;
+        return Biome.JUNGLE;
     }
 
     @Override
     public String getName() {
-        return "Oak Forest";
+        return "Crystal Fields";
     }
 
     @Override
@@ -27,9 +26,19 @@ public class OakForestBiome extends AetherBiome {
 
         for (int y = minY; y < maxY; y++) {
             if (y == maxY - 1) {
-                chunkData.setBlock(x, y, z, Material.GRASS_BLOCK);
+                if (random.nextInt(4) == 0) {
+                    chunkData.setBlock(x, y, z, Material.BUDDING_AMETHYST);
+
+                    switch (random.nextInt(5)) {
+                        case 0 -> chunkData.setBlock(x, y + 1, z, Material.SMALL_AMETHYST_BUD);
+                        case 1 -> chunkData.setBlock(x, y + 1, z, Material.MEDIUM_AMETHYST_BUD);
+                        case 2 -> chunkData.setBlock(x, y + 1, z, Material.LARGE_AMETHYST_BUD);
+                    }
+                } else {
+                    chunkData.setBlock(x, y, z, Material.AMETHYST_BLOCK);
+                }
             } else if (y > maxY - underCoverDepth) {
-                chunkData.setBlock(x, y, z, Material.DIRT);
+                chunkData.setBlock(x, y, z, Material.AMETHYST_BLOCK);
             } else {
                 chunkData.setBlock(x, y, z, AetherBiome.getRandomGroundMaterial(random));
             }
@@ -39,28 +48,26 @@ public class OakForestBiome extends AetherBiome {
     @Override
     public boolean canReplaceMaterial(Material replaceable, Material ground) {
         boolean replaceableOk = replaceable == Material.AIR ||
-                replaceable == Material.GRASS;
+                replaceable == Material.SMALL_AMETHYST_BUD ||
+                replaceable == Material.MEDIUM_AMETHYST_BUD ||
+                replaceable == Material.LARGE_AMETHYST_BUD;
 
-        boolean groundOk = ground == Material.DIRT ||
-                ground == Material.GRASS_BLOCK;
+        boolean groundOk = ground == Material.AMETHYST_BLOCK ||
+                ground == Material.BUDDING_AMETHYST;
 
         return replaceableOk && groundOk;
     }
 
     @Override
     public void spawnTree(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
-        Location location = new Location(null, x, y, z);
-        limitedRegion.generateTree(location, random, random.nextInt(4) == 0 ? TreeType.TREE : TreeType.BIG_TREE);
+        if (random.nextInt(4) == 0) {
+            CrystalTreeSpawner.spawn(x, y, z, limitedRegion, random);
+        }
     }
 
     @Override
     public void spawnPlant(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
-        int randomPlant = random.nextInt(20);
-        if (randomPlant == 0) {
-            limitedRegion.setType(x, y, z, random.nextBoolean() ? Material.RED_MUSHROOM : Material.BROWN_MUSHROOM);
-        } else {
-            limitedRegion.setType(x, y, z, Material.GRASS);
-        }
+        //None
     }
 
     @Override

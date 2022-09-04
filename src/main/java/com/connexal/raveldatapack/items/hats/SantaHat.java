@@ -14,6 +14,7 @@ public class SantaHat extends CustomItem {
         super();
         this.customModelData = customModelData;
         this.namespaceKey = "santa_hat";
+        this.isHat = true;
     }
 
     @Override

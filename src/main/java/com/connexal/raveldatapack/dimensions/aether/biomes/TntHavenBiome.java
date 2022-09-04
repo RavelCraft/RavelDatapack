@@ -1,8 +1,6 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.TreeType;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
@@ -10,15 +8,15 @@ import org.bukkit.generator.WorldInfo;
 
 import java.util.Random;
 
-public class TaigaBiome extends AetherBiome {
+public class TntHavenBiome extends AetherBiome {
     @Override
     public Biome getVanillaBiome() {
-        return Biome.TAIGA;
+        return Biome.BIRCH_FOREST;
     }
 
     @Override
     public String getName() {
-        return "Taiga";
+        return "Tnt Haven";
     }
 
     @Override
@@ -26,10 +24,17 @@ public class TaigaBiome extends AetherBiome {
         int underCoverDepth = random.nextInt(3) + 3;
 
         for (int y = minY; y < maxY; y++) {
-            if (y == maxY - 1) {
-                chunkData.setBlock(x, y, z, Material.GRASS_BLOCK);
-            } else if (y > maxY - underCoverDepth) {
-                chunkData.setBlock(x, y, z, Material.DIRT);
+            if (y > maxY - underCoverDepth) {
+                int tmp = random.nextInt(8);
+                if (tmp < 1) {
+                    chunkData.setBlock(x, y, z, Material.TNT);
+                } else if (tmp < 4) {
+                    chunkData.setBlock(x, y, z, Material.RED_CONCRETE);
+                } else if (tmp < 6) {
+                    chunkData.setBlock(x, y, z, Material.RED_CONCRETE_POWDER);
+                } else {
+                    chunkData.setBlock(x, y, z, Material.RED_TERRACOTTA);
+                }
             } else {
                 chunkData.setBlock(x, y, z, AetherBiome.getRandomGroundMaterial(random));
             }
@@ -38,28 +43,33 @@ public class TaigaBiome extends AetherBiome {
 
     @Override
     public boolean canReplaceMaterial(Material replaceable, Material ground) {
-        boolean replaceableOk = replaceable == Material.AIR ||
-                replaceable == Material.GRASS;
+        boolean replaceableOk = replaceable == Material.AIR;
 
-        boolean groundOk = ground == Material.DIRT ||
-                ground == Material.GRASS_BLOCK;
+        boolean groundOk = ground == Material.RED_TERRACOTTA ||
+                ground == Material.RED_CONCRETE ||
+                ground == Material.RED_CONCRETE_POWDER ||
+                ground == Material.TNT;
 
         return replaceableOk && groundOk;
     }
 
     @Override
     public void spawnTree(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
-        Location location = new Location(null, x, y, z);
-        limitedRegion.generateTree(location, random, random.nextInt(4) == 0 ? TreeType.REDWOOD : TreeType.TALL_REDWOOD);
+        if (random.nextBoolean()) {
+            int height = random.nextInt(4) + 1;
+            for (int i = 0; i < height; i++) {
+                limitedRegion.setType(x, y + i, z, Material.TNT);
+            }
+        }
     }
 
     @Override
     public void spawnPlant(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
-        limitedRegion.setType(x, y, z, Material.GRASS);
+        //No plants
     }
 
     @Override
     public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
-        //No structures
+        // No structures
     }
 }

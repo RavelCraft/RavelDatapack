@@ -13,7 +13,8 @@ import org.bukkit.generator.WorldInfo;
 import org.bukkit.profile.PlayerTextures;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Random;
+import java.util.UUID;
 
 public class CrimsonFungusRocksBiome extends AetherBiome {
     @Override

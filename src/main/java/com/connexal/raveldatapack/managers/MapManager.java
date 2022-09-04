@@ -16,9 +16,6 @@ public class MapManager implements Listener {
     private final ConfigManager.YmlConfig dataYML = RavelDatapack.getConfig("data");
     private final Map<Integer, String> savedImages = new HashMap<>();
 
-    /**
-     * Initialises the data file.
-     */
     public void init() {
         RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
         loadImages();
@@ -39,20 +36,11 @@ public class MapManager implements Listener {
         }
     }
 
-    /**
-     * When a new map is created, save the ID and Image to data file
-     *
-     * @param id  Map ID
-     * @param url Image URL
-     */
     public void saveImage(Integer id, String url) {
         dataYML.getConfig().set("ids." + id, url);
         dataYML.saveConfig();
     }
 
-    /**
-     * Loads images from data file to HashMap.
-     */
     private void loadImages() {
         if (dataYML.getConfig().contains("ids"))
             dataYML.getConfig().getConfigurationSection("ids").getKeys(false).forEach(id -> {

@@ -4,6 +4,7 @@ import com.connexal.raveldatapack.commands.RavelBiomeCommand;
 import com.connexal.raveldatapack.commands.RavelDatapackCommand;
 import com.connexal.raveldatapack.commands.RavelSchematicCommand;
 import com.connexal.raveldatapack.items.CustomItem;
+import com.connexal.raveldatapack.listeners.BlockListener;
 import com.connexal.raveldatapack.listeners.DimensionListener;
 import com.connexal.raveldatapack.listeners.EnchantmentListener;
 import com.connexal.raveldatapack.listeners.EventListener;
@@ -25,6 +26,7 @@ public final class RavelDatapack extends JavaPlugin {
     private static PluginMessageManager pluginMessageManager = null;
     private static ItemManager itemManager = null;
     private static HatManager hatManager = null;
+    private static BlockManager blockManager = null;
     private static EnchantmentManager enchantmentManager = null;
     private static MapManager mapManager = null;
     private static DimensionManager dimensionManager = null;
@@ -38,6 +40,7 @@ public final class RavelDatapack extends JavaPlugin {
         pluginMessageManager = new PluginMessageManager();
         itemManager = new ItemManager();
         hatManager = new HatManager();
+        blockManager = new BlockManager();
         enchantmentManager = new EnchantmentManager();
         mapManager = new MapManager();
         dimensionManager = new DimensionManager();
@@ -47,6 +50,7 @@ public final class RavelDatapack extends JavaPlugin {
         log.info(String.format("[%s] Registered %d custom enchantments", getDescription().getName(), enchantmentManager.init()));
         log.info(String.format("[%s] Registered %d custom items", getDescription().getName(), itemManager.init()));
         log.info(String.format("[%s] Registered %d custom hats", getDescription().getName(), hatManager.init()));
+        log.info(String.format("[%s] Registered %d custom blocks", getDescription().getName(), blockManager.init()));
         log.info(String.format("[%s] Registered %d custom dimenstions", getDescription().getName(), dimensionManager.init()));
         mapManager.init();
 
@@ -59,6 +63,7 @@ public final class RavelDatapack extends JavaPlugin {
         instance.getServer().getPluginManager().registerEvents(new EventListener(), this);
         instance.getServer().getPluginManager().registerEvents(new EnchantmentListener(), this);
         instance.getServer().getPluginManager().registerEvents(new DimensionListener(), this);
+        instance.getServer().getPluginManager().registerEvents(new BlockListener(), this);
 
         log.info(String.format("[%s] Creating custom dimension worlds", getDescription().getName()));
         dimensionManager.createWorlds();
@@ -133,6 +138,10 @@ public final class RavelDatapack extends JavaPlugin {
 
     public static HatManager getHatManager() {
         return hatManager;
+    }
+
+    public static BlockManager getBlockManager() {
+        return blockManager;
     }
 
     public static EnchantmentManager getEnchantmentManager() {

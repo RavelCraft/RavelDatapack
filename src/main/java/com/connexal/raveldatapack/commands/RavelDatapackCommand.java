@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.commands;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.blocks.CustomBlock;
 import com.connexal.raveldatapack.enchantments.CustomEnchantment;
 import com.connexal.raveldatapack.items.CustomItem;
 import com.connexal.raveldatapack.maps.CustomMapRenderer;
@@ -46,6 +47,9 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
             }
             for (CustomEnchantment enchantment : RavelDatapack.getEnchantmentManager().getEnchantments()) {
                 player.getWorld().dropItem(player.getEyeLocation(), enchantment.getBook(enchantment.getMaxLevel()));
+            }
+            for (CustomBlock block : RavelDatapack.getBlockManager().getBlocks().values()) {
+                player.getWorld().dropItem(player.getEyeLocation(), block.createBlockItem());
             }
 
             sender.sendMessage(ChatColor.AQUA + "You were given all the items.");

@@ -8,15 +8,15 @@ import org.bukkit.generator.WorldInfo;
 
 import java.util.Random;
 
-public class DarkForestBiome extends AetherBiome {
+public class PrismarineHillsBiome extends AetherBiome {
     @Override
     public Biome getVanillaBiome() {
-        return Biome.DARK_FOREST;
+        return Biome.TAIGA;
     }
 
     @Override
     public String getName() {
-        return "Dark Forest";
+        return "Prismarine Hills";
     }
 
     @Override
@@ -25,16 +25,16 @@ public class DarkForestBiome extends AetherBiome {
 
         for (int y = minY; y < maxY; y++) {
             if (y == maxY - 1) {
-                chunkData.setBlock(x, y, z, Material.GRASS_BLOCK);
-
-                int tmp = random.nextInt(10);
-                if (tmp < 4) {
-                    chunkData.setBlock(x, y + 1, z, Material.GRASS);
-                } else if (tmp < 5) {
-                    chunkData.setBlock(x, y + 1, z, Material.FERN);
+                int tmp = random.nextInt(4);
+                if (tmp < 1) {
+                    chunkData.setBlock(x, y, z, Material.PRISMARINE_BRICKS);
+                } else if (tmp < 2) {
+                    chunkData.setBlock(x, y, z, Material.LIGHT_BLUE_STAINED_GLASS);
+                } else {
+                    chunkData.setBlock(x, y, z, Material.PRISMARINE);
                 }
             } else if (y > maxY - underCoverDepth) {
-                chunkData.setBlock(x, y, z, Material.DIRT);
+                chunkData.setBlock(x, y, z, Material.PRISMARINE);
             } else {
                 chunkData.setBlock(x, y, z, AetherBiome.getRandomGroundMaterial(random));
             }
@@ -43,27 +43,23 @@ public class DarkForestBiome extends AetherBiome {
 
     @Override
     public boolean canReplaceMaterial(Material replaceable, Material ground) {
-        boolean replaceableOk = replaceable == Material.AIR ||
-                replaceable == Material.GRASS ||
-                replaceable == Material.FERN;
+        boolean replaceableOk = replaceable == Material.AIR;
 
-        boolean groundOk = ground == Material.DIRT ||
-                ground == Material.GRASS_BLOCK;
+        boolean groundOk = ground == Material.PRISMARINE_BRICKS ||
+                ground == Material.LIGHT_BLUE_STAINED_GLASS ||
+                ground == Material.PRISMARINE;
 
         return replaceableOk && groundOk;
     }
 
     @Override
     public void spawnTree(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
-        //TODO
+        //No trees
     }
 
     @Override
     public void spawnPlant(LimitedRegion limitedRegion, int x, int y, int z, Random random) {
-        int randomPlant = random.nextInt(10);
-        if (randomPlant == 0) {
-            limitedRegion.setType(x, y, z, random.nextBoolean() ? Material.RED_MUSHROOM : Material.BROWN_MUSHROOM);
-        }
+        //No plants
     }
 
     @Override
