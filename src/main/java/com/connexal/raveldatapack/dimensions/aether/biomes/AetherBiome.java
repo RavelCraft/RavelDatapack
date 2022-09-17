@@ -7,6 +7,8 @@ import com.connexal.raveldatapack.utils.schematics.Schematics;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -96,6 +98,19 @@ public abstract class AetherBiome {
     }
 
     public abstract void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ);
+
+    public static boolean spawnEntity(Location location, EntityType original, Entity spawned, Biome biome) {
+        if (biomeMap.containsKey(biome)) {
+            return biomeMap.get(biome).spawnEntity(location, original, spawned);
+        }
+
+        RavelDatapack.getLog().warning("Unknown biome " + biome.toString());
+        return false;
+    }
+
+    public boolean spawnEntity(Location location, EntityType original, Entity spawned) {
+        return false;
+    }
 
     public static Material getRandomGroundMaterial(Random random) {
         int randomMaterial = random.nextInt(101);

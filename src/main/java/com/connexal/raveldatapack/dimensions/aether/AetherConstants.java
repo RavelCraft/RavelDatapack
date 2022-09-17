@@ -1,11 +1,8 @@
 package com.connexal.raveldatapack.dimensions.aether;
 
 import org.bukkit.Material;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.FaceAttachable;
+import org.bukkit.block.data.*;
 import org.bukkit.block.data.FaceAttachable.AttachedFace;
-import org.bukkit.block.data.Snowable;
-import org.bukkit.block.data.Waterlogged;
 import org.bukkit.block.data.type.Bamboo;
 import org.bukkit.block.data.type.Leaves;
 
@@ -28,16 +25,24 @@ public class AetherConstants {
     public static final int PLANT_DENSITY = 50;
 
     public static final BlockData DEAD_FIRE_CORAL_BLOCK_DATA;
+    public static final BlockData DEAD_BRAIN_CORAL_BLOCK_DATA;
     public static final BlockData SNOWY_GRASS_BLOCK_DATA;
     public static final BlockData JUNGLE_LEAVES_BLOCK_DATA;
     public static final BlockData BAMBOO_LEAVES_BLOCK_DATA;
+    public static final BlockData BIRCH_LEAVES_BLOCK_DATA;
+    public static final BlockData SPRUCE_LEAVES_BLOCK_DATA;
     public static final BlockData AZALEA_LEAVES_BLOCK_DATA;
     public static final BlockData FLOWERING_AZALEA_LEAVES_BLOCK_DATA;
     public static final BlockData BOTTOM_POLISHED_BLACKSTONE_BUTTON_DATA;
+    public static final BlockData UPPER_ROSE_BUSH_BLOCK_DATA;
+    public static final BlockData UPPER_SMALL_DRIPLEAF_BLOCK_DATA;
 
     static {
         DEAD_FIRE_CORAL_BLOCK_DATA = Material.DEAD_FIRE_CORAL.createBlockData();
         ((Waterlogged) DEAD_FIRE_CORAL_BLOCK_DATA).setWaterlogged(false);
+
+        DEAD_BRAIN_CORAL_BLOCK_DATA = Material.DEAD_BRAIN_CORAL.createBlockData();
+        ((Waterlogged) DEAD_BRAIN_CORAL_BLOCK_DATA).setWaterlogged(false);
 
         SNOWY_GRASS_BLOCK_DATA = Material.GRASS_BLOCK.createBlockData();
         ((Snowable) SNOWY_GRASS_BLOCK_DATA).setSnowy(true);
@@ -48,6 +53,12 @@ public class AetherConstants {
         BAMBOO_LEAVES_BLOCK_DATA = Material.BAMBOO.createBlockData();
         ((Bamboo) BAMBOO_LEAVES_BLOCK_DATA).setLeaves(Bamboo.Leaves.LARGE);
 
+        BIRCH_LEAVES_BLOCK_DATA = Material.BIRCH_LEAVES.createBlockData();
+        ((Leaves) BIRCH_LEAVES_BLOCK_DATA).setPersistent(true);
+
+        SPRUCE_LEAVES_BLOCK_DATA = Material.SPRUCE_LEAVES.createBlockData();
+        ((Leaves) SPRUCE_LEAVES_BLOCK_DATA).setPersistent(true);
+
         BOTTOM_POLISHED_BLACKSTONE_BUTTON_DATA = Material.POLISHED_BLACKSTONE_BUTTON.createBlockData();
         ((FaceAttachable) BOTTOM_POLISHED_BLACKSTONE_BUTTON_DATA).setAttachedFace(AttachedFace.FLOOR);
 
@@ -56,5 +67,11 @@ public class AetherConstants {
 
         FLOWERING_AZALEA_LEAVES_BLOCK_DATA = Material.FLOWERING_AZALEA_LEAVES.createBlockData();
         ((Leaves) FLOWERING_AZALEA_LEAVES_BLOCK_DATA).setPersistent(true);
+
+        UPPER_ROSE_BUSH_BLOCK_DATA = Material.ROSE_BUSH.createBlockData();
+        ((Bisected) UPPER_ROSE_BUSH_BLOCK_DATA).setHalf(Bisected.Half.TOP);
+
+        UPPER_SMALL_DRIPLEAF_BLOCK_DATA = Material.SMALL_DRIPLEAF.createBlockData();
+        ((Bisected) UPPER_SMALL_DRIPLEAF_BLOCK_DATA).setHalf(Bisected.Half.TOP);
     }
 }

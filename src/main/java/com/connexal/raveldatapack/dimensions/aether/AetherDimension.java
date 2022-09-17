@@ -7,6 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -67,5 +69,10 @@ public class AetherDimension extends CustomDimension {
     @Override
     public String getBiomeName(Biome biome) {
         return AetherBiome.getBiomeName(biome);
+    }
+
+    @Override
+    public boolean spawnEntity(Location location, EntityType original, Entity spawned) {
+        return AetherBiome.spawnEntity(location, original, spawned, location.getBlock().getBiome());
     }
 }

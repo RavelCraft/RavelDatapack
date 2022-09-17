@@ -12,7 +12,7 @@ import java.util.Random;
 public class CrystalFieldsBiome extends AetherBiome {
     @Override
     public Biome getVanillaBiome() {
-        return Biome.JUNGLE;
+        return Biome.FOREST;
     }
 
     @Override

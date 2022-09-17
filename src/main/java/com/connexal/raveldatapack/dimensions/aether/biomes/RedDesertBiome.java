@@ -67,6 +67,10 @@ public class RedDesertBiome extends AetherBiome {
 
     @Override
     public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
+        if (random.nextInt(8) != 0) {
+            return;
+        }
+
         Schematic schematic;
         if (random.nextBoolean()) {
             schematic = this.getSchematicFromCache("redDesertHouse1");

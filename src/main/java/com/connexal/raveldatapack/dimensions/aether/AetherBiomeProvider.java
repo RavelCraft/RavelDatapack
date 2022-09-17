@@ -43,19 +43,17 @@ public class AetherBiomeProvider extends BiomeProvider {
             } else {
                 return Biome.PLAINS;
             }
-        } else if (noise < 1.4) { // Medium
+        } else if (noise < 1.5) { // Medium
             if (voronoi < 0.15) {
                 return Biome.BIRCH_FOREST;
             } else if (voronoi < 0.3) {
-                return Biome.FOREST;
-            } else if (voronoi < 0.45) {
-                return Biome.TAIGA;
-            } else if (voronoi < 0.6) {
                 return Biome.JUNGLE;
+            } else if (voronoi < 0.6) {
+                return Biome.TAIGA;
             } else {
-                return Biome.DARK_FOREST;
+                return Biome.FOREST;
             }
-        } else if (noise < 1.8) { // Tropical
+        } else if (noise < 1.7) { // Tropical
             if (voronoi < 0.3) {
                 return Biome.BADLANDS; //Mesa
             } else if (voronoi < 0.4) {
@@ -76,6 +74,6 @@ public class AetherBiomeProvider extends BiomeProvider {
 
     @Override
     public @NotNull List<Biome> getBiomes(@NotNull WorldInfo worldInfo) {
-        return Arrays.asList(Biome.SNOWY_TAIGA, Biome.SNOWY_PLAINS, Biome.MEADOW, Biome.PLAINS, Biome.BIRCH_FOREST, Biome.FOREST, Biome.TAIGA, Biome.DARK_FOREST, Biome.JUNGLE, Biome.BADLANDS, Biome.ERODED_BADLANDS, Biome.BEACH, Biome.WOODED_BADLANDS, Biome.SAVANNA_PLATEAU, Biome.DESERT);
+        return Arrays.asList(Biome.SNOWY_TAIGA, Biome.SNOWY_PLAINS, Biome.MEADOW, Biome.PLAINS, Biome.BIRCH_FOREST, Biome.FOREST, Biome.TAIGA, Biome.JUNGLE, Biome.BADLANDS, Biome.ERODED_BADLANDS, Biome.BEACH, Biome.WOODED_BADLANDS, Biome.SAVANNA_PLATEAU, Biome.DESERT);
     }
 }

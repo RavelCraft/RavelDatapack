@@ -17,7 +17,7 @@ public class RosePlainsBiome extends AetherBiome {
 
     @Override
     public String getName() {
-        return "Rose plains";
+        return "Rose Plains";
     }
 
     @Override
@@ -65,7 +65,7 @@ public class RosePlainsBiome extends AetherBiome {
         int randomPlant = random.nextInt(100) + 1;
         if (randomPlant < 40) {
             limitedRegion.setType(x, y, z, Material.ROSE_BUSH);
-            limitedRegion.setType(x, y + 1, z, Material.ROSE_BUSH);
+            limitedRegion.setBlockData(x, y + 1, z, AetherConstants.UPPER_ROSE_BUSH_BLOCK_DATA);
         } else if (randomPlant < 60) {
             limitedRegion.setType(x, y, z, Material.MOSS_CARPET);
         } else if (randomPlant < 65) {

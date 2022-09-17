@@ -24,6 +24,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.util.BoundingBox;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,9 +32,21 @@ import java.util.Map;
 public class BlockListener implements Listener {
     private final BlockManager blockManager = RavelDatapack.getBlockManager();
     private final Map<Location, CustomBlock> customPlacedBlocks = new HashMap<>();
+    private final Map<Player, Long> lastPlaceEvent = new HashMap<>();
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
+        Long last = lastPlaceEvent.get(event.getPlayer());
+        long now = System.currentTimeMillis();
+        if (last == null) {
+            this.lastPlaceEvent.put(event.getPlayer(), now);
+        } else {
+            if (now - last < 100) {
+                return;
+            }
+            this.lastPlaceEvent.replace(event.getPlayer(), now);
+        }
+
         if (event.getPlayer().getGameMode() == GameMode.ADVENTURE) {
             return;
         }
@@ -51,6 +64,10 @@ public class BlockListener implements Listener {
 
         CustomBlock customBlock = this.blockManager.getBlocks().get(event.getItem().getItemMeta().getCustomModelData());
         if (customBlock == null) {
+            return;
+        }
+
+        if (block.getWorld().getNearbyEntities(new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 1, block.getZ() + 1)).size() > 0) {
             return;
         }
 

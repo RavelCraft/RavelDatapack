@@ -8,9 +8,13 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 
@@ -195,6 +199,23 @@ public class DimensionListener implements Listener {
                 event.setCancelled(true);
                 this.setPortalInside(blocksWest, Material.NETHER_PORTAL, false);
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onEntitySpawn(CreatureSpawnEvent event) {
+        if (event.getSpawnReason() != CreatureSpawnEvent.SpawnReason.NATURAL) {
+            return;
+        }
+
+        Location location = event.getLocation();
+        CustomDimension dimension = RavelDatapack.getDimensionManager().getDimension(location.getWorld().getName());
+        if (dimension == null) {
+            return;
+        }
+
+        if (dimension.spawnEntity(location, event.getEntityType(), event.getEntity())) {
+            event.setCancelled(true);
         }
     }
 
