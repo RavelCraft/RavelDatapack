@@ -73,7 +73,7 @@ public class DesertBiome extends AetherBiome {
 
     @Override
     public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
-        if (random.nextInt(8) != 0) {
+        if (random.nextInt(10) != 0) {
             return;
         }
 

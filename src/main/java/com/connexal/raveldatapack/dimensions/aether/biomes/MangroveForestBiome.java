@@ -5,6 +5,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Monster;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -75,5 +78,15 @@ public class MangroveForestBiome extends AetherBiome {
     @Override
     public void spawnStructure(WorldInfo worldInfo, LimitedRegion limitedRegion, Random random, int chunkX, int chunkZ) {
         // No structures
+    }
+
+    @Override
+    public boolean spawnEntity(Location location, EntityType original, Entity spawned) {
+        if (spawned instanceof Monster) {
+            return false;
+        }
+
+        location.getWorld().spawnEntity(location, EntityType.FROG);
+        return true;
     }
 }

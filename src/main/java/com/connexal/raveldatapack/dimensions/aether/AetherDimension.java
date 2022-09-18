@@ -9,12 +9,17 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Monster;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
+
+import java.util.Random;
 
 public class AetherDimension extends CustomDimension {
     private final AetherBiomeProvider biomeProvider;
     private final AetherChunkGenerator chunkGenerator;
+
+    private final Random mobRandom = new Random();
 
     public AetherDimension() {
         this.biomeProvider = new AetherBiomeProvider();
@@ -73,6 +78,10 @@ public class AetherDimension extends CustomDimension {
 
     @Override
     public boolean spawnEntity(Location location, EntityType original, Entity spawned) {
+        if ((spawned instanceof Monster) && this.mobRandom.nextInt(4) != 0) {
+            return true;
+        }
+
         return AetherBiome.spawnEntity(location, original, spawned, location.getBlock().getBiome());
     }
 }

@@ -17,7 +17,7 @@ public class AetherBiomeProvider extends BiomeProvider {
     private void createGenerator(WorldInfo worldInfo) {
         if (generator == null) {
             generator = new SimplexOctaveGenerator(worldInfo.getSeed(), 10);
-            generator.setScale(0.0035D);
+            generator.setScale(0.003D);
         }
         if (voronoiGenerator == null) {
             voronoiGenerator = new VoronoiGenerator(worldInfo.getSeed(), (short) 0);
@@ -31,15 +31,15 @@ public class AetherBiomeProvider extends BiomeProvider {
         double noise = generator.noise(x, z, 0.5, 0.8, false) + 1;
         double voronoi = voronoiGenerator.noise(x, 0, z, 0.001);
 
-        if (noise < 0.1) { // Snowy
+        if (noise < 0) { // Snowy
             if (voronoi < 0.3) {
                 return Biome.SNOWY_TAIGA;
             } else {
                 return Biome.SNOWY_PLAINS;
             }
-        } else if (noise < 0.3) { // Plains
+        } else if (noise < 0.2) { // Plains
             if (voronoi < 0.4) {
-                return Biome.MEADOW; //Rose plains
+                return Biome.MEADOW;
             } else {
                 return Biome.PLAINS;
             }
@@ -53,21 +53,21 @@ public class AetherBiomeProvider extends BiomeProvider {
             } else {
                 return Biome.FOREST;
             }
-        } else if (noise < 1.7) { // Tropical
+        } else if (noise < 1.6) { // Tropical
             if (voronoi < 0.3) {
-                return Biome.BADLANDS; //Mesa
+                return Biome.BADLANDS;
             } else if (voronoi < 0.4) {
-                return Biome.BEACH; //Oasis
+                return Biome.BEACH;
             } else {
-                return Biome.ERODED_BADLANDS; //Dark mesa
+                return Biome.ERODED_BADLANDS;
             }
         } else { // Desert
             if (voronoi < 0.2) {
-                return Biome.WOODED_BADLANDS; //Wasteland
+                return Biome.WOODED_BADLANDS;
             } else if (voronoi < 0.4) {
                 return Biome.DESERT;
             } else {
-                return Biome.SAVANNA_PLATEAU; //Red desert
+                return Biome.SAVANNA_PLATEAU;
             }
         }
     }
