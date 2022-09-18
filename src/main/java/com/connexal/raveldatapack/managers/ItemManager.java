@@ -39,6 +39,8 @@ public class ItemManager {
 
         this.registerCustomItem(new SuperHammerItem(79786));
 
+        this.registerCustomItem(new SpeedBoostItem(202483));
+
         return registeredCount;
     }
 

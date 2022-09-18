@@ -28,23 +28,24 @@ import org.bukkit.util.BoundingBox;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class BlockListener implements Listener {
     private final BlockManager blockManager = RavelDatapack.getBlockManager();
     private final Map<Location, CustomBlock> customPlacedBlocks = new HashMap<>();
-    private final Map<Player, Long> lastPlaceEvent = new HashMap<>();
+    private final Map<UUID, Long> lastPlaceEvent = new HashMap<>();
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        Long last = lastPlaceEvent.get(event.getPlayer());
+        Long last = lastPlaceEvent.get(event.getPlayer().getUniqueId());
         long now = System.currentTimeMillis();
         if (last == null) {
-            this.lastPlaceEvent.put(event.getPlayer(), now);
+            this.lastPlaceEvent.put(event.getPlayer().getUniqueId(), now);
         } else {
             if (now - last < 100) {
                 return;
             }
-            this.lastPlaceEvent.replace(event.getPlayer(), now);
+            this.lastPlaceEvent.replace(event.getPlayer().getUniqueId(), now);
         }
 
         if (event.getPlayer().getGameMode() == GameMode.ADVENTURE) {
