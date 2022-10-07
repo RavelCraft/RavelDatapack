@@ -1,11 +1,10 @@
-package com.connexal.raveldatapack.items;
+package com.connexal.raveldatapack.items.nope;
 
-import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,33 +14,34 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-public class ThunderHammerItem extends CustomItem implements Listener {
-    public ThunderHammerItem(int customModelData) {
+public class PowerSwordItem extends CustomItem implements Listener {
+    public PowerSwordItem(int customModelData) {
         super();
         this.customModelData = customModelData;
-        this.namespaceKey = "thunderhammer";
+        this.namespaceKey = "powersword";
     }
 
     @Override
     public void create() {
-        this.itemStack = new ItemStack(Material.CLOCK, 1);
+        this.itemStack = new ItemStack(Material.NETHERITE_SWORD, 1);
 
         ItemMeta meta = this.createItemMeta();
 
-        this.setItemLore(meta, "Show off", "- Slow but strong", "- Knockback 5");
+        this.setItemLore(meta, "The sword of the gods", "- Summons lighting", "- Gives blindness");
 
-        meta.displayName(Component.text(ChatColor.RED.toString() + ChatColor.BOLD + "Thunder Hammer"));
-        meta.addEnchant(Enchantment.KNOCKBACK, 5, true);
-        this.setAttackDamage(meta, 35, EquipmentSlot.HAND);
-        this.setAttackSpeed(meta, 1, EquipmentSlot.HAND);
+        meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Power Sword"));
+        this.setAttackDamage(meta, 18, EquipmentSlot.HAND);
+        meta.addEnchant(Enchantment.SWEEPING_EDGE, 1, false);
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape("  N", " B ", "B  ");
-        recipe.setIngredient('N', Material.NETHERITE_BLOCK);
+        recipe.shape(" N ", " N ", " B ");
+        recipe.setIngredient('N', Material.NETHERITE_INGOT);
         recipe.setIngredient('B', Material.BLAZE_ROD);
         this.instance.getServer().addRecipe(recipe);
 
@@ -61,8 +61,9 @@ public class ThunderHammerItem extends CustomItem implements Listener {
             }
 
             if (item.getItemMeta().getCustomModelData() == this.getCustomModelData()) {
-                for (Player tmp : RavelDatapack.getInstance().getServer().getOnlinePlayers()) {
-                    tmp.playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 1);
+                player.getWorld().strikeLightning(event.getEntity().getLocation());
+                if (event.getEntity() instanceof Player target) {
+                    target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 3 * 20, 255, false, false));
                 }
             }
         }

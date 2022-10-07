@@ -1,6 +1,7 @@
-package com.connexal.raveldatapack.items;
+package com.connexal.raveldatapack.items.nope;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.items.CustomItem;
 import com.connexal.raveldatapack.utils.AmoUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;

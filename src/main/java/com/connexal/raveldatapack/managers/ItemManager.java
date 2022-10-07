@@ -2,6 +2,10 @@ package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.items.*;
+import com.connexal.raveldatapack.items.nope.*;
+import com.connexal.raveldatapack.items.enderite.*;
+import com.connexal.raveldatapack.items.plate.*;
+import com.connexal.raveldatapack.items.warhammer.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -16,15 +20,11 @@ public class ItemManager {
         this.registerCustomItem(new BolterItem(295304));
         this.registerCustomItem(new BoltItem(450256));
         this.registerCustomItem(new BoltPistolItem(485103));
-
         this.registerCustomItem(new ChopperItem(695205));
-
         this.registerCustomItem(new PowerSwordItem(806528));
-
         this.registerCustomItem(new StormbreakerItem(952356));
         this.registerCustomItem(new ThunderHammerItem(426754));
         this.registerCustomItem(new FireballItem(367026));
-
         this.registerCustomItem(new PikeItem(209846));
 
         this.registerCustomItem(new PlateItem(256289));
@@ -40,6 +40,13 @@ public class ItemManager {
         this.registerCustomItem(new SuperHammerItem(79786));
 
         this.registerCustomItem(new SpeedBoostItem(202483));
+
+        this.registerCustomItem(new WoodenWarHammer(738351));
+        this.registerCustomItem(new StoneWarHammer(738352));
+        this.registerCustomItem(new IronWarHammer(738353));
+        this.registerCustomItem(new GoldenWarHammer(738354));
+        this.registerCustomItem(new DiamondWarHammer(738355));
+        this.registerCustomItem(new NetheriteWarHammer(738356));
 
         return registeredCount;
     }

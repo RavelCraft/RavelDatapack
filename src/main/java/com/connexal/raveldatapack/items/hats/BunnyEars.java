@@ -29,10 +29,5 @@ public class BunnyEars extends CustomItem {
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);
-
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape("   ", "H H", "   ");
-        recipe.setIngredient('H', Material.RABBIT_HIDE);
-        this.instance.getServer().addRecipe(recipe);
     }
 }

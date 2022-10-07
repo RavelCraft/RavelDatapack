@@ -29,9 +29,5 @@ public class ElfEars extends CustomItem {
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);
-
-        ShapelessRecipe recipe = new ShapelessRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.addIngredient(1, Material.PORKCHOP);
-        this.instance.getServer().addRecipe(recipe);
     }
 }

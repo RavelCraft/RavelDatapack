@@ -29,10 +29,5 @@ public class Antlers extends CustomItem {
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);
-
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape("   ", "W W", "W W");
-        recipe.setIngredient('W', Material.OAK_LOG);
-        this.instance.getServer().addRecipe(recipe);
     }
 }

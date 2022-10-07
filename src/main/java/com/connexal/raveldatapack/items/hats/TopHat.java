@@ -29,11 +29,5 @@ public class TopHat extends CustomItem {
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);
-
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape(" B ", " L ", "BBB");
-        recipe.setIngredient('B', Material.BLACK_WOOL);
-        recipe.setIngredient('L', Material.LEATHER);
-        this.instance.getServer().addRecipe(recipe);
     }
 }

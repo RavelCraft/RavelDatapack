@@ -1,5 +1,6 @@
-package com.connexal.raveldatapack.items;
+package com.connexal.raveldatapack.items.nope;
 
+import com.connexal.raveldatapack.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

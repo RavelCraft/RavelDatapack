@@ -62,12 +62,12 @@ public class AetherBiomeProvider extends BiomeProvider {
                 return Biome.ERODED_BADLANDS;
             }
         } else { // Desert
-            if (voronoi < 0.2) {
-                return Biome.WOODED_BADLANDS;
-            } else if (voronoi < 0.4) {
+            if (voronoi < 0.3) {
+                return Biome.SAVANNA_PLATEAU;
+            } else if (voronoi < 0.6) {
                 return Biome.DESERT;
             } else {
-                return Biome.SAVANNA_PLATEAU;
+                return Biome.WOODED_BADLANDS;
             }
         }
     }

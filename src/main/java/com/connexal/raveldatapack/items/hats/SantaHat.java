@@ -29,11 +29,5 @@ public class SantaHat extends CustomItem {
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);
-
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape(" S ", " R ", "RRR");
-        recipe.setIngredient('R', Material.RED_WOOL);
-        recipe.setIngredient('S', Material.SNOWBALL);
-        this.instance.getServer().addRecipe(recipe);
     }
 }

@@ -1,24 +1,27 @@
-package com.connexal.raveldatapack.items;
+package com.connexal.raveldatapack.items.nope;
 
+import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class PikeItem extends CustomItem implements Listener {
-    public PikeItem(int customModelData) {
+public class ThunderHammerItem extends CustomItem implements Listener {
+    public ThunderHammerItem(int customModelData) {
         super();
         this.customModelData = customModelData;
-        this.namespaceKey = "pike";
+        this.namespaceKey = "thunderhammer";
     }
 
     @Override
@@ -27,18 +30,21 @@ public class PikeItem extends CustomItem implements Listener {
 
         ItemMeta meta = this.createItemMeta();
 
-        this.setItemLore(meta, "Pierce your enemies' armor");
+        this.setItemLore(meta, "Show off", "- Slow but strong", "- Knockback 5");
 
-        meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Pike"));
+        meta.displayName(Component.text(ChatColor.RED.toString() + ChatColor.BOLD + "Thunder Hammer"));
+        meta.addEnchant(Enchantment.KNOCKBACK, 5, true);
+        this.setAttackDamage(meta, 35, EquipmentSlot.HAND);
+        this.setAttackSpeed(meta, 1, EquipmentSlot.HAND);
         meta.setCustomModelData(customModelData);
 
         this.setItemMeta(meta);
 
         ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
-        recipe.shape("DDD", "DND", "DDD");
-        recipe.setIngredient('D', Material.DIAMOND);
-        recipe.setIngredient('N', Material.NETHERITE_INGOT);
-        instance.getServer().addRecipe(recipe);
+        recipe.shape("  N", " B ", "B  ");
+        recipe.setIngredient('N', Material.NETHERITE_BLOCK);
+        recipe.setIngredient('B', Material.BLAZE_ROD);
+        this.instance.getServer().addRecipe(recipe);
 
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
     }
@@ -48,21 +54,18 @@ public class PikeItem extends CustomItem implements Listener {
         if (event.getDamager() instanceof Player player) {
             ItemStack item = player.getInventory().getItemInMainHand();
 
-            if (!(event.getEntity() instanceof LivingEntity)) {
-                return;
-            }
             if (item.getItemMeta() == null) {
                 return;
             }
             if (!item.getItemMeta().hasCustomModelData()) {
                 return;
             }
-            if (item.getItemMeta().getCustomModelData() != this.getCustomModelData()) {
-                return;
-            }
 
-            event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
-            event.setDamage(6);
+            if (item.getItemMeta().getCustomModelData() == this.getCustomModelData()) {
+                for (Player tmp : RavelDatapack.getInstance().getServer().getOnlinePlayers()) {
+                    tmp.playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 1);
+                }
+            }
         }
     }
 }
