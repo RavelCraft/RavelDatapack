@@ -19,7 +19,6 @@ public class PoisonBladeEnchantment extends CustomEnchantment implements Listene
 
     @Override
     public void create() {
-        this.enchantment = this;
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
     }
 

@@ -5,7 +5,6 @@ import com.connexal.raveldatapack.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -13,33 +12,28 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ChopperItem extends CustomItem implements Listener {
     public ChopperItem(int customModelData) {
-        super();
-        this.customModelData = customModelData;
-        this.namespaceKey = "chopper";
+        super(customModelData, "chopper");
     }
 
     @Override
     public void create() {
-        this.itemStack = new ItemStack(Material.CLOCK, 1);
+        this.createItem(Material.CLOCK);
 
         ItemMeta meta = this.createItemMeta();
-
         this.setItemLore(meta, "Slice up your enemies");
-
         meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Chopper"));
-        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier("generic.attackDamage", 8, AttributeModifier.Operation.ADD_NUMBER));
+        this.setAttackDamage(meta, 8, EquipmentSlot.HAND);
         meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier("generic.movementSpeed", 1.3, AttributeModifier.Operation.MULTIPLY_SCALAR_1));
-        meta.setCustomModelData(customModelData);
-
         this.setItemMeta(meta);
 
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
+        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
         recipe.shape("NNN", "III", "III");
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
         recipe.setIngredient('I', Material.IRON_INGOT);

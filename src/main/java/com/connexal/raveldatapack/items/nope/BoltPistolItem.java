@@ -5,8 +5,6 @@ import com.connexal.raveldatapack.items.CustomItem;
 import com.connexal.raveldatapack.utils.AmoUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -14,36 +12,30 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class BoltPistolItem extends CustomItem implements Listener {
     public BoltPistolItem(int customModelData) {
-        super();
-        this.customModelData = customModelData;
-        this.namespaceKey = "boltpistol";
+        super(customModelData, "boltpistol");
     }
 
     @Override
     public void create() {
-        this.itemStack = new ItemStack(Material.CLOCK, 1);
+        this.createItem(Material.CLOCK);
 
         ItemMeta meta = this.createItemMeta();
-
         this.setItemLore(meta, "Shoots arrows");
-
         meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt Pistol"));
-        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier("generic.attackDamage", 5, AttributeModifier.Operation.ADD_NUMBER));
-        meta.setCustomModelData(customModelData);
-
+        this.setAttackDamage(meta, 5, EquipmentSlot.HAND);
         this.setItemMeta(meta);
 
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
+        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
         recipe.shape(" IB", "III", " I ");
         recipe.setIngredient('B', Material.BLAZE_POWDER);
         recipe.setIngredient('I', Material.IRON_INGOT);
-        instance.getServer().addRecipe(recipe);
+        this.instance.getServer().addRecipe(recipe);
 
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
     }

@@ -5,7 +5,6 @@ import com.connexal.raveldatapack.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -19,28 +18,22 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ThunderHammerItem extends CustomItem implements Listener {
     public ThunderHammerItem(int customModelData) {
-        super();
-        this.customModelData = customModelData;
-        this.namespaceKey = "thunderhammer";
+        super(customModelData, "thunderhammer");
     }
 
     @Override
     public void create() {
-        this.itemStack = new ItemStack(Material.CLOCK, 1);
+        this.createItem(Material.CLOCK);
 
         ItemMeta meta = this.createItemMeta();
-
         this.setItemLore(meta, "Show off", "- Slow but strong", "- Knockback 5");
-
         meta.displayName(Component.text(ChatColor.RED.toString() + ChatColor.BOLD + "Thunder Hammer"));
         meta.addEnchant(Enchantment.KNOCKBACK, 5, true);
         this.setAttackDamage(meta, 35, EquipmentSlot.HAND);
         this.setAttackSpeed(meta, 1, EquipmentSlot.HAND);
-        meta.setCustomModelData(customModelData);
-
         this.setItemMeta(meta);
 
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
+        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
         recipe.shape("  N", " B ", "B  ");
         recipe.setIngredient('N', Material.NETHERITE_BLOCK);
         recipe.setIngredient('B', Material.BLAZE_ROD);

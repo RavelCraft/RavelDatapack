@@ -10,34 +10,27 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class FireballItem extends CustomItem implements Listener {
     public FireballItem(int customModelData) {
-        super();
-        this.customModelData = customModelData;
-        this.namespaceKey = "fireball";
+        super(customModelData, "fireball");
     }
 
     @Override
     public void create() {
-        this.itemStack = new ItemStack(Material.FIRE_CHARGE, 1);
+        this.createItem(Material.FIRE_CHARGE);
 
         ItemMeta meta = this.createItemMeta();
-
         this.setItemLore(meta, "Right click to shoot");
-
         meta.displayName(Component.text(ChatColor.RESET.toString() + ChatColor.WHITE + "Fireball"));
-        meta.setCustomModelData(customModelData);
-
         this.setItemMeta(meta);
 
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
+        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
         recipe.shape("FF", "FF");
         recipe.setIngredient('F', Material.FIRE_CHARGE);
-        instance.getServer().addRecipe(recipe);
+        this.instance.getServer().addRecipe(recipe);
 
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
     }

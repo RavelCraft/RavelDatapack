@@ -4,7 +4,6 @@ import com.connexal.raveldatapack.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,27 +18,21 @@ import org.bukkit.potion.PotionEffectType;
 
 public class PowerSwordItem extends CustomItem implements Listener {
     public PowerSwordItem(int customModelData) {
-        super();
-        this.customModelData = customModelData;
-        this.namespaceKey = "powersword";
+        super(customModelData, "powersword");
     }
 
     @Override
     public void create() {
-        this.itemStack = new ItemStack(Material.NETHERITE_SWORD, 1);
+        this.createItem(Material.NETHERITE_SWORD);
 
         ItemMeta meta = this.createItemMeta();
-
         this.setItemLore(meta, "The sword of the gods", "- Summons lighting", "- Gives blindness");
-
         meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Power Sword"));
         this.setAttackDamage(meta, 18, EquipmentSlot.HAND);
         meta.addEnchant(Enchantment.SWEEPING_EDGE, 1, false);
-        meta.setCustomModelData(customModelData);
-
         this.setItemMeta(meta);
 
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
+        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
         recipe.shape(" N ", " N ", " B ");
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
         recipe.setIngredient('B', Material.BLAZE_ROD);

@@ -22,15 +22,17 @@ public abstract class CustomEnchantment extends Enchantment {
     private final String name;
     private final String namespace;
     protected final RavelDatapack instance;
-    protected Enchantment enchantment;
+    private final Enchantment enchantment;
 
     protected final List<Enchantment> conflictingEnchants = new ArrayList<>();
 
     public CustomEnchantment(String namespace, String name) {
         super(NamespacedKey.minecraft(namespace));
+
         this.name = name;
         this.namespace = namespace;
         this.instance = RavelDatapack.getInstance();
+        this.enchantment = this;
     }
 
     /**

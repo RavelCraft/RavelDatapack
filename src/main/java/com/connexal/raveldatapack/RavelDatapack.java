@@ -4,10 +4,7 @@ import com.connexal.raveldatapack.commands.RavelBiomeCommand;
 import com.connexal.raveldatapack.commands.RavelDatapackCommand;
 import com.connexal.raveldatapack.commands.RavelSchematicCommand;
 import com.connexal.raveldatapack.items.CustomItem;
-import com.connexal.raveldatapack.listeners.BlockListener;
-import com.connexal.raveldatapack.listeners.DimensionListener;
-import com.connexal.raveldatapack.listeners.EnchantmentListener;
-import com.connexal.raveldatapack.listeners.EventListener;
+import com.connexal.raveldatapack.listeners.*;
 import com.connexal.raveldatapack.managers.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -64,6 +61,7 @@ public final class RavelDatapack extends JavaPlugin {
         instance.getServer().getPluginManager().registerEvents(new EnchantmentListener(), this);
         instance.getServer().getPluginManager().registerEvents(new DimensionListener(), this);
         instance.getServer().getPluginManager().registerEvents(new BlockListener(), this);
+        instance.getServer().getPluginManager().registerEvents(new SmithingListener(), this);
 
         log.info(String.format("[%s] Creating custom dimension worlds", getDescription().getName()));
         dimensionManager.createWorlds();

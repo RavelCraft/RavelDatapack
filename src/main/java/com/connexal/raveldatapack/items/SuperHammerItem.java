@@ -5,7 +5,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -24,28 +23,22 @@ public class SuperHammerItem extends CustomItem implements Listener {
     private final List<Location> blocksToProcessLoc = new ArrayList<>();
 
     public SuperHammerItem(int customModelData) {
-        super();
-        this.customModelData = customModelData;
-        this.namespaceKey = "super_hammer";
+        super(customModelData, "super_hammer");
     }
 
     @Override
     public void create() {
-        this.itemStack = new ItemStack(Material.NETHERITE_PICKAXE, 1);
+        this.createItem(Material.NETHERITE_PICKAXE);
 
         ItemMeta meta = this.createItemMeta(true, false);
-
         this.setItemLore(meta, "Break a 3x3x3 area of blocks");
-
         meta.displayName(Component.text(ChatColor.RED.toString() + ChatColor.BOLD + "Super Hammer"));
         meta.addEnchant(Enchantment.KNOCKBACK, 2, true);
         this.setAttackDamage(meta, 5, EquipmentSlot.HAND);
         this.setAttackSpeed(meta, 1, EquipmentSlot.HAND);
-        meta.setCustomModelData(customModelData);
-
         this.setItemMeta(meta);
 
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
+        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
         recipe.shape(" NN", " BN", "B  ");
         recipe.setIngredient('N', Material.NETHERITE_BLOCK);
         recipe.setIngredient('B', Material.BLAZE_ROD);

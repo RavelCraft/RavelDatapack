@@ -17,7 +17,6 @@ public class BlasingArmorEnchantment extends CustomEnchantment implements Listen
 
     @Override
     public void create() {
-        this.enchantment = this;
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
     }
 

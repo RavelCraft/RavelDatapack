@@ -177,13 +177,12 @@ public class EnchantmentManager {
             return;
         }
 
-        LegacyComponentSerializer serializer = LegacyComponentSerializer.builder().build();
-        String originalName = serializer.serialize(originalMeta.displayName());
+        String originalName = resultMeta.getDisplayName();
 
         String name;
         if (resultMeta.hasDisplayName()) {
             String tmpName = originalName;
-            name = serializer.serialize(resultMeta.displayName());
+            name = resultMeta.getDisplayName();
 
             while (tmpName.contains(ChatColor.COLOR_CHAR + "")) {
                 int index = tmpName.indexOf(ChatColor.COLOR_CHAR + "");
@@ -200,7 +199,7 @@ public class EnchantmentManager {
             name = ChatColor.stripColor(originalName);
         }
 
-        resultMeta.displayName(Component.text(name));
+        resultMeta.setDisplayName(name);
         result.setItemMeta(resultMeta);
     }
 

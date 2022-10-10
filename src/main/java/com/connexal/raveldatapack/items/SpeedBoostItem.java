@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -23,23 +22,17 @@ public class SpeedBoostItem extends CustomItem implements Listener {
     private final Map<UUID, Long> lastUseEvent = new HashMap<>();
 
     public SpeedBoostItem(int customModelData) {
-        super();
-        this.customModelData = customModelData;
-        this.namespaceKey = "speed_boost";
+        super(customModelData, "speed_boost");
     }
 
     @Override
     public void create() {
-        this.itemStack = new ItemStack(Material.SUGAR, 1);
+        this.createItem(Material.SUGAR);
 
         ItemMeta meta = this.createItemMeta(true, true);
-
         this.setItemLore(meta, "Don't do drugs, they", "aren't good for you.", "Luckily, this is not a", "drug.");
-
         meta.displayName(Component.text(ChatColor.RED.toString() + ChatColor.BOLD + "Speed Boost"));
         meta.addEnchant(Enchantment.MENDING, 1, false);
-        meta.setCustomModelData(this.customModelData);
-
         this.setItemMeta(meta);
 
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);

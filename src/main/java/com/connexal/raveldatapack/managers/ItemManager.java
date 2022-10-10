@@ -1,10 +1,14 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.items.*;
-import com.connexal.raveldatapack.items.nope.*;
+import com.connexal.raveldatapack.items.CustomItem;
+import com.connexal.raveldatapack.items.FireballItem;
+import com.connexal.raveldatapack.items.SpeedBoostItem;
+import com.connexal.raveldatapack.items.SuperHammerItem;
 import com.connexal.raveldatapack.items.enderite.*;
-import com.connexal.raveldatapack.items.plate.*;
+import com.connexal.raveldatapack.items.nope.*;
+import com.connexal.raveldatapack.items.plate.PlateItem;
+import com.connexal.raveldatapack.items.plate.TurkeyOnAPlateItem;
 import com.connexal.raveldatapack.items.warhammer.*;
 import org.bukkit.inventory.ItemStack;
 

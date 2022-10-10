@@ -4,7 +4,6 @@ import com.connexal.raveldatapack.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,29 +16,23 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class PikeItem extends CustomItem implements Listener {
     public PikeItem(int customModelData) {
-        super();
-        this.customModelData = customModelData;
-        this.namespaceKey = "pike";
+        super(customModelData, "pike");
     }
 
     @Override
     public void create() {
-        this.itemStack = new ItemStack(Material.CLOCK, 1);
+        this.createItem(Material.CLOCK);
 
         ItemMeta meta = this.createItemMeta();
-
         this.setItemLore(meta, "Pierce your enemies' armor");
-
         meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Pike"));
-        meta.setCustomModelData(customModelData);
-
         this.setItemMeta(meta);
 
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft(namespaceKey), itemStack);
+        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
         recipe.shape("DDD", "DND", "DDD");
         recipe.setIngredient('D', Material.DIAMOND);
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
-        instance.getServer().addRecipe(recipe);
+        this.instance.getServer().addRecipe(recipe);
 
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
     }

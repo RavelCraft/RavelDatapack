@@ -3,6 +3,8 @@ package com.connexal.raveldatapack.items;
 import com.connexal.raveldatapack.RavelDatapack;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
@@ -15,11 +17,24 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class CustomItem {
-    protected ItemStack itemStack;
-    protected int customModelData;
-    protected String namespaceKey;
-    protected boolean isHat = false;
+    private ItemStack itemStack;
+    private final int customModelData;
+    private final String namespaceKey;
+    private final boolean isHat;
+    private final boolean isNewItem; //If it is a completely new item, or just an extension of an existing item
+
     protected final RavelDatapack instance = RavelDatapack.getInstance();
+
+    public CustomItem(int customModelData, String namespaceKey, boolean isHat, boolean isNewItem) {
+        this.customModelData = customModelData;
+        this.namespaceKey = namespaceKey;
+        this.isHat = isHat;
+        this.isNewItem = isNewItem;
+    }
+
+    public CustomItem(int customModelData, String namespaceKey) {
+        this(customModelData, namespaceKey, false, true);
+    }
 
     public abstract void create();
 
@@ -35,8 +50,20 @@ public abstract class CustomItem {
         return this.namespaceKey;
     }
 
+    public NamespacedKey getNamespacedKey() {
+        return NamespacedKey.minecraft(this.namespaceKey);
+    }
+
     public boolean isHat() {
         return this.isHat;
+    }
+
+    public boolean isNewItem() {
+        return this.isNewItem;
+    }
+
+    public void createItem(Material base) {
+        this.itemStack = new ItemStack(base, 1);
     }
 
     public ItemMeta createItemMeta() {
@@ -56,6 +83,8 @@ public abstract class CustomItem {
             meta.setUnbreakable(true);
         }
 
+        meta.setCustomModelData(this.customModelData);
+
         return meta;
     }
 
@@ -66,7 +95,6 @@ public abstract class CustomItem {
     public ItemMeta createToolMeta(double attackDamage, double attackSpeed, boolean unbreakable) {
         ItemMeta meta = this.itemStack.getItemMeta();
 
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
@@ -87,6 +115,8 @@ public abstract class CustomItem {
         }
 
         this.setItemLore(meta, ChatColor.GRAY + "When in Main Hand:", ChatColor.DARK_GREEN + stringAttackDamage + " Attack Damage", ChatColor.DARK_GREEN + stringAttackSpeed + " Attack Speed");
+
+        meta.setCustomModelData(this.customModelData);
 
         return meta;
     }
