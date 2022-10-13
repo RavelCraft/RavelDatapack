@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items.nope;
 
+import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -37,7 +38,7 @@ public class StormbreakerItem extends CustomItem implements Listener {
         recipe.shape(" NN", " BN", "B  ");
         recipe.setIngredient('N', Material.NETHER_STAR);
         recipe.setIngredient('B', Material.BLAZE_ROD);
-        this.instance.getServer().addRecipe(recipe);
+        RavelDatapack.getRecipeManager().registerRecipe(recipe);
 
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
     }

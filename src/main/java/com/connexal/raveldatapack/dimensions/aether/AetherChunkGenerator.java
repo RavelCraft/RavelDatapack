@@ -41,11 +41,11 @@ public class AetherChunkGenerator extends CustomChunkGenerator {
     private void createGenerator(WorldInfo worldInfo) {
         if (generator1 == null) {
             generator1 = new SimplexOctaveGenerator(worldInfo.getSeed(), 10);
-            generator1.setScale(AetherConstants.SACALE_1);
+            generator1.setScale(AetherConstants.SCALE_1);
         }
         if (generator2 == null) {
             generator2 = new SimplexOctaveGenerator(worldInfo.getSeed(), 8);
-            generator2.setScale(AetherConstants.SACALE_2);
+            generator2.setScale(AetherConstants.SCALE_2);
         }
     }
 

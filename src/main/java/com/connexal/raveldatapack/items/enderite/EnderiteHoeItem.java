@@ -28,7 +28,7 @@ public class EnderiteHoeItem extends CustomItem {
             RecipeChoice base = new RecipeChoice.MaterialChoice(Material.NETHERITE_HOE);
             RecipeChoice addition = new RecipeChoice.ExactChoice(ingot);
             SmithingRecipe recipe = new SmithingRecipe(this.getNamespacedKey(), this.getItemStack(), base, addition);
-            RavelDatapack.getInstance().getServer().addRecipe(recipe);
+            RavelDatapack.getRecipeManager().registerRecipe(recipe);
         }
     }
 }

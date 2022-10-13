@@ -19,6 +19,7 @@ public final class RavelDatapack extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static RavelDatapack instance = null;
 
+    private static RecipeManager recipeManager = null;
     private static ConfigManager configManager = null;
     private static PluginMessageManager pluginMessageManager = null;
     private static ItemManager itemManager = null;
@@ -34,6 +35,7 @@ public final class RavelDatapack extends JavaPlugin {
 
         configManager = new ConfigManager();
 
+        recipeManager = new RecipeManager();
         pluginMessageManager = new PluginMessageManager();
         itemManager = new ItemManager();
         hatManager = new HatManager();
@@ -44,11 +46,12 @@ public final class RavelDatapack extends JavaPlugin {
 
         this.saveDefaultConfig();
 
+        recipeManager.init();
         log.info(String.format("[%s] Registered %d custom enchantments", getDescription().getName(), enchantmentManager.init()));
         log.info(String.format("[%s] Registered %d custom items", getDescription().getName(), itemManager.init()));
         log.info(String.format("[%s] Registered %d custom hats", getDescription().getName(), hatManager.init()));
         log.info(String.format("[%s] Registered %d custom blocks", getDescription().getName(), blockManager.init()));
-        log.info(String.format("[%s] Registered %d custom dimenstions", getDescription().getName(), dimensionManager.init()));
+        log.info(String.format("[%s] Registered %d custom dimensions", getDescription().getName(), dimensionManager.init()));
         mapManager.init();
 
         log.info(String.format("[%s] Adding commands", getDescription().getName()));
@@ -76,21 +79,9 @@ public final class RavelDatapack extends JavaPlugin {
 
         pluginMessageManager.unregister();
 
+        recipeManager.unregisterAllRecipes();
+
         int num = 0;
-        for (CustomItem item : itemManager.getItems().values()) {
-            this.getServer().removeRecipe(NamespacedKey.minecraft(item.getNamespaceKey()));
-            num++;
-        }
-        log.info(String.format("[%s] Unregistered %d custom item recipes", getDescription().getName(), num));
-
-        num = 0;
-        for (CustomItem item : hatManager.getItems().values()) {
-            this.getServer().removeRecipe(NamespacedKey.minecraft(item.getNamespaceKey()));
-            num++;
-        }
-        log.info(String.format("[%s] Unregistered %d custom hat recipes", getDescription().getName(), num));
-
-        num = 0;
         try {
             Field keyField = Enchantment.class.getDeclaredField("byKey");
 
@@ -124,6 +115,10 @@ public final class RavelDatapack extends JavaPlugin {
 
     public static RavelDatapack getInstance() {
         return instance;
+    }
+
+    public static RecipeManager getRecipeManager() {
+        return recipeManager;
     }
 
     public static PluginMessageManager getPluginMessageManager() {

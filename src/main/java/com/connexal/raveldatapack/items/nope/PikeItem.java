@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items.nope;
 
+import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -32,7 +33,7 @@ public class PikeItem extends CustomItem implements Listener {
         recipe.shape("DDD", "DND", "DDD");
         recipe.setIngredient('D', Material.DIAMOND);
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
-        this.instance.getServer().addRecipe(recipe);
+        RavelDatapack.getRecipeManager().registerRecipe(recipe);
 
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
     }

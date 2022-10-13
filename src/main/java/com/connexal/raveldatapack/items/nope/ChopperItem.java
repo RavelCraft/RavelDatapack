@@ -37,7 +37,7 @@ public class ChopperItem extends CustomItem implements Listener {
         recipe.shape("NNN", "III", "III");
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
         recipe.setIngredient('I', Material.IRON_INGOT);
-        this.instance.getServer().addRecipe(recipe);
+        RavelDatapack.getRecipeManager().registerRecipe(recipe);
 
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
     }

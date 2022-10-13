@@ -24,7 +24,7 @@ public abstract class CustomChunkGenerator extends ChunkGenerator {
             chunkPopulator.setBiomeProvider(this.biomeProvider);
         }
 
-        this.blockPopulators = Arrays.asList(new CustomBlockPopulator(chunkPopulators));
+        this.blockPopulators = List.of(new CustomBlockPopulator(chunkPopulators));
     }
 
     public CustomChunkGenerator(BiomeProvider biomeProvider) {

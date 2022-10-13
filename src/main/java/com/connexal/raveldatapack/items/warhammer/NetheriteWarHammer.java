@@ -28,7 +28,7 @@ public class NetheriteWarHammer extends CustomItem {
             RecipeChoice base = new RecipeChoice.ExactChoice(diamondWarHammer);
             RecipeChoice addition = new RecipeChoice.MaterialChoice(Material.NETHERITE_INGOT);
             SmithingRecipe recipe = new SmithingRecipe(this.getNamespacedKey(), this.getItemStack(), base, addition);
-            this.instance.getServer().addRecipe(recipe);
+            RavelDatapack.getRecipeManager().registerRecipe(recipe);
         }
     }
 }

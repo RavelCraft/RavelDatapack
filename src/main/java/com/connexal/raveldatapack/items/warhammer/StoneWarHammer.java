@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items.warhammer;
 
+import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -24,6 +25,6 @@ public class StoneWarHammer extends CustomItem {
         recipe.shape("III", "ISI", " S ");
         recipe.setIngredient('I', Material.COBBLESTONE);
         recipe.setIngredient('S', Material.STICK);
-        this.instance.getServer().addRecipe(recipe);
+        RavelDatapack.getRecipeManager().registerRecipe(recipe);
     }
 }

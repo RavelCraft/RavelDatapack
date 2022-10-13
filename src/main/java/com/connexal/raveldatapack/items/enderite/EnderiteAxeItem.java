@@ -28,7 +28,7 @@ public class EnderiteAxeItem extends CustomItem {
             RecipeChoice base = new RecipeChoice.MaterialChoice(Material.NETHERITE_AXE);
             RecipeChoice addition = new RecipeChoice.ExactChoice(ingot);
             SmithingRecipe recipe = new SmithingRecipe(this.getNamespacedKey(), this.getItemStack(), base, addition);
-            this.instance.getServer().addRecipe(recipe);
+            RavelDatapack.getRecipeManager().registerRecipe(recipe);
         }
     }
 }

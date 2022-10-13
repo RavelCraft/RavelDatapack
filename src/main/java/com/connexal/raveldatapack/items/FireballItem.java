@@ -2,7 +2,10 @@ package com.connexal.raveldatapack.items;
 
 import com.connexal.raveldatapack.RavelDatapack;
 import net.kyori.adventure.text.Component;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
@@ -30,7 +33,7 @@ public class FireballItem extends CustomItem implements Listener {
         ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
         recipe.shape("FF", "FF");
         recipe.setIngredient('F', Material.FIRE_CHARGE);
-        this.instance.getServer().addRecipe(recipe);
+        RavelDatapack.getRecipeManager().registerRecipe(recipe);
 
         this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
     }

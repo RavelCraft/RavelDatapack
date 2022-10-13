@@ -30,7 +30,7 @@ public class TurkeyOnAPlateItem extends CustomItem {
             recipe.setIngredient('C', Material.COOKED_CHICKEN);
             RecipeChoice plate_ingredient = new RecipeChoice.ExactChoice(plate);
             recipe.setIngredient('P', plate_ingredient);
-            this.instance.getServer().addRecipe(recipe);
+            RavelDatapack.getRecipeManager().registerRecipe(recipe);
         }
     }
 }

@@ -2,11 +2,9 @@ package com.connexal.raveldatapack.listeners;
 
 import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.items.CustomItem;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
@@ -151,6 +149,7 @@ public class SmithingListener implements Listener {
                 resultMeta.addEnchant(entry.getKey(), entry.getValue(), true);
                 RavelDatapack.getLog().info("Added enchantment " + entry.getKey().getKey().getKey() + " to result");
             }
+            RavelDatapack.getEnchantmentManager().updateItemLoreEnchants(result);
             if (!equipment.getItemMeta().getDisplayName().startsWith(ChatColor.COLOR_CHAR + "")) {
                 resultMeta.setDisplayName(equipment.getItemMeta().getDisplayName());
             }

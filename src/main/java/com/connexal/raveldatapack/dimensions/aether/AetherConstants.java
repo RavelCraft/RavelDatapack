@@ -9,11 +9,11 @@ import org.bukkit.block.data.type.Leaves;
 public class AetherConstants {
     public static final double AMPLITUDE_1 = 0.5;
     public static final double FREQUENCY_1 = 0.9;
-    public static final double SACALE_1 = 0.008D;
+    public static final double SCALE_1 = 0.008D;
 
     public static final double AMPLITUDE_2 = 0.2;
     public static final double FREQUENCY_2 = 1.4;
-    public static final double SACALE_2 = 0.01D;
+    public static final double SCALE_2 = 0.01D;
 
     public static final int START_DRAWING_HEIGHT = 5;
 

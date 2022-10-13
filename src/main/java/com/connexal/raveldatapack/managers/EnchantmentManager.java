@@ -7,8 +7,6 @@ import com.connexal.raveldatapack.enchantments.PoisonBladeEnchantment;
 import com.connexal.raveldatapack.enchantments.TelekinesisEnchantment;
 import com.connexal.raveldatapack.utils.EnchantmentLoreUtil;
 import com.connexal.raveldatapack.utils.StringUtil;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -93,8 +91,8 @@ public class EnchantmentManager {
         this.removeEnchantItemStack(item, enchantment);
 
         ItemMeta meta = item.getItemMeta();
-        if (meta instanceof EnchantmentStorageMeta enchatMeta) {
-            if (!enchatMeta.addStoredEnchant(enchantment, level, true)) {
+        if (meta instanceof EnchantmentStorageMeta enchantMeta) {
+            if (!enchantMeta.addStoredEnchant(enchantment, level, true)) {
                 return false;
             }
         } else {
