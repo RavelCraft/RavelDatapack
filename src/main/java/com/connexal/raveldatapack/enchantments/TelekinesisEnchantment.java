@@ -58,6 +58,11 @@ public class TelekinesisEnchantment extends CustomEnchantment implements Listene
     }
 
     @Override
+    public int getTradeCost(int level) {
+        return 10 * level;
+    }
+
+    @Override
     public @NotNull EnchantmentTarget getItemTarget() {
         return EnchantmentTarget.TOOL;
     }

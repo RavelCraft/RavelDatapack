@@ -10,9 +10,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class BlasingArmorEnchantment extends CustomEnchantment implements Listener {
-    public BlasingArmorEnchantment() {
-        super("blasing_armor", "Blasing Armor");
+public class BlazingArmorEnchantment extends CustomEnchantment implements Listener {
+    public BlazingArmorEnchantment() {
+        super("blazing_armor", "Blazing Armor");
     }
 
     @Override
@@ -55,6 +55,11 @@ public class BlasingArmorEnchantment extends CustomEnchantment implements Listen
     @Override
     public int getAnvilMergeCost(int level) {
         return 10 * level;
+    }
+
+    @Override
+    public int getTradeCost(int level) {
+        return 14 * level;
     }
 
     @Override

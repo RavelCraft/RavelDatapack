@@ -4,6 +4,7 @@ import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.enchantments.CustomEnchantment;
 import org.bukkit.Material;
 import org.bukkit.entity.Villager;
+import org.bukkit.entity.WanderingTrader;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -26,28 +27,27 @@ public class EnchantmentListener implements Listener {
             return;
         }
 
-        if (event.getEntity() instanceof Villager villager) {
-            if (villager.getProfession().equals(Villager.Profession.LIBRARIAN) && villager.getVillagerLevel() == 1 && villager.getVillagerExperience() == 0) {
-                RavelDatapack.getLog().info(villager.getVillagerLevel() + " " + villager.getVillagerExperience());
-                Random rand = new Random();
-                if (rand.nextInt(50) == 0) {
-                    MerchantRecipe recipe = new MerchantRecipe(RavelDatapack.getEnchantmentManager().getRandomCustomEnchantment(), 1);
-                    ItemStack emerald = new ItemStack(Material.EMERALD);
-                    emerald.setAmount(40);
-                    recipe.addIngredient(emerald);
-                    recipe.addIngredient(new ItemStack(Material.BOOK));
+        if (event.getEntity() instanceof WanderingTrader trader) {
+            event.setCancelled(true);
 
-                    List<MerchantRecipe> recipeList = new ArrayList<>(villager.getRecipes());
-                    recipeList.clear();
-                    recipeList.add(recipe);
-                    villager.setRecipes(recipeList);
+            List<MerchantRecipe> recipes = new ArrayList<>();
+            Random random = new Random();
 
-                    villager.setVillagerLevel(5);
-                    event.setCancelled(true);
-                } else {
-                    villager.setVillagerExperience(1);
-                }
+            for (CustomEnchantment enchantment : RavelDatapack.getEnchantmentManager().getEnchantments()) {
+                int level = random.nextInt(enchantment.getStartLevel(), enchantment.getMaxLevel() + 1);
+
+                MerchantRecipe recipe = new MerchantRecipe(enchantment.getBook(level), 0, random.nextInt(5) + 10, true);
+                recipe.addIngredient(new ItemStack(Material.BOOK));
+                recipe.addIngredient(new ItemStack(Material.EMERALD, enchantment.getTradeCost(level)));
+                recipes.add(recipe);
+                RavelDatapack.getLog().info("Added recipe for " + enchantment.getName() + " " + level);
             }
+
+            trader.setRecipes(recipes);
+
+            trader.setCanDrinkMilk(true);
+            trader.setCanDrinkPotion(true);
+            trader.setDespawnDelay(0);
         }
     }
 

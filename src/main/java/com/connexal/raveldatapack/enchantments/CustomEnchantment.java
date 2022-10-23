@@ -42,7 +42,7 @@ public abstract class CustomEnchantment extends Enchantment {
         ItemMeta meta = book.getItemMeta();
 
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(ChatColor.GRAY + RavelDatapack.getEnchantmentManager().formatEnchantmentName(this, this.getMaxLevel())));
+        lore.add(Component.text(ChatColor.GRAY + RavelDatapack.getEnchantmentManager().formatEnchantmentName(this, level)));
         meta.lore(lore);
 
         book.setItemMeta(meta);
@@ -129,4 +129,6 @@ public abstract class CustomEnchantment extends Enchantment {
     public @NotNull String translationKey() {
         return "enchantment." + this.namespace + "." + this.name;
     }
+
+    public abstract int getTradeCost(int level);
 }

@@ -12,6 +12,15 @@ public class ItemsUtil {
         return name.endsWith("_SHOVEL") || name.endsWith("_PICKAXE") || name.endsWith("_AXE");
     }
 
+    public static boolean isItemASword(ItemStack item) {
+        if (item == null) {
+            return false;
+        }
+        String name = item.getType().toString();
+
+        return name.endsWith("_SWORD");
+    }
+
     public static boolean isItemArmor(ItemStack item) {
         if (item == null) {
             return false;

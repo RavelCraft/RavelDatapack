@@ -1,7 +1,7 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.enchantments.BlasingArmorEnchantment;
+import com.connexal.raveldatapack.enchantments.BlazingArmorEnchantment;
 import com.connexal.raveldatapack.enchantments.CustomEnchantment;
 import com.connexal.raveldatapack.enchantments.PoisonBladeEnchantment;
 import com.connexal.raveldatapack.enchantments.TelekinesisEnchantment;
@@ -28,7 +28,7 @@ public class EnchantmentManager {
     public int init() {
         this.registerCustomEnchantment(new TelekinesisEnchantment());
         this.registerCustomEnchantment(new PoisonBladeEnchantment());
-        this.registerCustomEnchantment(new BlasingArmorEnchantment());
+        this.registerCustomEnchantment(new BlazingArmorEnchantment());
 
         return registeredCount;
     }

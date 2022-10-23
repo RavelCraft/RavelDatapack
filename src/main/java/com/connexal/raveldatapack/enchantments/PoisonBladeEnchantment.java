@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.enchantments;
 
+import com.connexal.raveldatapack.utils.ItemsUtil;
 import io.papermc.paper.enchantments.EnchantmentRarity;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.LivingEntity;
@@ -44,12 +45,17 @@ public class PoisonBladeEnchantment extends CustomEnchantment implements Listene
 
     @Override
     public boolean canEnchantItemInternal(ItemStack item) {
-        return item.getType().name().endsWith("_SWORD");
+        return ItemsUtil.isItemASword(item);
     }
 
     @Override
     public int getAnvilMergeCost(int level) {
         return 10 * level;
+    }
+
+    @Override
+    public int getTradeCost(int level) {
+        return 12 * level;
     }
 
     @Override
