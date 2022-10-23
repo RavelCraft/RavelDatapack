@@ -1,10 +1,11 @@
 package com.connexal.raveldatapack.commands;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.blocks.CustomBlock;
-import com.connexal.raveldatapack.enchantments.CustomEnchantment;
-import com.connexal.raveldatapack.items.CustomItem;
-import com.connexal.raveldatapack.maps.CustomMapRenderer;
+import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.blocks.CustomBlock;
+import com.connexal.raveldatapack.api.enchantments.CustomEnchantment;
+import com.connexal.raveldatapack.api.items.CustomItem;
+import com.connexal.raveldatapack.api.maps.CustomMapRenderer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapView;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,16 +41,13 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
 
-            for (CustomItem item : RavelDatapack.getItemManager().getItems().values()) {
+            for (CustomItem item : RavelDatapackAPI.getItemManager().getItems().values()) {
                 player.getWorld().dropItem(player.getEyeLocation(), item.getItemStack());
             }
-            for (CustomItem item : RavelDatapack.getHatManager().getItems().values()) {
-                player.getWorld().dropItem(player.getEyeLocation(), item.getItemStack());
-            }
-            for (CustomEnchantment enchantment : RavelDatapack.getEnchantmentManager().getEnchantments()) {
+            for (CustomEnchantment enchantment : RavelDatapackAPI.getEnchantmentManager().getEnchantments()) {
                 player.getWorld().dropItem(player.getEyeLocation(), enchantment.getBook(enchantment.getMaxLevel()));
             }
-            for (CustomBlock block : RavelDatapack.getBlockManager().getBlocks().values()) {
+            for (CustomBlock block : RavelDatapackAPI.getBlockManager().getBlocks().values()) {
                 player.getWorld().dropItem(player.getEyeLocation(), block.createBlockItem());
             }
 
@@ -72,8 +71,10 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
             MapView view = RavelDatapack.getInstance().getServer().createMap(player.getWorld());
             view.getRenderers().clear();
 
-            CustomMapRenderer renderer = new CustomMapRenderer();
-            if (!renderer.load(args[1])) {
+            CustomMapRenderer renderer;
+            try {
+                renderer = new CustomMapRenderer(args[1]);
+            } catch (IOException e) {
                 sender.sendMessage(ChatColor.RED + "Failed to load map.");
                 return true;
             }
@@ -85,7 +86,7 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
             map.setItemMeta(meta);
 
             player.getWorld().dropItem(player.getEyeLocation(), map);
-            RavelDatapack.getMapManager().saveImage(view.getId(), args[1]);
+            RavelDatapackAPI.getMapManager().saveImage(view.getId(), args[1]);
 
             sender.sendMessage(ChatColor.AQUA + "You were given the map.");
         } else {

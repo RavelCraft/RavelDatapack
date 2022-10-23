@@ -1,7 +1,9 @@
 package com.connexal.raveldatapack.items;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.utils.BlockUtil;
+import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.items.CustomItem;
+import com.connexal.raveldatapack.api.utils.BlockUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -43,9 +45,9 @@ public class SuperHammerItem extends CustomItem implements Listener {
         recipe.shape(" NN", " BN", "B  ");
         recipe.setIngredient('N', Material.NETHERITE_BLOCK);
         recipe.setIngredient('B', Material.BLAZE_ROD);
-        RavelDatapack.getRecipeManager().registerRecipe(recipe);
+        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
 
-        this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
+        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
     }
 
     @EventHandler

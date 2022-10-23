@@ -1,9 +1,11 @@
 package com.connexal.raveldatapack.dimensions.aether.populators;
 
-import com.connexal.raveldatapack.dimensions.CustomChunkPopulator;
-import com.connexal.raveldatapack.utils.BlockFaces;
+import com.connexal.raveldatapack.api.dimentions.CustomChunkPopulator;
+import com.connexal.raveldatapack.api.utils.BlockFaces;
+import com.connexal.raveldatapack.dimensions.aether.biomes.AetherBiome;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Biome;
 import org.bukkit.block.BlockFace;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -38,5 +40,10 @@ public class AetherOrePopulator extends CustomChunkPopulator {
 
     private boolean isAcceptable(Material material) {
         return material == Material.STONE || material == Material.COBBLESTONE || material == Material.ANDESITE || material == Material.TUFF;
+    }
+
+    @Override
+    public boolean isSurface(Material cover, Material ground, Biome biome) {
+        return AetherBiome.canReplaceMaterial(cover, ground, biome);
     }
 }

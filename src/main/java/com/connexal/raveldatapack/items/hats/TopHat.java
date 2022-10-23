@@ -1,14 +1,14 @@
 package com.connexal.raveldatapack.items.hats;
 
-import com.connexal.raveldatapack.items.CustomItem;
+import com.connexal.raveldatapack.api.items.CustomHatItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class TopHat extends CustomItem {
+public class TopHat extends CustomHatItem {
     public TopHat(int customModelData) {
-        super(customModelData, "top_hat", true, true);
+        super(customModelData, "top_hat");
     }
 
     @Override

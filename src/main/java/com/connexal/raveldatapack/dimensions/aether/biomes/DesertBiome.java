@@ -1,8 +1,8 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
+import com.connexal.raveldatapack.api.utils.schematics.Schematic;
 import com.connexal.raveldatapack.dimensions.aether.AetherConstants;
 import com.connexal.raveldatapack.dimensions.aether.assets.CactusSpawner;
-import com.connexal.raveldatapack.utils.schematics.Schematic;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;

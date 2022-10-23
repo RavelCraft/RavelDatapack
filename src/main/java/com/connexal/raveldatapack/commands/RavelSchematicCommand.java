@@ -1,8 +1,8 @@
 package com.connexal.raveldatapack.commands;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.utils.schematics.Schematic;
-import com.connexal.raveldatapack.utils.schematics.Schematics;
+import com.connexal.raveldatapack.api.utils.schematics.Schematic;
+import com.connexal.raveldatapack.api.utils.schematics.Schematics;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;

@@ -1,12 +1,12 @@
 package com.connexal.raveldatapack.dimensions.aether;
 
-import com.connexal.raveldatapack.dimensions.CustomChunkGenerator;
+import com.connexal.raveldatapack.api.dimentions.CustomChunkGenerator;
+import com.connexal.raveldatapack.api.utils.RavelMath;
 import com.connexal.raveldatapack.dimensions.aether.biomes.*;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherOrePopulator;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherPlantPopulator;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherStructurePopulator;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherTreePopulator;
-import com.connexal.raveldatapack.utils.RavelMath;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.WorldInfo;

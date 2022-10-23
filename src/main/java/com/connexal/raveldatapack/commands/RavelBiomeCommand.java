@@ -1,7 +1,7 @@
 package com.connexal.raveldatapack.commands;
 
-import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.dimensions.CustomDimension;
+import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.dimentions.CustomDimension;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +23,7 @@ public class RavelBiomeCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        CustomDimension dimension = RavelDatapack.getDimensionManager().getDimension(player.getWorld().getName());
+        CustomDimension dimension = RavelDatapackAPI.getDimensionManager().getDimension(player.getWorld().getName());
         if (dimension == null) {
             sender.sendMessage(ChatColor.RED + "This world is not a Ravel dimension.");
             return true;

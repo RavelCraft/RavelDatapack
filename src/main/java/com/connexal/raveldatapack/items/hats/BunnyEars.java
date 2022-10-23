@@ -1,14 +1,14 @@
 package com.connexal.raveldatapack.items.hats;
 
-import com.connexal.raveldatapack.items.CustomItem;
+import com.connexal.raveldatapack.api.items.CustomHatItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class BunnyEars extends CustomItem {
+public class BunnyEars extends CustomHatItem {
     public BunnyEars(int customModelData) {
-        super(customModelData, "bunny_ears", true, true);
+        super(customModelData, "bunny_ears");
     }
 
     @Override

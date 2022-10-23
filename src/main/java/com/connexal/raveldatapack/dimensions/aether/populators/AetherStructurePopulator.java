@@ -1,7 +1,8 @@
 package com.connexal.raveldatapack.dimensions.aether.populators;
 
-import com.connexal.raveldatapack.dimensions.CustomChunkPopulator;
+import com.connexal.raveldatapack.api.dimentions.CustomChunkPopulator;
 import com.connexal.raveldatapack.dimensions.aether.biomes.AetherBiome;
+import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -41,5 +42,10 @@ public class AetherStructurePopulator extends CustomChunkPopulator {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean isSurface(Material cover, Material ground, Biome biome) {
+        return AetherBiome.canReplaceMaterial(cover, ground, biome);
     }
 }

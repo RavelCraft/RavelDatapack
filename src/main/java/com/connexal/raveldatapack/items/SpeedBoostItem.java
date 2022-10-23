@@ -1,5 +1,7 @@
 package com.connexal.raveldatapack.items;
 
+import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.api.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -35,7 +37,7 @@ public class SpeedBoostItem extends CustomItem implements Listener {
         meta.addEnchant(Enchantment.MENDING, 1, false);
         this.setItemMeta(meta);
 
-        this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
+        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
     }
 
     @EventHandler

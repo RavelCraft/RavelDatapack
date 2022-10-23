@@ -1,7 +1,8 @@
 package com.connexal.raveldatapack.items.nope;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.items.CustomItem;
+import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -24,6 +25,6 @@ public class BoltItem extends CustomItem {
 
         ShapelessRecipe recipe = new ShapelessRecipe(this.getNamespacedKey(), this.getItemStack());
         recipe.addIngredient(2, Material.IRON_INGOT);
-        RavelDatapack.getRecipeManager().registerRecipe(recipe);
+        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
     }
 }

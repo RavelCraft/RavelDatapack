@@ -1,6 +1,8 @@
 package com.connexal.raveldatapack.enchantments;
 
-import com.connexal.raveldatapack.utils.ItemsUtil;
+import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.api.enchantments.CustomEnchantment;
+import com.connexal.raveldatapack.api.utils.ItemsUtil;
 import io.papermc.paper.enchantments.EnchantmentRarity;
 import org.bukkit.GameMode;
 import org.bukkit.block.Container;
@@ -19,7 +21,7 @@ public class TelekinesisEnchantment extends CustomEnchantment implements Listene
 
     @Override
     public void create() {
-        this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
+        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
     }
 
     @EventHandler

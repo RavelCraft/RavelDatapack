@@ -1,8 +1,9 @@
 package com.connexal.raveldatapack.items.nope;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.items.CustomItem;
-import com.connexal.raveldatapack.utils.AmoUtil;
+import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.items.CustomItem;
+import com.connexal.raveldatapack.api.utils.AmoUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -38,9 +39,9 @@ public class BoltPistolItem extends CustomItem implements Listener {
         recipe.shape(" IB", "III", " I ");
         recipe.setIngredient('B', Material.BLAZE_POWDER);
         recipe.setIngredient('I', Material.IRON_INGOT);
-        RavelDatapack.getRecipeManager().registerRecipe(recipe);
+        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
 
-        this.instance.getServer().getPluginManager().registerEvents(this, this.instance);
+        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
     }
 
     @EventHandler

@@ -1,16 +1,18 @@
 package com.connexal.raveldatapack.items.warhammer;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.items.CustomItem;
+import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.items.CustomToolItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class NetheriteWarHammer extends CustomItem {
+public class NetheriteWarHammer extends CustomToolItem {
     public NetheriteWarHammer(int customModelData) {
         super(customModelData, "netherite_war_hammer");
     }
@@ -23,12 +25,14 @@ public class NetheriteWarHammer extends CustomItem {
         meta.displayName(Component.text(ChatColor.RESET.toString() + ChatColor.WHITE + "Netherite War Hammer"));
         this.setItemMeta(meta);
 
-        ItemStack diamondWarHammer = RavelDatapack.getItemManager().getItem("diamond_war_hammer");
+        this.allowEnchantment(Enchantment.DAMAGE_ALL);
+
+        ItemStack diamondWarHammer = RavelDatapackAPI.getItemManager().getItem("diamond_war_hammer");
         if (diamondWarHammer != null) {
             RecipeChoice base = new RecipeChoice.ExactChoice(diamondWarHammer);
             RecipeChoice addition = new RecipeChoice.MaterialChoice(Material.NETHERITE_INGOT);
             SmithingRecipe recipe = new SmithingRecipe(this.getNamespacedKey(), this.getItemStack(), base, addition);
-            RavelDatapack.getRecipeManager().registerRecipe(recipe);
+            RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
         }
     }
 }

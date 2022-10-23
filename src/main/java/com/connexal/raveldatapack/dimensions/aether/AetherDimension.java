@@ -1,7 +1,7 @@
 package com.connexal.raveldatapack.dimensions.aether;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.dimensions.CustomDimension;
+import com.connexal.raveldatapack.api.dimentions.CustomDimension;
 import com.connexal.raveldatapack.dimensions.aether.biomes.AetherBiome;
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -1,7 +1,8 @@
 package com.connexal.raveldatapack.items.plate;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.items.CustomItem;
+import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.items.CustomItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,14 +24,14 @@ public class TurkeyOnAPlateItem extends CustomItem {
         meta.displayName(Component.text(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Turkey on a Plate"));
         this.setItemMeta(meta);
 
-        ItemStack plate = RavelDatapack.getItemManager().getItem("plate");
+        ItemStack plate = RavelDatapackAPI.getItemManager().getItem("plate");
         if (plate != null) {
             ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
             recipe.shape(" C ", " P ", "   ");
             recipe.setIngredient('C', Material.COOKED_CHICKEN);
             RecipeChoice plate_ingredient = new RecipeChoice.ExactChoice(plate);
             recipe.setIngredient('P', plate_ingredient);
-            RavelDatapack.getRecipeManager().registerRecipe(recipe);
+            RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
         }
     }
 }

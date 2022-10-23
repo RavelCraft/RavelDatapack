@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.api.utils.YmlConfig;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,7 +16,7 @@ public class ConfigManager {
     private final Map<String, YmlConfig> configs = new HashMap<>();
 
     public ConfigManager() {
-        YmlConfig config = new YmlConfig(this.plugin.getConfig());
+        YmlConfig config = new YmlConfigImpl(this.plugin.getConfig());
         config.saveConfig();
 
         configs.put("config", config);
@@ -25,7 +26,7 @@ public class ConfigManager {
         if (configs.containsKey(name)) {
             return configs.get(name);
         } else {
-            YmlConfig config = new YmlConfig(this.plugin, name + ".yml");
+            YmlConfig config = new YmlConfigImpl(this.plugin, name + ".yml");
             config.saveConfig();
 
             configs.put(name, config);
@@ -38,7 +39,7 @@ public class ConfigManager {
         if (configs.containsKey(name)) {
             return null;
         } else {
-            YmlConfig config = new YmlConfig(this.plugin, file);
+            YmlConfig config = new YmlConfigImpl(this.plugin, file);
             config.saveConfig();
 
             configs.put(name, config);
@@ -53,11 +54,11 @@ public class ConfigManager {
         }
     }
 
-    public static class YmlConfig {
+    public static class YmlConfigImpl implements YmlConfig {
         private FileConfiguration configuration;
         private File file = null;
 
-        public YmlConfig(RavelDatapack plugin, File file) {
+        public YmlConfigImpl(RavelDatapack plugin, File file) {
             this.file = file;
             if (!this.file.exists()) {
                 plugin.saveResource(file.getName(), false);
@@ -72,18 +73,20 @@ public class ConfigManager {
             }
         }
 
-        public YmlConfig(RavelDatapack plugin, String configName) {
+        public YmlConfigImpl(RavelDatapack plugin, String configName) {
             this(plugin, new File(plugin.getDataFolder(), configName));
         }
 
-        public YmlConfig(FileConfiguration config) {
+        public YmlConfigImpl(FileConfiguration config) {
             this.configuration = config;
         }
 
+        @Override
         public FileConfiguration getConfig() {
             return configuration;
         }
 
+        @Override
         public void saveConfig() {
             if (file == null) {
                 RavelDatapack.getInstance().saveConfig();
@@ -96,6 +99,7 @@ public class ConfigManager {
             }
         }
 
+        @Override
         public void reloadConfig() {
             if (file != null) {
                 this.configuration = new YamlConfiguration();
