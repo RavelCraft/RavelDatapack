@@ -6,13 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class AmoUtil {
-    /**
-     * Remove one of the given {@link Player}'s custom items from their inventory
-     *
-     * @param player          The {@link Player} to remove the item from
-     * @param customModelData The custom model data of the item to remove
-     * @return True if the item was removed, false if the item was not found
-     */
     public static boolean usePlayerAmo(Player player, Integer customModelData) {
         if (player.getGameMode() == GameMode.CREATIVE) {
             return true;
@@ -58,13 +51,6 @@ public class AmoUtil {
         }
     }
 
-    /**
-     * Remove one of the given {@link Player}'s items from their inventory
-     *
-     * @param player   The {@link Player} to remove the item from
-     * @param material The {@link Material} of the item to remove
-     * @return True if the item was removed, false if the item was not found
-     */
     public static boolean usePlayerAmo(Player player, Material material) {
         if (player.getGameMode() == GameMode.CREATIVE) {
             return true;

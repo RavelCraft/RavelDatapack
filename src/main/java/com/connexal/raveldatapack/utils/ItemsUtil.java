@@ -3,12 +3,6 @@ package com.connexal.raveldatapack.utils;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemsUtil {
-    /**
-     * Get if an {@link ItemStack} is a tool
-     *
-     * @param item The {@link ItemStack} to check
-     * @return True if the item is a tool, false if not
-     */
     public static boolean isItemATool(ItemStack item) {
         if (item == null) {
             return false;
@@ -18,12 +12,6 @@ public class ItemsUtil {
         return name.endsWith("_SHOVEL") || name.endsWith("_PICKAXE") || name.endsWith("_AXE");
     }
 
-    /**
-     * Get if an {@link ItemStack} is armor
-     *
-     * @param item The {@link ItemStack} to check
-     * @return True if the item is armor, false if not
-     */
     public static boolean isItemArmor(ItemStack item) {
         if (item == null) {
             return false;

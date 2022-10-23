@@ -35,17 +35,8 @@ public abstract class CustomEnchantment extends Enchantment {
         this.enchantment = this;
     }
 
-    /**
-     * Create the enchantment
-     */
     public abstract void create();
 
-    /**
-     * Get the enchanted book {@link ItemStack}
-     *
-     * @param level The enchantment level
-     * @return The enchanted book
-     */
     public ItemStack getBook(int level) {
         ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
         ItemMeta meta = book.getItemMeta();
@@ -63,12 +54,6 @@ public abstract class CustomEnchantment extends Enchantment {
         return book;
     }
 
-    /**
-     * Test to see if an {@link ItemStack} has the enchantment
-     *
-     * @param item The item to test
-     * @return True if the item has the enchantment
-     */
     protected boolean hasEnchantment(ItemStack item) {
         if (item == null) {
             return false;
@@ -79,12 +64,6 @@ public abstract class CustomEnchantment extends Enchantment {
         return item.getItemMeta().hasEnchant(this.enchantment);
     }
 
-    /**
-     * Get the enchantment level of an enchanted book {@link ItemStack}
-     *
-     * @param item The enchanted book
-     * @return The enchantment level
-     */
     protected int getEnchantmentLevel(ItemStack item) {
         if (!hasEnchantment(item)) {
             return 0;

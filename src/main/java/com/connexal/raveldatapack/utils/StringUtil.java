@@ -9,12 +9,6 @@ import java.util.regex.Pattern;
 public class StringUtil {
     public static final Pattern HEX_PATTERN = Pattern.compile("#([A-Fa-f\b]{6})");
 
-    /**
-     * Convert a number to a Roman numeral
-     *
-     * @param number The number to convert
-     * @return The Roman numeral
-     */
     public static String toRoman(int number) {
         if (number == 0) {
             return "0";

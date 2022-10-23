@@ -17,7 +17,7 @@ public class BlockManager {
     public int init() {
         this.registerCustomItem(new CustomBlock("Test Block", 68295, false, false, false, false, false, true, CustomBlock.Parent.MUSHROOM_STEM));
 
-        return registeredCount;
+        return this.registeredCount;
     }
 
     public void registerCustomItem(CustomBlock block) {
@@ -32,7 +32,7 @@ public class BlockManager {
         }
 
         this.blocks.put(block.getCustomModelData(), block);
-        registeredCount++;
+        this.registeredCount++;
     }
 
     public Map<Integer, CustomBlock> getBlocks() {
