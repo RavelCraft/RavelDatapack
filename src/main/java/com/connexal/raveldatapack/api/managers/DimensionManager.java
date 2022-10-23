@@ -2,6 +2,7 @@ package com.connexal.raveldatapack.api.managers;
 
 import com.connexal.raveldatapack.api.RavelDatapackAPI;
 import com.connexal.raveldatapack.api.dimentions.CustomDimension;
+import com.connexal.raveldatapack.api.exceptions.CustomDimensionException;
 import com.connexal.raveldatapack.api.utils.BlockFaces;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,11 +27,9 @@ public class DimensionManager implements Listener {
     public void registerDimension(CustomDimension dimension) {
         for (CustomDimension registeredDimension : dimensions.values()) {
             if (registeredDimension.getName().equals(dimension.getName())) {
-                RavelDatapackAPI.getLogger().severe("A dimension with the name " + dimension.getName() + " has already been registered!");
-                return;
+                throw new CustomDimensionException("A dimension with the name " + dimension.getName() + " has already been registered!");
             } else if (registeredDimension.getPortalFrameMaterial().equals(dimension.getPortalFrameMaterial())) {
-                RavelDatapackAPI.getLogger().severe("A dimension with the portal frame material " + dimension.getPortalFrameMaterial() + " has already been registered!");
-                return;
+                throw new CustomDimensionException("A dimension with the portal frame material " + dimension.getPortalFrameMaterial() + " has already been registered!");
             }
         }
 

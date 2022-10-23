@@ -2,6 +2,7 @@ package com.connexal.raveldatapack.api.managers;
 
 import com.connexal.raveldatapack.api.RavelDatapackAPI;
 import com.connexal.raveldatapack.api.enchantments.CustomEnchantment;
+import com.connexal.raveldatapack.api.exceptions.CustomEnchantmentException;
 import com.connexal.raveldatapack.api.utils.EnchantmentLoreUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -33,15 +34,15 @@ import java.util.stream.Stream;
 public class EnchantmentManager implements Listener {
     private final Map<String, CustomEnchantment> enchantments = new HashMap<>();
 
-    public boolean registerCustomEnchantment(CustomEnchantment enchantment) {
+    public void registerCustomEnchantment(CustomEnchantment enchantment) {
         if (RavelDatapackAPI.getConfig().contains("enchantments." + enchantment.getKey())) {
             if (!RavelDatapackAPI.getConfig().getBoolean("enchantments." + enchantment.getKey())) {
-                return false;
+                return;
             }
         } else {
             RavelDatapackAPI.getConfig().set("enchantments." + enchantment.getKey(), false);
             RavelDatapackAPI.saveConfig();
-            return false;
+            return;
         }
 
         enchantment.create();
@@ -50,15 +51,13 @@ public class EnchantmentManager implements Listener {
         enchantments.put(enchantment.getNamespace(), enchantment);
 
         if (!registered) {
-            return this.registerEnchantment(enchantment);
+            this.registerEnchantment(enchantment);
         } else {
-            RavelDatapackAPI.getLogger().info("Enchantment already registered: \"" + enchantment.getKey() + "\"");
-            return false;
+            throw new CustomEnchantmentException("Enchantment already registered: \"" + enchantment.getKey() + "\"");
         }
     }
 
-    private boolean registerEnchantment(Enchantment enchantment) {
-        boolean registered = true;
+    private void registerEnchantment(Enchantment enchantment) {
         try {
             Field f = Enchantment.class.getDeclaredField("acceptingNew");
             f.setAccessible(true);
@@ -66,14 +65,10 @@ public class EnchantmentManager implements Listener {
 
             Enchantment.registerEnchantment(enchantment);
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-            RavelDatapackAPI.getLogger().severe("Failed to register enchantment \"" + enchantment.getKey() + "\": Field value failure.");
-            registered = false;
+            throw new CustomEnchantmentException("Failed to register enchantment \"" + enchantment.getKey() + "\": Field value failure.", e);
         } catch (IllegalStateException e) {
-            RavelDatapackAPI.getLogger().severe("Failed to register enchantment \"" + enchantment.getKey() + "\": Not accepting new.");
-            registered = false;
+            throw new CustomEnchantmentException("Failed to register enchantment \"" + enchantment.getKey() + "\": Not accepting new.", e);
         }
-
-        return registered;
     }
 
     public void unregisterEnchantments() {

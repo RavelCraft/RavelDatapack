@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.api.managers;
 
 import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.exceptions.CustomMapException;
 import com.connexal.raveldatapack.api.maps.CustomMapRenderer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +28,7 @@ public class MapManager implements Listener {
             try {
                 view.addRenderer(new CustomMapRenderer(this.getImage(view.getId())));
             } catch (IOException e) {
-                RavelDatapackAPI.getLogger().severe("Failed to load image for map " + view.getId());
+                throw new CustomMapException("Failed to load image for map " + view.getId(), e);
             }
             view.setScale(Scale.FARTHEST);
             view.setTrackingPosition(false);

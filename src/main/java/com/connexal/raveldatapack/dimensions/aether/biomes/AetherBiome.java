@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
 import com.connexal.raveldatapack.RavelDatapack;
+import com.connexal.raveldatapack.api.exceptions.SchematicException;
 import com.connexal.raveldatapack.api.utils.RavelMath;
 import com.connexal.raveldatapack.api.utils.schematics.Schematic;
 import com.connexal.raveldatapack.api.utils.schematics.Schematics;
@@ -143,14 +144,15 @@ public abstract class AetherBiome {
             return schematicCache.get(schematicName);
         }
 
-        Schematic schematic = Schematics.loadSchematic(schematicName);
-        if (schematic == null) {
-            RavelDatapack.getLog().warning("Could not load schematic " + schematicName);
+        try {
+            Schematic schematic = Schematics.loadSchematic(schematicName);
+            schematicCache.put(schematicName, schematic);
+            return schematic;
+        } catch (SchematicException e) {
+            RavelDatapack.getLog().severe("Could not load schematic " + schematicName);
+            e.printStackTrace();
             return null;
         }
-
-        schematicCache.put(schematicName, schematic);
-        return schematic;
     }
 
     public Location getAcceptableStructureSpawn(WorldInfo worldInfo, LimitedRegion limitedRegion, int worldX, int worldZ, int width, int depth, int heightTolerance) {

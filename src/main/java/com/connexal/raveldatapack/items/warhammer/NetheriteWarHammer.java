@@ -1,6 +1,5 @@
 package com.connexal.raveldatapack.items.warhammer;
 
-import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.api.RavelDatapackAPI;
 import com.connexal.raveldatapack.api.items.CustomToolItem;
 import net.kyori.adventure.text.Component;

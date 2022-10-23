@@ -3,6 +3,7 @@ package com.connexal.raveldatapack;
 import com.connexal.raveldatapack.api.CustomAdder;
 import com.connexal.raveldatapack.api.RavelDatapackAPI;
 import com.connexal.raveldatapack.api.blocks.CustomBlock;
+import com.connexal.raveldatapack.api.exceptions.*;
 import com.connexal.raveldatapack.api.managers.*;
 import com.connexal.raveldatapack.dimensions.aether.AetherDimension;
 import com.connexal.raveldatapack.enchantments.BlazingArmorEnchantment;
@@ -26,11 +27,15 @@ import org.bukkit.inventory.ShapelessRecipe;
 public class CustomAdderImpl implements CustomAdder {
     @Override
     public void add() {
-        this.registerBlocks();
-        this.registerItems();
-        this.registerRecipes();
-        this.registerEnchantments();
-        this.registerDimensions();
+        try {
+            this.registerBlocks();
+            this.registerItems();
+            this.registerRecipes();
+            this.registerEnchantments();
+            this.registerDimensions();
+        } catch (RavelDatapackException e) {
+            RavelDatapack.getLog().severe("Something went wrong while adding custom content: " + e.getMessage());
+        }
     }
 
     private void registerBlocks() {
@@ -39,7 +44,7 @@ public class CustomAdderImpl implements CustomAdder {
         blockManager.registerCustomBlock(new CustomBlock("Test Block", 68295, false, false, false, false, false, true, CustomBlock.Parent.MUSHROOM_STEM));
     }
 
-    private void registerItems() {
+    private void registerItems() throws CustomItemException {
         ItemManager itemManager = RavelDatapackAPI.getItemManager();
 
         itemManager.registerCustomItem(new BolterItem(295304));
@@ -82,7 +87,7 @@ public class CustomAdderImpl implements CustomAdder {
         itemManager.registerCustomItem(new EmeraldMask(724045));
     }
 
-    private void registerRecipes() {
+    private void registerRecipes() throws CustomRecipeException {
         RecipeManager recipeManager = RavelDatapackAPI.getRecipeManager();
 
         ShapelessRecipe woolToString = new ShapelessRecipe(NamespacedKey.minecraft("wool_to_string"), new ItemStack(Material.STRING, 4));
@@ -91,7 +96,7 @@ public class CustomAdderImpl implements CustomAdder {
         recipeManager.registerRecipe(woolToString);
     }
 
-    private void registerEnchantments() {
+    private void registerEnchantments() throws CustomEnchantmentException {
         EnchantmentManager enchantmentManager = RavelDatapackAPI.getEnchantmentManager();
 
         enchantmentManager.registerCustomEnchantment(new TelekinesisEnchantment());
@@ -99,7 +104,7 @@ public class CustomAdderImpl implements CustomAdder {
         enchantmentManager.registerCustomEnchantment(new BlazingArmorEnchantment());
     }
 
-    private void registerDimensions() {
+    private void registerDimensions() throws CustomDimensionException {
         DimensionManager dimensionManager = RavelDatapackAPI.getDimensionManager();
 
         dimensionManager.registerDimension(new AetherDimension());

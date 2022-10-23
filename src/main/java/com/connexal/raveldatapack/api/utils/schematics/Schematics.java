@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.api.utils.schematics;
 
 import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.exceptions.SchematicException;
 import com.connexal.raveldatapack.api.utils.nbt.*;
 import org.bukkit.Location;
 import org.bukkit.block.data.BlockData;
@@ -15,11 +16,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Schematics {
-    public static Schematic loadSchematic(String schematicName) {
+    public static Schematic loadSchematic(String schematicName) throws SchematicException {
         InputStream stream = RavelDatapackAPI.getPlugin().getResource("schematics/" + schematicName + ".ravelschem");
         if (stream == null) {
-            RavelDatapackAPI.getLogger().warning("Schematic not found");
-            return null;
+            throw new SchematicException("Schematic not found");
         }
 
         CompoundTag schematicTag;
@@ -27,14 +27,12 @@ public class Schematics {
             NBTInputStream nbtStream = new NBTInputStream(stream);
             schematicTag = (CompoundTag) nbtStream.readTag();
             if (!schematicTag.getName().equals("Schematic")) {
-                RavelDatapackAPI.getLogger().warning("Tag \"Schematic\" does not exist or is not first");
                 nbtStream.close();
-                return null;
+                throw new SchematicException("Tag \"Schematic\" does not exist or is not first");
             }
             nbtStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new SchematicException("Something went wrong whilst reading the schematic file", e);
         }
 
         Map<String, Tag> schematic = schematicTag.getValue();
@@ -50,8 +48,7 @@ public class Schematics {
         int[] baseOffset = new int[3];
 
         if (baseOffsetList.size() != 3) {
-            RavelDatapackAPI.getLogger().warning("BaseOffset list has wrong size");
-            return null;
+            throw new SchematicException("BaseOffset list has wrong size");
         }
         for (int i = 0; i < 3; i++) {
             baseOffset[i] = ((IntTag) baseOffsetList.get(i)).getValue();

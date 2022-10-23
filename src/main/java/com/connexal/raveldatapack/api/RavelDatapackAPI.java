@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.api;
 
+import com.connexal.raveldatapack.api.exceptions.CustomRecipeException;
 import com.connexal.raveldatapack.api.managers.*;
 import com.connexal.raveldatapack.api.utils.YmlConfig;
 import org.bukkit.Server;
@@ -60,7 +61,12 @@ public class RavelDatapackAPI {
         }
         initialized = false;
 
-        recipeManager.unregisterAllRecipes();
+        try {
+            recipeManager.unregisterAllRecipes();
+        } catch (CustomRecipeException e) {
+            logger.severe("Failed to unregister all recipes");
+            e.printStackTrace();
+        }
         recipeManager = null;
         blockManager = null;
         dimensionManager = null;

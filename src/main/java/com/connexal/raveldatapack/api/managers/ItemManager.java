@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.api.managers;
 
 import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.exceptions.CustomItemException;
 import com.connexal.raveldatapack.api.items.CustomHatItem;
 import com.connexal.raveldatapack.api.items.CustomItem;
 import org.bukkit.ChatColor;
@@ -36,8 +37,7 @@ public class ItemManager implements Listener {
         }
 
         if (this.items.containsKey(item.getCustomModelData())) {
-            RavelDatapackAPI.getLogger().warning("Custom model data " + item.getCustomModelData() + " is already registered for " + item.getNamespaceKey() + "!");
-            return;
+            throw new CustomItemException("Custom model data " + item.getCustomModelData() + " is already registered for " + item.getNamespaceKey() + "!");
         }
 
         item.create();

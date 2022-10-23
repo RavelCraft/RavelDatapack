@@ -1,6 +1,6 @@
 package com.connexal.raveldatapack.api.utils.schematics;
 
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.exceptions.SchematicException;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
@@ -60,41 +60,41 @@ public class Schematic {
         LOCATION
     }
 
-    private void placeBlock(Object placer, PlacerType type, int x, int y, int z, BlockData data) {
+    private void placeBlock(Object placer, PlacerType type, int x, int y, int z, BlockData data) throws SchematicException {
         if (type == PlacerType.LIMITED_REGION) {
             LimitedRegion limitedRegion = (LimitedRegion) placer;
 
             if (limitedRegion.isInRegion(x, y, z)) {
                 limitedRegion.setBlockData(x, y, z, data);
             } else {
-                RavelDatapackAPI.getLogger().warning("Could not place structure block at " + x + " " + y + " " + z + " because it is outside the region");
+                throw new SchematicException("Could not place structure block at " + x + " " + y + " " + z + " because it is outside the region");
             }
         } else if (type == PlacerType.LOCATION) {
             Location placeLocation = new Location(((Location) placer).getWorld(), x, y, z);
             placeLocation.getBlock().setBlockData(data);
         } else {
-            throw new IllegalArgumentException("Unknown placer type " + type.toString());
+            throw new SchematicException("Unknown placer type " + type.toString());
         }
     }
 
-    private void placeBlock(Object placer, PlacerType type, int x, int y, int z, Material material) {
+    private void placeBlock(Object placer, PlacerType type, int x, int y, int z, Material material) throws SchematicException {
         if (type == PlacerType.LIMITED_REGION) {
             LimitedRegion limitedRegion = (LimitedRegion) placer;
 
             if (limitedRegion.isInRegion(x, y, z)) {
                 limitedRegion.setType(x, y, z, material);
             } else {
-                RavelDatapackAPI.getLogger().warning("Could not place structure block at " + x + " " + y + " " + z + " because it is outside the region");
+                throw new SchematicException("Could not place structure block at " + x + " " + y + " " + z + " because it is outside the region");
             }
         } else if (type == PlacerType.LOCATION) {
             Location placeLocation = new Location(((Location) placer).getWorld(), x, y, z);
             placeLocation.getBlock().setType(material);
         } else {
-            throw new IllegalArgumentException("Unknown placer type: " + type);
+            throw new SchematicException("Unknown placer type: " + type);
         }
     }
 
-    private void pasteSchematic(Object placer, PlacerType type, int placeX, int placeY, int placeZ) {
+    private void pasteSchematic(Object placer, PlacerType type, int placeX, int placeY, int placeZ) throws SchematicException {
         int offsetX = placeX - this.baseOffset[0];
         int offsetY = placeY - this.baseOffset[1];
         int offsetZ = placeZ - this.baseOffset[2];
@@ -117,11 +117,11 @@ public class Schematic {
         }
     }
 
-    public void pasteSchematic(Location location) {
+    public void pasteSchematic(Location location) throws SchematicException {
         this.pasteSchematic(location, PlacerType.LOCATION, location.getBlockX(), location.getBlockY(), location.getBlockZ());
     }
 
-    public void pasteSchematic(LimitedRegion limitedRegion, int placeX, int placeY, int placeZ) {
+    public void pasteSchematic(LimitedRegion limitedRegion, int placeX, int placeY, int placeZ) throws SchematicException {
         this.pasteSchematic(limitedRegion, PlacerType.LIMITED_REGION, placeX, placeY, placeZ);
     }
 }

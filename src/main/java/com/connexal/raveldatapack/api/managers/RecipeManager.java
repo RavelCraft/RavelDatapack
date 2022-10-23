@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.api.managers;
 
 import com.connexal.raveldatapack.api.RavelDatapackAPI;
+import com.connexal.raveldatapack.api.exceptions.CustomRecipeException;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Recipe;
@@ -16,22 +17,22 @@ public class RecipeManager {
             if (RavelDatapackAPI.getServer().addRecipe(recipe)) {
                 this.items.add(keyed.getKey());
             } else {
-                RavelDatapackAPI.getLogger().severe("Failed to register recipe: " + keyed.getKey());
+                throw new CustomRecipeException("Failed to register recipe: " + keyed.getKey());
             }
         } else {
-            throw new IllegalArgumentException("Recipe must be keyed");
+            throw new CustomRecipeException("Recipe must be keyed so it can be added");
         }
     }
 
-    public void unregisterRecipe(NamespacedKey key) {
+    public void unregisterRecipe(NamespacedKey key) throws CustomRecipeException {
         if (this.items.remove(key)) {
             RavelDatapackAPI.getServer().removeRecipe(key);
         } else {
-            RavelDatapackAPI.getLogger().severe("Failed to unregister recipe: " + key);
+            throw new CustomRecipeException("Failed to unregister recipe: " + key);
         }
     }
 
-    public void unregisterAllRecipes() {
+    public void unregisterAllRecipes() throws CustomRecipeException {
         for (NamespacedKey key : new ArrayList<>(this.items)) {
             this.unregisterRecipe(key);
         }

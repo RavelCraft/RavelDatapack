@@ -1,6 +1,5 @@
 package com.connexal.raveldatapack.items.nope;
 
-import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.api.RavelDatapackAPI;
 import com.connexal.raveldatapack.api.items.CustomItem;
 import net.kyori.adventure.text.Component;
