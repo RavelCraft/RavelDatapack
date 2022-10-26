@@ -1,90 +1,72 @@
 package com.connexal.raveldatapack.items;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
-import com.connexal.raveldatapack.api.items.CustomItem;
-import com.connexal.raveldatapack.api.utils.BlockUtil;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
+import com.github.imdabigboss.easydatapack.api.utils.BlockUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuperHammerItem extends CustomItem implements Listener {
-    private final List<Location> blocksToProcessLoc = new ArrayList<>();
+public class SuperHammerItem {
+    private static final List<Location> blocksToProcessLoc = new ArrayList<>();
+    private static final Server server = RavelDatapack.getInstance().getServer();
 
-    public SuperHammerItem(int customModelData) {
-        super(customModelData, "super_hammer");
-    }
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomToolItem.Builder(customModelData, "super_hammer", ChatColor.RED.toString() + ChatColor.BOLD + "Super Hammer", Material.NETHERITE_PICKAXE, 5, 1)
+                .playerBreakBlockEvent(SuperHammerItem::blockBreakEvent)
+                .lore("Break a 3x3x3 area of blocks")
+                .hideFlags(true)
+                .unbreakable(true)
+                .enchantment(Enchantment.KNOCKBACK, 2)
+                .build();
 
-    @Override
-    public void create() {
-        this.createItem(Material.NETHERITE_PICKAXE);
+        adder.register(item);
 
-        ItemMeta meta = this.createItemMeta(true, false);
-        this.setItemLore(meta, "Break a 3x3x3 area of blocks");
-        meta.displayName(Component.text(ChatColor.RED.toString() + ChatColor.BOLD + "Super Hammer"));
-        meta.addEnchant(Enchantment.KNOCKBACK, 2, true);
-        this.setAttackDamage(meta, 5, EquipmentSlot.HAND);
-        this.setAttackSpeed(meta, 1, EquipmentSlot.HAND);
-        this.setItemMeta(meta);
-
-        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
+        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape(" NN", " BN", "B  ");
         recipe.setIngredient('N', Material.NETHERITE_BLOCK);
         recipe.setIngredient('B', Material.BLAZE_ROD);
-        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
-
-        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
+        adder.register(recipe);
     }
 
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
-        if (this.blocksToProcessLoc.contains(event.getBlock().getLocation())) {
-            this.blocksToProcessLoc.remove(event.getBlock().getLocation());
+    private static void blockBreakEvent(BlockBreakEvent event) {
+        if (blocksToProcessLoc.contains(event.getBlock().getLocation())) {
+            blocksToProcessLoc.remove(event.getBlock().getLocation());
             return;
         }
 
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (item.getItemMeta() == null) {
-            return;
-        }
-        if (!item.getItemMeta().hasCustomModelData()) {
-            return;
-        }
-
-        if (item.getItemMeta().getCustomModelData() == this.getCustomModelData()) {
-            Location location = event.getBlock().getLocation();
-            for (int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++) {
-                for (int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++) {
-                    for (int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++) {
-                        Block block = location.getWorld().getBlockAt(x, y, z);
-                        Location blockLocation = block.getLocation();
-                        if (blockLocation.equals(location)) {
-                            continue;
-                        }
-
-                        if (block.isLiquid() || BlockUtil.UNBREAKABLE_BLOCKS.contains(block.getType())) {
-                            continue;
-                        }
-
-                        this.blocksToProcessLoc.add(blockLocation);
-                        BlockUtil.breakBlock(player, block, item);
+        Location location = event.getBlock().getLocation();
+        for (int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++) {
+            for (int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++) {
+                for (int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++) {
+                    Block block = location.getWorld().getBlockAt(x, y, z);
+                    Location blockLocation = block.getLocation();
+                    if (blockLocation.equals(location)) {
+                        continue;
                     }
+
+                    if (block.isLiquid() || BlockUtil.UNBREAKABLE_BLOCKS.contains(block.getType())) {
+                        continue;
+                    }
+
+                    blocksToProcessLoc.add(blockLocation);
+                    BlockUtil.breakBlock(server, player, block, item);
                 }
             }
         }

@@ -1,6 +1,6 @@
 package com.connexal.raveldatapack.dimensions.aether;
 
-import com.connexal.raveldatapack.api.utils.VoronoiGenerator;
+import com.github.imdabigboss.easydatapack.api.utils.VoronoiGenerator;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.WorldInfo;

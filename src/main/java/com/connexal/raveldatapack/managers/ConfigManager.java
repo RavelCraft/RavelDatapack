@@ -1,7 +1,7 @@
 package com.connexal.raveldatapack.managers;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.utils.YmlConfig;
+import com.github.imdabigboss.easydatapack.api.utils.YmlConfig;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

@@ -1,33 +1,24 @@
 package com.connexal.raveldatapack.items.warhammer;
 
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
-import com.connexal.raveldatapack.api.items.CustomToolItem;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class GoldenWarHammer extends CustomToolItem {
-    public GoldenWarHammer(int customModelData) {
-        super(customModelData, "golden_war_hammer");
-    }
+public class GoldenWarHammer {
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomToolItem.Builder(customModelData, "golden_war_hammer", ChatColor.WHITE + "Golden War Hammer", Material.GOLDEN_PICKAXE, 11, 0.5)
+                .build();
 
-    @Override
-    public void create() {
-        this.createItem(Material.GOLDEN_PICKAXE);
+        adder.register(item);
 
-        ItemMeta meta = this.createToolMeta(11, 0.5);
-        meta.displayName(Component.text(ChatColor.RESET.toString() + ChatColor.WHITE + "Golden War Hammer"));
-        this.setItemMeta(meta);
-
-        this.allowEnchantment(Enchantment.DAMAGE_ALL);
-
-        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
+        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape("III", "ISI", " S ");
         recipe.setIngredient('I', Material.GOLD_INGOT);
         recipe.setIngredient('S', Material.STICK);
-        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
+        adder.register(recipe);
     }
 }

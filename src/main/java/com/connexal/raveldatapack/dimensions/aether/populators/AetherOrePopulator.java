@@ -1,8 +1,8 @@
 package com.connexal.raveldatapack.dimensions.aether.populators;
 
-import com.connexal.raveldatapack.api.dimentions.CustomChunkPopulator;
-import com.connexal.raveldatapack.api.utils.BlockFaces;
 import com.connexal.raveldatapack.dimensions.aether.biomes.AetherBiome;
+import com.github.imdabigboss.easydatapack.api.dimentions.CustomChunkPopulator;
+import com.github.imdabigboss.easydatapack.api.utils.BlockFaces;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;

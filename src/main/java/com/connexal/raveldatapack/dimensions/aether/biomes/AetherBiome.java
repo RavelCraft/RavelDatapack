@@ -1,10 +1,10 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.exceptions.SchematicException;
-import com.connexal.raveldatapack.api.utils.RavelMath;
-import com.connexal.raveldatapack.api.utils.schematics.Schematic;
-import com.connexal.raveldatapack.api.utils.schematics.Schematics;
+import com.github.imdabigboss.easydatapack.api.exceptions.SchematicException;
+import com.github.imdabigboss.easydatapack.api.utils.ExtraMath;
+import com.github.imdabigboss.easydatapack.api.utils.schematics.Schematic;
+import com.github.imdabigboss.easydatapack.api.utils.schematics.Schematics;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -145,7 +145,7 @@ public abstract class AetherBiome {
         }
 
         try {
-            Schematic schematic = Schematics.loadSchematic(schematicName);
+            Schematic schematic = Schematics.loadSchematic(RavelDatapack.getInstance(), schematicName);
             schematicCache.put(schematicName, schematic);
             return schematic;
         } catch (SchematicException e) {
@@ -184,8 +184,8 @@ public abstract class AetherBiome {
                     continue;
                 }
 
-                int minY = RavelMath.min(y1, y2, y3, y4);
-                int maxY = RavelMath.max(y1, y2, y3, y4);
+                int minY = ExtraMath.min(y1, y2, y3, y4);
+                int maxY = ExtraMath.max(y1, y2, y3, y4);
 
                 int heightDiff = maxY - minY;
                 if (heightDiff > heightTolerance) {

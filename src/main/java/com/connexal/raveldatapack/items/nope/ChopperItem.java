@@ -1,65 +1,40 @@
 package com.connexal.raveldatapack.items.nope;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
-import com.connexal.raveldatapack.api.items.CustomItem;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class ChopperItem extends CustomItem implements Listener {
-    public ChopperItem(int customModelData) {
-        super(customModelData, "chopper");
-    }
+public class ChopperItem {
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomToolItem.Builder(customModelData, "chopper", ChatColor.GOLD.toString() + ChatColor.BOLD + "Chopper", Material.CLOCK, 8, 1)
+                .playerHitEntityEvent(ChopperItem::playerHitEntityEvent)
+                .lore("Slice up your enemies")
+                .attributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier("generic.movementSpeed", 1.3, AttributeModifier.Operation.MULTIPLY_SCALAR_1))
+                .hideFlags(true)
+                .build();
 
-    @Override
-    public void create() {
-        this.createItem(Material.CLOCK);
+        adder.register(item);
 
-        ItemMeta meta = this.createItemMeta();
-        this.setItemLore(meta, "Slice up your enemies");
-        meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Chopper"));
-        this.setAttackDamage(meta, 8, EquipmentSlot.HAND);
-        meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier("generic.movementSpeed", 1.3, AttributeModifier.Operation.MULTIPLY_SCALAR_1));
-        this.setItemMeta(meta);
-
-        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
+        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape("NNN", "III", "III");
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
         recipe.setIngredient('I', Material.IRON_INGOT);
-        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
-
-        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
+        adder.register(recipe);
     }
 
-    @EventHandler
-    public void handleEvent(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player player) {
-            ItemStack item = player.getInventory().getItemInMainHand();
-
-            if (item.getItemMeta() == null) {
-                return;
-            }
-            if (!item.getItemMeta().hasCustomModelData()) {
-                return;
-            }
-
-            if (item.getItemMeta().getCustomModelData() == this.getCustomModelData()) {
-                for (Player tmp : RavelDatapack.getInstance().getServer().getOnlinePlayers()) {
-                    tmp.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 1);
-                }
-            }
+    private static void playerHitEntityEvent(EntityDamageByEntityEvent event) {
+        for (Player tmp : RavelDatapack.getInstance().getServer().getOnlinePlayers()) {
+            tmp.playSound(event.getDamager().getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 1);
         }
     }
 }

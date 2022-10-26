@@ -1,23 +1,18 @@
 package com.connexal.raveldatapack.items.hats;
 
-import com.connexal.raveldatapack.api.items.CustomHatItem;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomHatItem;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class SantaHat extends CustomHatItem {
-    public SantaHat(int customModelData) {
-        super(customModelData, "santa_hat");
-    }
+public class SantaHat {
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomHatItem.Builder(customModelData, "santa_hat", ChatColor.AQUA.toString() + ChatColor.BOLD + "Santa Hat", Material.CLOCK)
+                .lore("Become Santa")
+                .build();
 
-    @Override
-    public void create() {
-        this.createItem(Material.CLOCK);
-
-        ItemMeta meta = this.createItemMeta();
-        this.setItemLore(meta, "Become Santa");
-        meta.displayName(Component.text(ChatColor.AQUA.toString() + ChatColor.BOLD + "Santa Hat"));
-        this.setItemMeta(meta);
+        adder.register(item);
     }
 }

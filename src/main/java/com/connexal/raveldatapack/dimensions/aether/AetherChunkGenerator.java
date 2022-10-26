@@ -1,12 +1,12 @@
 package com.connexal.raveldatapack.dimensions.aether;
 
-import com.connexal.raveldatapack.api.dimentions.CustomChunkGenerator;
-import com.connexal.raveldatapack.api.utils.RavelMath;
 import com.connexal.raveldatapack.dimensions.aether.biomes.*;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherOrePopulator;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherPlantPopulator;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherStructurePopulator;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherTreePopulator;
+import com.github.imdabigboss.easydatapack.api.dimentions.CustomChunkGenerator;
+import com.github.imdabigboss.easydatapack.api.utils.ExtraMath;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.WorldInfo;
@@ -78,8 +78,8 @@ public class AetherChunkGenerator extends CustomChunkGenerator {
                     currentHeight += AetherConstants.ISLAND_LEVEL;
                     bottomHeight += AetherConstants.ISLAND_LEVEL - 1;
 
-                    currentHeight = RavelMath.clamp(currentHeight, worldInfo.getMinHeight(), worldInfo.getMaxHeight());
-                    bottomHeight = RavelMath.clamp(bottomHeight, worldInfo.getMinHeight(), worldInfo.getMaxHeight());
+                    currentHeight = ExtraMath.clamp(currentHeight, worldInfo.getMinHeight(), worldInfo.getMaxHeight());
+                    bottomHeight = ExtraMath.clamp(bottomHeight, worldInfo.getMinHeight(), worldInfo.getMaxHeight());
 
                     AetherBiome.generateStack(chunkData, x, z, bottomHeight, currentHeight, biome, random);
                 }

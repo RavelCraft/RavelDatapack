@@ -23,6 +23,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.github.imdabigboss.easydatapack</groupId>
+            <artifactId>api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.19.2-R0.1-SNAPSHOT</version>

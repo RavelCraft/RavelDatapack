@@ -1,8 +1,9 @@
 package com.connexal.raveldatapack.dimensions.aether;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.dimentions.CustomDimension;
 import com.connexal.raveldatapack.dimensions.aether.biomes.AetherBiome;
+import com.github.imdabigboss.easydatapack.api.dimentions.CustomChunkGenerator;
+import com.github.imdabigboss.easydatapack.api.dimentions.CustomDimension;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,7 +12,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
 import org.bukkit.generator.BiomeProvider;
-import org.bukkit.generator.ChunkGenerator;
 
 import java.util.Random;
 
@@ -67,7 +67,7 @@ public class AetherDimension extends CustomDimension {
     }
 
     @Override
-    protected ChunkGenerator getChunkGenerator() {
+    protected CustomChunkGenerator getChunkGenerator() {
         return this.chunkGenerator;
     }
 

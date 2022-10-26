@@ -1,10 +1,11 @@
 package com.connexal.raveldatapack.items.nope;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
-import com.connexal.raveldatapack.api.items.CustomItem;
-import com.connexal.raveldatapack.api.utils.AmoUtil;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
+import com.github.imdabigboss.easydatapack.api.utils.AmoUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,68 +13,41 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class BoltPistolItem extends CustomItem implements Listener {
-    public BoltPistolItem(int customModelData) {
-        super(customModelData, "boltpistol");
-    }
+public class BoltPistolItem {
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomToolItem.Builder(customModelData, "boltpistol", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt Pistol", Material.CLOCK, 5, 1)
+                .itemUseEvent(BoltPistolItem::itemUseEvent)
+                .lore("Shoots arrows with no", "recharge time!")
+                .hideFlags(true)
+                .build();
 
-    @Override
-    public void create() {
-        this.createItem(Material.CLOCK);
+        adder.register(item);
 
-        ItemMeta meta = this.createItemMeta();
-        this.setItemLore(meta, "Shoots arrows");
-        meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt Pistol"));
-        this.setAttackDamage(meta, 5, EquipmentSlot.HAND);
-        this.setItemMeta(meta);
-
-        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
+        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape(" IB", "III", " I ");
         recipe.setIngredient('B', Material.BLAZE_POWDER);
         recipe.setIngredient('I', Material.IRON_INGOT);
-        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
-
-        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
+        adder.register(recipe);
     }
 
-    @EventHandler
-    public void handleEvent(PlayerInteractEvent event) {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
-            if (event.getItem() == null) {
-                return;
-            }
-            if (event.getItem().getItemMeta() == null) {
-                return;
-            }
-            if (!event.getItem().getItemMeta().hasCustomModelData()) {
-                return;
-            }
-
-            if (event.getItem().getItemMeta().getCustomModelData() == this.getCustomModelData()) {
-                Player player = event.getPlayer();
-                if (!AmoUtil.usePlayerAmo(player, Material.ARROW)) {
-                    return;
-                }
-
-                for (Player tmp : RavelDatapack.getInstance().getServer().getOnlinePlayers()) {
-                    tmp.playSound(player.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1, 1);
-                }
-
-                Location eye = player.getEyeLocation();
-                Location loc = eye.add(eye.getDirection().multiply(1.2));
-                Arrow arrow = (Arrow) loc.getWorld().spawnEntity(loc, EntityType.ARROW);
-                arrow.setVelocity(loc.getDirection().normalize().multiply(2));
-                arrow.setShooter(player);
-                arrow.setGravity(true);
-            }
+    private static void itemUseEvent(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if (!AmoUtil.usePlayerAmo(player, Material.ARROW)) {
+            return;
         }
+
+        for (Player tmp : RavelDatapack.getInstance().getServer().getOnlinePlayers()) {
+            tmp.playSound(player.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1, 1);
+        }
+
+        Location eye = player.getEyeLocation();
+        Location loc = eye.add(eye.getDirection().multiply(1.2));
+        Arrow arrow = (Arrow) loc.getWorld().spawnEntity(loc, EntityType.ARROW);
+        arrow.setVelocity(loc.getDirection().normalize().multiply(2));
+        arrow.setShooter(player);
+        arrow.setGravity(true);
     }
 }

@@ -1,9 +1,9 @@
 package com.connexal.raveldatapack.commands;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.exceptions.SchematicException;
-import com.connexal.raveldatapack.api.utils.schematics.Schematic;
-import com.connexal.raveldatapack.api.utils.schematics.Schematics;
+import com.github.imdabigboss.easydatapack.api.exceptions.SchematicException;
+import com.github.imdabigboss.easydatapack.api.utils.schematics.Schematic;
+import com.github.imdabigboss.easydatapack.api.utils.schematics.Schematics;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -47,7 +47,7 @@ public class RavelSchematicCommand implements CommandExecutor, TabExecutor {
             Location playerLocation = player.getLocation();
 
             try {
-                Schematic schematic = Schematics.loadSchematic(args[1]);
+                Schematic schematic = Schematics.loadSchematic(RavelDatapack.getInstance(), args[1]);
                 schematic.pasteSchematic(playerLocation);
 
                 sender.sendMessage(ChatColor.AQUA + "Schematic pasted");

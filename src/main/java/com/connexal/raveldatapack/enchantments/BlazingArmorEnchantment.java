@@ -1,8 +1,9 @@
 package com.connexal.raveldatapack.enchantments;
 
-import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.enchantments.CustomEnchantment;
-import com.connexal.raveldatapack.api.utils.ItemsUtil;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
+import com.github.imdabigboss.easydatapack.api.exceptions.CustomEnchantmentException;
+import com.github.imdabigboss.easydatapack.api.utils.ItemsUtil;
 import io.papermc.paper.enchantments.EnchantmentRarity;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
@@ -10,16 +11,30 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
-public class BlazingArmorEnchantment extends CustomEnchantment implements Listener {
-    public BlazingArmorEnchantment() {
-        super("blazing_armor", "Blazing Armor");
+public class BlazingArmorEnchantment implements Listener {
+    private final CustomEnchantment enchantment;
+
+    public BlazingArmorEnchantment(CustomEnchantment enchantment) {
+        this.enchantment = enchantment;
     }
 
-    @Override
-    public void create() {
-        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
+    public static void register(CustomAdder adder) throws CustomEnchantmentException {
+        CustomEnchantment enchantment = new CustomEnchantment.Builder("Blazing Armor", "balzing_armor", BlazingArmorEnchantment::canEnchantItem, EnchantmentTarget.ARMOR)
+                .anvilMergeCost(level -> 10 * level)
+                .tradeCost(level -> 14 * level)
+                .tradeable(false)
+                .discoverable(false)
+                .rarity(EnchantmentRarity.VERY_RARE)
+                .maxLevel(3)
+                .eventListener(BlazingArmorEnchantment.class)
+                .build();
+
+        adder.register(enchantment);
+    }
+
+    private static boolean canEnchantItem(ItemStack item) {
+        return ItemsUtil.isItemArmor(item);
     }
 
     @EventHandler
@@ -32,70 +47,20 @@ public class BlazingArmorEnchantment extends CustomEnchantment implements Listen
 
             int fire_time = 0;
 
-            if (hasEnchantment(item1)) {
-                fire_time += getEnchantmentLevel(item1);
+            if (this.enchantment.hasEnchantment(item1)) {
+                fire_time += this.enchantment.getEnchantmentLevel(item1);
             }
-            if (hasEnchantment(item2)) {
-                fire_time += getEnchantmentLevel(item2);
+            if (this.enchantment.hasEnchantment(item2)) {
+                fire_time += this.enchantment.getEnchantmentLevel(item2);
             }
-            if (hasEnchantment(item3)) {
-                fire_time += getEnchantmentLevel(item3);
+            if (this.enchantment.hasEnchantment(item3)) {
+                fire_time += this.enchantment.getEnchantmentLevel(item3);
             }
-            if (hasEnchantment(item4)) {
-                fire_time += getEnchantmentLevel(item4);
+            if (this.enchantment.hasEnchantment(item4)) {
+                fire_time += this.enchantment.getEnchantmentLevel(item4);
             }
 
             event.getDamager().setFireTicks(fire_time * 20);
         }
-    }
-
-    @Override
-    public boolean canEnchantItemInternal(ItemStack item) {
-        return ItemsUtil.isItemArmor(item);
-    }
-
-    @Override
-    public int getAnvilMergeCost(int level) {
-        return 10 * level;
-    }
-
-    @Override
-    public int getTradeCost(int level) {
-        return 14 * level;
-    }
-
-    @Override
-    public @NotNull EnchantmentTarget getItemTarget() {
-        return EnchantmentTarget.ARMOR;
-    }
-
-    @Override
-    public boolean isTreasure() {
-        return false;
-    }
-
-    @Override
-    public boolean isCursed() {
-        return false;
-    }
-
-    @Override
-    public boolean isTradeable() {
-        return false;
-    }
-
-    @Override
-    public boolean isDiscoverable() {
-        return false;
-    }
-
-    @Override
-    public @NotNull EnchantmentRarity getRarity() {
-        return EnchantmentRarity.VERY_RARE;
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3;
     }
 }

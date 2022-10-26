@@ -1,34 +1,28 @@
 package com.connexal.raveldatapack.items.enderite;
 
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
-import com.connexal.raveldatapack.api.items.CustomToolItem;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class EnderiteAxeItem extends CustomToolItem {
-    public EnderiteAxeItem(int customModelData) {
-        super(customModelData, "enderite_axe");
-    }
+public class EnderiteAxeItem {
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomToolItem.Builder(customModelData, "enderite_axe", ChatColor.WHITE + "Enderite Axe", Material.NETHERITE_AXE, 12, 1)
+                .build();
 
-    @Override
-    public void create() {
-        this.createItem(Material.NETHERITE_AXE);
+        adder.register(item);
 
-        ItemMeta meta = this.createToolMeta(12, 1);
-        meta.displayName(Component.text(ChatColor.RESET.toString() + ChatColor.WHITE + "Enderite Axe"));
-        this.setItemMeta(meta);
-
-        ItemStack ingot = RavelDatapackAPI.getItemManager().getItem("enderite_ingot");
+        ItemStack ingot = EasyDatapackAPI.getItemManager().getItemStack("enderite_ingot");
         if (ingot != null) {
             RecipeChoice base = new RecipeChoice.MaterialChoice(Material.NETHERITE_AXE);
             RecipeChoice addition = new RecipeChoice.ExactChoice(ingot);
-            SmithingRecipe recipe = new SmithingRecipe(this.getNamespacedKey(), this.getItemStack(), base, addition);
-            RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
+            adder.register(new SmithingRecipe(item.getNamespacedKey(), item.getItemStack(), base, addition));
         }
     }
 }

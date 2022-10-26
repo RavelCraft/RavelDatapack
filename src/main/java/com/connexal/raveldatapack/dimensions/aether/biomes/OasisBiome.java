@@ -1,7 +1,8 @@
 package com.connexal.raveldatapack.dimensions.aether.biomes;
 
-import com.connexal.raveldatapack.api.utils.schematics.Schematic;
 import com.connexal.raveldatapack.dimensions.aether.assets.PalmTreeSpawner;
+import com.github.imdabigboss.easydatapack.api.exceptions.SchematicException;
+import com.github.imdabigboss.easydatapack.api.utils.schematics.Schematic;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -69,7 +70,11 @@ public class OasisBiome extends AetherBiome {
                 return;
             }
 
-            schematic.pasteSchematic(limitedRegion, location.getBlockX(), location.getBlockY(), location.getBlockZ());
+            try {
+                schematic.pasteSchematic(limitedRegion, location.getBlockX(), location.getBlockY(), location.getBlockZ());
+            } catch (SchematicException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

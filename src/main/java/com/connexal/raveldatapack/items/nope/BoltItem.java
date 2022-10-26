@@ -1,29 +1,23 @@
 package com.connexal.raveldatapack.items.nope;
 
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
-import com.connexal.raveldatapack.api.items.CustomItem;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class BoltItem extends CustomItem {
-    public BoltItem(int customModelData) {
-        super(customModelData, "bolt");
-    }
+public class BoltItem {
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomItem.Builder(customModelData, "bolt", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt", Material.CLOCK)
+                .lore("Amo for the Bolter")
+                .hideFlags(true)
+                .build();
 
-    @Override
-    public void create() {
-        this.createItem(Material.CLOCK);
+        adder.register(item);
 
-        ItemMeta meta = this.createItemMeta();
-        this.setItemLore(meta, "Amo for the Bolter");
-        meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt"));
-        this.setItemMeta(meta);
-
-        ShapelessRecipe recipe = new ShapelessRecipe(this.getNamespacedKey(), this.getItemStack());
+        ShapelessRecipe recipe = new ShapelessRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.addIngredient(2, Material.IRON_INGOT);
-        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
+        adder.register(recipe);
     }
 }

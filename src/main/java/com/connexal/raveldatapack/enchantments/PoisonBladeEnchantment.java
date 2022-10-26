@@ -1,8 +1,9 @@
 package com.connexal.raveldatapack.enchantments;
 
-import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.enchantments.CustomEnchantment;
-import com.connexal.raveldatapack.api.utils.ItemsUtil;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
+import com.github.imdabigboss.easydatapack.api.exceptions.CustomEnchantmentException;
+import com.github.imdabigboss.easydatapack.api.utils.ItemsUtil;
 import io.papermc.paper.enchantments.EnchantmentRarity;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.LivingEntity;
@@ -13,29 +14,43 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.NotNull;
 
-public class PoisonBladeEnchantment extends CustomEnchantment implements Listener {
-    public PoisonBladeEnchantment() {
-        super("poison_blade", "Poison Blade");
+public class PoisonBladeEnchantment implements Listener {
+    private final CustomEnchantment enchantment;
+
+    public PoisonBladeEnchantment(CustomEnchantment enchantment) {
+        this.enchantment = enchantment;
     }
 
-    @Override
-    public void create() {
-        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
+    public static void register(CustomAdder adder) throws CustomEnchantmentException {
+        CustomEnchantment enchantment = new CustomEnchantment.Builder("Poison Blade", "poison_blade", PoisonBladeEnchantment::canEnchantItem, EnchantmentTarget.WEAPON)
+                .anvilMergeCost(level -> 10 * level)
+                .tradeCost(level -> 12 * level)
+                .tradeable(false)
+                .discoverable(false)
+                .rarity(EnchantmentRarity.VERY_RARE)
+                .maxLevel(3)
+                .eventListener(PoisonBladeEnchantment.class)
+                .build();
+
+        adder.register(enchantment);
+    }
+
+    private static boolean canEnchantItem(ItemStack item) {
+        return ItemsUtil.isItemASword(item);
     }
 
     @EventHandler
     public void handleEvent(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player player) {
             ItemStack item = player.getInventory().getItemInMainHand();
-            if (!this.hasEnchantment(item)) {
+            if (!this.enchantment.hasEnchantment(item)) {
                 return;
             }
 
             if (event.getEntity() instanceof LivingEntity entity) {
 
-                int time = this.getEnchantmentLevel(item);
+                int time = this.enchantment.getEnchantmentLevel(item);
                 if (time == 0) {
                     time = 1;
                 }
@@ -43,55 +58,5 @@ public class PoisonBladeEnchantment extends CustomEnchantment implements Listene
                 entity.addPotionEffect(new PotionEffect(PotionEffectType.POISON, time * 2 * 20, 255, false, true));
             }
         }
-    }
-
-    @Override
-    public boolean canEnchantItemInternal(ItemStack item) {
-        return ItemsUtil.isItemASword(item);
-    }
-
-    @Override
-    public int getAnvilMergeCost(int level) {
-        return 10 * level;
-    }
-
-    @Override
-    public int getTradeCost(int level) {
-        return 12 * level;
-    }
-
-    @Override
-    public @NotNull EnchantmentTarget getItemTarget() {
-        return EnchantmentTarget.WEAPON;
-    }
-
-    @Override
-    public boolean isTreasure() {
-        return false;
-    }
-
-    @Override
-    public boolean isCursed() {
-        return false;
-    }
-
-    @Override
-    public boolean isTradeable() {
-        return false;
-    }
-
-    @Override
-    public boolean isDiscoverable() {
-        return false;
-    }
-
-    @Override
-    public @NotNull EnchantmentRarity getRarity() {
-        return EnchantmentRarity.VERY_RARE;
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3;
     }
 }

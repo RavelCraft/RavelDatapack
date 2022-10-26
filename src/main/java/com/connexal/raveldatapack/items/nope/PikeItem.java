@@ -1,64 +1,33 @@
 package com.connexal.raveldatapack.items.nope;
 
-import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
-import com.connexal.raveldatapack.api.items.CustomItem;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class PikeItem extends CustomItem implements Listener {
-    public PikeItem(int customModelData) {
-        super(customModelData, "pike");
-    }
+public class PikeItem {
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomToolItem.Builder(customModelData, "pike", ChatColor.GOLD.toString() + ChatColor.BOLD + "Pike", Material.CLOCK, 6, 1)
+                .playerHitEntityEvent(PikeItem::playerHitEntityEvent)
+                .lore("Pierce your enemies' armor")
+                .build();
 
-    @Override
-    public void create() {
-        this.createItem(Material.CLOCK);
+        adder.register(item);
 
-        ItemMeta meta = this.createItemMeta();
-        this.setItemLore(meta, "Pierce your enemies' armor");
-        meta.displayName(Component.text(ChatColor.GOLD.toString() + ChatColor.BOLD + "Pike"));
-        this.setItemMeta(meta);
-
-        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
+        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape("DDD", "DND", "DDD");
         recipe.setIngredient('D', Material.DIAMOND);
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
-        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
-
-        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
+        adder.register(recipe);
     }
 
-    @EventHandler
-    public void handleEvent(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player player) {
-            ItemStack item = player.getInventory().getItemInMainHand();
-
-            if (!(event.getEntity() instanceof LivingEntity)) {
-                return;
-            }
-            if (item.getItemMeta() == null) {
-                return;
-            }
-            if (!item.getItemMeta().hasCustomModelData()) {
-                return;
-            }
-            if (item.getItemMeta().getCustomModelData() != this.getCustomModelData()) {
-                return;
-            }
-
-            event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
-            event.setDamage(6);
-        }
+    private static void playerHitEntityEvent(EntityDamageByEntityEvent event) {
+        event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
+        event.setDamage(6);
     }
 }

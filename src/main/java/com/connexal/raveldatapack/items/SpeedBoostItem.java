@@ -1,17 +1,13 @@
 package com.connexal.raveldatapack.items;
 
-import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.items.CustomItem;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -19,58 +15,37 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class SpeedBoostItem extends CustomItem implements Listener {
+public class SpeedBoostItem {
     private static final int COOLDOWN_TIME = 120;
-    private final Map<UUID, Long> lastUseEvent = new HashMap<>();
+    private static final Map<UUID, Long> lastUseEvent = new HashMap<>();
 
-    public SpeedBoostItem(int customModelData) {
-        super(customModelData, "speed_boost");
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomItem.Builder(customModelData, "speed_boost", ChatColor.RED.toString() + ChatColor.BOLD + "Speed Boost", Material.SUGAR)
+                .itemUseEvent(SpeedBoostItem::itemUseEvent)
+                .lore("Don't do drugs, they", "aren't good for you.", "Luckily, this is not a", "drug.")
+                .hideFlags(true)
+                .enchantment(Enchantment.MENDING, 1)
+                .build();
+
+        adder.register(item);
     }
 
-    @Override
-    public void create() {
-        this.createItem(Material.SUGAR);
+    private static void itemUseEvent(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        Long lastUse = lastUseEvent.get(player.getUniqueId());
+        long currentTime = System.currentTimeMillis();
 
-        ItemMeta meta = this.createItemMeta(true, true);
-        this.setItemLore(meta, "Don't do drugs, they", "aren't good for you.", "Luckily, this is not a", "drug.");
-        meta.displayName(Component.text(ChatColor.RED.toString() + ChatColor.BOLD + "Speed Boost"));
-        meta.addEnchant(Enchantment.MENDING, 1, false);
-        this.setItemMeta(meta);
-
-        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
-    }
-
-    @EventHandler
-    public void handleEvent(PlayerInteractEvent event) {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
-            if (event.getItem() == null) {
+        if (lastUse != null) {
+            if (lastUse + COOLDOWN_TIME * 1000 > currentTime) {
+                player.sendMessage(ChatColor.RED + "You can't use this item yet! Wait another " + (COOLDOWN_TIME - (currentTime - lastUse) / 1000) + " seconds.");
                 return;
-            }
-            if (event.getItem().getItemMeta() == null) {
-                return;
-            }
-            if (!event.getItem().getItemMeta().hasCustomModelData()) {
-                return;
-            }
-
-            if (event.getItem().getItemMeta().getCustomModelData() == this.getCustomModelData()) {
-                Player player = event.getPlayer();
-                Long lastUse = this.lastUseEvent.get(player.getUniqueId());
-                long currentTime = System.currentTimeMillis();
-
-                if (lastUse != null) {
-                    if (lastUse + COOLDOWN_TIME * 1000 > currentTime) {
-                        player.sendMessage(ChatColor.RED + "You can't use this item yet! Wait another " + (COOLDOWN_TIME - (currentTime - lastUse) / 1000) + " seconds.");
-                        return;
-                    } else {
-                        this.lastUseEvent.remove(player.getUniqueId());
-                    }
-                }
-
-                this.lastUseEvent.put(player.getUniqueId(), currentTime);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10 * 20, 2));
-                player.sendMessage(ChatColor.AQUA + "You feel a rush of energy!");
+            } else {
+                lastUseEvent.remove(player.getUniqueId());
             }
         }
+
+        lastUseEvent.put(player.getUniqueId(), currentTime);
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10 * 20, 2));
+        player.sendMessage(ChatColor.AQUA + "You feel a rush of energy!");
     }
 }

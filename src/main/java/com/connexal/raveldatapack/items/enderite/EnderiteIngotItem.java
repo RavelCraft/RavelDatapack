@@ -1,29 +1,23 @@
 package com.connexal.raveldatapack.items.enderite;
 
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
-import com.connexal.raveldatapack.api.items.CustomItem;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class EnderiteIngotItem extends CustomItem {
-    public EnderiteIngotItem(int customModelData) {
-        super(customModelData, "enderite_ingot");
-    }
+public class EnderiteIngotItem {
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomItem.Builder(customModelData, "enderite_ingot", ChatColor.WHITE + "Enderite Ingot", Material.NETHERITE_INGOT)
+                .build();
 
-    @Override
-    public void create() {
-        this.createItem(Material.NETHERITE_INGOT);
-        ItemMeta meta = this.createItemMeta(false, false);
-        meta.displayName(Component.text(ChatColor.RESET.toString() + ChatColor.WHITE + "Enderite Ingot"));
-        this.setItemMeta(meta);
+        adder.register(item);
 
-        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
+        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape("EEE", "EIE", "EEE");
         recipe.setIngredient('E', Material.ENDER_PEARL);
         recipe.setIngredient('I', Material.ENDER_EYE);
-        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
+        adder.register(recipe);
     }
 }

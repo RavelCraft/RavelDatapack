@@ -1,8 +1,9 @@
 package com.connexal.raveldatapack.enchantments;
 
-import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.enchantments.CustomEnchantment;
-import com.connexal.raveldatapack.api.utils.ItemsUtil;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
+import com.github.imdabigboss.easydatapack.api.exceptions.CustomEnchantmentException;
+import com.github.imdabigboss.easydatapack.api.utils.ItemsUtil;
 import io.papermc.paper.enchantments.EnchantmentRarity;
 import org.bukkit.GameMode;
 import org.bukkit.block.Container;
@@ -12,16 +13,29 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
-public class TelekinesisEnchantment extends CustomEnchantment implements Listener {
-    public TelekinesisEnchantment() {
-        super("telekinesis", "Telekinesis");
+public class TelekinesisEnchantment implements Listener {
+    private final CustomEnchantment enchantment;
+
+    public TelekinesisEnchantment(CustomEnchantment enchantment) {
+        this.enchantment = enchantment;
     }
 
-    @Override
-    public void create() {
-        RavelDatapack.getInstance().getServer().getPluginManager().registerEvents(this, RavelDatapack.getInstance());
+    public static void register(CustomAdder adder) throws CustomEnchantmentException {
+        CustomEnchantment enchantment = new CustomEnchantment.Builder("Telekinesis", "telekinesis", TelekinesisEnchantment::canEnchantItem, EnchantmentTarget.TOOL)
+                .anvilMergeCost(level -> 10 * level)
+                .tradeCost(level -> 10 * level)
+                .tradeable(false)
+                .discoverable(false)
+                .rarity(EnchantmentRarity.VERY_RARE)
+                .eventListener(TelekinesisEnchantment.class)
+                .build();
+
+        adder.register(enchantment);
+    }
+
+    private static boolean canEnchantItem(ItemStack item) {
+        return ItemsUtil.isItemATool(item);
     }
 
     @EventHandler
@@ -39,7 +53,7 @@ public class TelekinesisEnchantment extends CustomEnchantment implements Listene
         }
 
         ItemStack item = player.getInventory().getItemInMainHand();
-        if (!this.hasEnchantment(item)) {
+        if (!this.enchantment.hasEnchantment(item)) {
             return;
         }
 
@@ -47,55 +61,5 @@ public class TelekinesisEnchantment extends CustomEnchantment implements Listene
         for (ItemStack drop : event.getBlock().getDrops(item)) {
             player.getInventory().addItem(drop);
         }
-    }
-
-    @Override
-    public boolean canEnchantItemInternal(ItemStack item) {
-        return ItemsUtil.isItemATool(item);
-    }
-
-    @Override
-    public int getAnvilMergeCost(int level) {
-        return 10 * level;
-    }
-
-    @Override
-    public int getTradeCost(int level) {
-        return 10 * level;
-    }
-
-    @Override
-    public @NotNull EnchantmentTarget getItemTarget() {
-        return EnchantmentTarget.TOOL;
-    }
-
-    @Override
-    public boolean isTreasure() {
-        return false;
-    }
-
-    @Override
-    public boolean isCursed() {
-        return false;
-    }
-
-    @Override
-    public boolean isTradeable() {
-        return false;
-    }
-
-    @Override
-    public boolean isDiscoverable() {
-        return false;
-    }
-
-    @Override
-    public @NotNull EnchantmentRarity getRarity() {
-        return EnchantmentRarity.VERY_RARE;
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 1;
     }
 }

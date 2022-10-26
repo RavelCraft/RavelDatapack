@@ -2,7 +2,7 @@ name: RavelDatapack
 version: 1.0
 main: com.connexal.raveldatapack.RavelDatapack
 api-version: 1.19
-softdepend: [floodgate]
+depend: [EasyDatapack]
 
 commands:
   raveldatapack:

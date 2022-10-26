@@ -1,33 +1,24 @@
 package com.connexal.raveldatapack.items.warhammer;
 
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
-import com.connexal.raveldatapack.api.items.CustomToolItem;
-import net.kyori.adventure.text.Component;
+import com.github.imdabigboss.easydatapack.api.CustomAdder;
+import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class DiamondWarHammer extends CustomToolItem {
-    public DiamondWarHammer(int customModelData) {
-        super(customModelData, "diamond_war_hammer");
-    }
+public class DiamondWarHammer {
+    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+        CustomItem item = new CustomToolItem.Builder(customModelData, "diamond_war_hammer", ChatColor.WHITE + "Diamond War Hammer", Material.DIAMOND_PICKAXE, 12, 0.45)
+                .build();
 
-    @Override
-    public void create() {
-        this.createItem(Material.DIAMOND_PICKAXE);
+        adder.register(item);
 
-        ItemMeta meta = this.createToolMeta(12, 0.45);
-        meta.displayName(Component.text(ChatColor.RESET.toString() + ChatColor.WHITE + "Diamond War Hammer"));
-        this.setItemMeta(meta);
-
-        this.allowEnchantment(Enchantment.DAMAGE_ALL);
-
-        ShapedRecipe recipe = new ShapedRecipe(this.getNamespacedKey(), this.getItemStack());
+        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape("III", "ISI", " S ");
         recipe.setIngredient('I', Material.DIAMOND);
         recipe.setIngredient('S', Material.STICK);
-        RavelDatapackAPI.getRecipeManager().registerRecipe(recipe);
+        adder.register(recipe);
     }
 }

@@ -1,24 +1,18 @@
 package com.connexal.raveldatapack.commands;
 
-import com.connexal.raveldatapack.RavelDatapack;
-import com.connexal.raveldatapack.api.RavelDatapackAPI;
-import com.connexal.raveldatapack.api.blocks.CustomBlock;
-import com.connexal.raveldatapack.api.enchantments.CustomEnchantment;
-import com.connexal.raveldatapack.api.items.CustomItem;
-import com.connexal.raveldatapack.api.maps.CustomMapRenderer;
+import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
+import com.github.imdabigboss.easydatapack.api.blocks.CustomBlock;
+import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
+import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.MapMeta;
-import org.bukkit.map.MapView;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,13 +35,13 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
 
-            for (CustomItem item : RavelDatapackAPI.getItemManager().getItems().values()) {
+            for (CustomItem item : EasyDatapackAPI.getItemManager().getCustomItems()) {
                 player.getWorld().dropItem(player.getEyeLocation(), item.getItemStack());
             }
-            for (CustomEnchantment enchantment : RavelDatapackAPI.getEnchantmentManager().getEnchantments()) {
+            for (CustomEnchantment enchantment : EasyDatapackAPI.getEnchantmentManager().getEnchantments()) {
                 player.getWorld().dropItem(player.getEyeLocation(), enchantment.getBook(enchantment.getMaxLevel()));
             }
-            for (CustomBlock block : RavelDatapackAPI.getBlockManager().getBlocks().values()) {
+            for (CustomBlock block : EasyDatapackAPI.getBlockManager().getCustomBlocks()) {
                 player.getWorld().dropItem(player.getEyeLocation(), block.createBlockItem());
             }
 
@@ -68,26 +62,13 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
 
-            MapView view = RavelDatapack.getInstance().getServer().createMap(player.getWorld());
-            view.getRenderers().clear();
-
-            CustomMapRenderer renderer;
-            try {
-                renderer = new CustomMapRenderer(args[1]);
-            } catch (IOException e) {
-                sender.sendMessage(ChatColor.RED + "Failed to load map.");
+            ItemStack map = EasyDatapackAPI.getMapManager().createMap(args[1]);
+            if (map == null) {
+                sender.sendMessage("Invalid URL.");
                 return true;
             }
-            view.addRenderer(renderer);
-
-            ItemStack map = new ItemStack(Material.FILLED_MAP);
-            MapMeta meta = (MapMeta) map.getItemMeta();
-            meta.setMapView(view);
-            map.setItemMeta(meta);
 
             player.getWorld().dropItem(player.getEyeLocation(), map);
-            RavelDatapackAPI.getMapManager().saveImage(view.getId(), args[1]);
-
             sender.sendMessage(ChatColor.AQUA + "You were given the map.");
         } else {
             sendHelp(sender, sender.isOp());
