@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.enchantments;
 
+import com.connexal.raveldatapack.CustomRegistry;
 import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
 import com.github.imdabigboss.easydatapack.api.exceptions.CustomEnchantmentException;
@@ -22,7 +23,7 @@ public class PoisonBladeEnchantment implements Listener {
         this.enchantment = enchantment;
     }
 
-    public static void register(CustomAdder adder) throws CustomEnchantmentException {
+    public static void register(CustomRegistry.CustomRegistryAdder adder) throws CustomEnchantmentException {
         CustomEnchantment enchantment = new CustomEnchantment.Builder("Poison Blade", "poison_blade", PoisonBladeEnchantment::canEnchantItem, EnchantmentTarget.WEAPON)
                 .anvilMergeCost(level -> 10 * level)
                 .tradeCost(level -> 12 * level)

@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items;
 
+import com.connexal.raveldatapack.CustomRegistry;
 import com.connexal.raveldatapack.RavelDatapack;
 import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
@@ -15,18 +16,17 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ShapedRecipe;
 
 public class FireballItem {
-    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomItem.Builder(customModelData, "fireball", ChatColor.WHITE + "Fireball", Material.FIRE_CHARGE)
                 .itemUseEvent(FireballItem::itemUseEvent)
                 .lore("Right click to shoot")
                 .build();
 
-        adder.register(item);
-
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape("FF", "FF");
         recipe.setIngredient('F', Material.FIRE_CHARGE);
-        adder.register(recipe);
+
+        adder.register(item, recipe);
     }
 
     private static void itemUseEvent(PlayerInteractEvent event) {

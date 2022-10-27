@@ -23,14 +23,14 @@ public final class RavelDatapack extends JavaPlugin {
         instance = this;
         this.saveDefaultConfig();
 
+        pluginMessageManager = new PluginMessageManager();
+        configManager = new ConfigManager();
+
         EasyDatapackAPI.registerCustomAdder(CustomRegistry::register);
     }
 
     @Override
     public void onEnable() {
-        pluginMessageManager = new PluginMessageManager();
-        configManager = new ConfigManager();
-
         this.getServer().getPluginManager().registerEvents(new EventListener(), this);
 
         this.getCommand("raveldatapack").setExecutor(new RavelDatapackCommand());

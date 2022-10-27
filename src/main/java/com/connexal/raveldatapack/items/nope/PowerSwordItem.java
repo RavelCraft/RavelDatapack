@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items.nope;
 
+import com.connexal.raveldatapack.CustomRegistry;
 import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
 import com.github.imdabigboss.easydatapack.api.items.CustomItem;
@@ -14,7 +15,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class PowerSwordItem {
-    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomToolItem.Builder(customModelData, "powersword", ChatColor.GOLD.toString() + ChatColor.BOLD + "Power Sword", Material.NETHERITE_SWORD, 18, 1)
                 .playerHitEntityEvent(PowerSwordItem::playerHitEntityEvent)
                 .lore("The sword of the gods", "- Summons lighting", "- Gives blindness")
@@ -23,13 +24,12 @@ public class PowerSwordItem {
                 .hideFlags(true)
                 .build();
 
-        adder.register(item);
-
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape(" N ", " N ", " B ");
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
         recipe.setIngredient('B', Material.BLAZE_ROD);
-        adder.register(recipe);
+
+        adder.register(item, recipe);
     }
 
     private static void playerHitEntityEvent(EntityDamageByEntityEvent event) {

@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items.nope;
 
+import com.connexal.raveldatapack.CustomRegistry;
 import com.connexal.raveldatapack.RavelDatapack;
 import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
@@ -18,20 +19,19 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ShapedRecipe;
 
 public class BolterItem {
-    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomToolItem.Builder(customModelData, "bolter", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolter", Material.CLOCK, 20, 1)
                 .itemUseEvent(BolterItem::itemUseEvent)
                 .hideFlags(true)
                 .build();
-
-        adder.register(item);
 
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape(" NB", "NNN", "IN ");
         recipe.setIngredient('N', Material.NETHERITE_INGOT);
         recipe.setIngredient('B', Material.BLAZE_POWDER);
         recipe.setIngredient('I', Material.IRON_INGOT);
-        adder.register(recipe);
+
+        adder.register(item, recipe);
     }
 
     private static void itemUseEvent(PlayerInteractEvent event) {

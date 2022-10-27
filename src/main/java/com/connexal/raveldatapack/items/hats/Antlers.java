@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items.hats;
 
+import com.connexal.raveldatapack.CustomRegistry;
 import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
 import com.github.imdabigboss.easydatapack.api.items.CustomHatItem;
@@ -8,7 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 public class Antlers {
-    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomHatItem.Builder(customModelData, "antlers", ChatColor.AQUA.toString() + ChatColor.BOLD + "Antlers", Material.CLOCK)
                 .lore("Antlers go brrr")
                 .build();

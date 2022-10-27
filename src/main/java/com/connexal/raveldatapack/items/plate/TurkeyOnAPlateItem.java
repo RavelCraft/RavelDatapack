@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items.plate;
 
+import com.connexal.raveldatapack.CustomRegistry;
 import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
@@ -12,11 +13,9 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 
 public class TurkeyOnAPlateItem {
-    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomHatItem.Builder(customModelData, "turkey_on_a_plate", ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Turkey on a Plate", Material.CLOCK)
                 .build();
-
-        adder.register(item);
 
         ItemStack plate = EasyDatapackAPI.getItemManager().getItemStack("plate");
         if (plate != null) {
@@ -25,7 +24,10 @@ public class TurkeyOnAPlateItem {
             recipe.setIngredient('C', Material.COOKED_CHICKEN);
             RecipeChoice plate_ingredient = new RecipeChoice.ExactChoice(plate);
             recipe.setIngredient('P', plate_ingredient);
-            adder.register(recipe);
+
+            adder.register(item, recipe);
+        } else {
+            adder.register(item);
         }
     }
 }

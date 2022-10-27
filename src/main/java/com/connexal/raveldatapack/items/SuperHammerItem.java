@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items;
 
+import com.connexal.raveldatapack.CustomRegistry;
 import com.connexal.raveldatapack.RavelDatapack;
 import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
@@ -24,7 +25,7 @@ public class SuperHammerItem {
     private static final List<Location> blocksToProcessLoc = new ArrayList<>();
     private static final Server server = RavelDatapack.getInstance().getServer();
 
-    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomToolItem.Builder(customModelData, "super_hammer", ChatColor.RED.toString() + ChatColor.BOLD + "Super Hammer", Material.NETHERITE_PICKAXE, 5, 1)
                 .playerBreakBlockEvent(SuperHammerItem::blockBreakEvent)
                 .lore("Break a 3x3x3 area of blocks")
@@ -33,13 +34,12 @@ public class SuperHammerItem {
                 .enchantment(Enchantment.KNOCKBACK, 2)
                 .build();
 
-        adder.register(item);
-
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape(" NN", " BN", "B  ");
         recipe.setIngredient('N', Material.NETHERITE_BLOCK);
         recipe.setIngredient('B', Material.BLAZE_ROD);
-        adder.register(recipe);
+
+        adder.register(item, recipe);
     }
 
     private static void blockBreakEvent(BlockBreakEvent event) {

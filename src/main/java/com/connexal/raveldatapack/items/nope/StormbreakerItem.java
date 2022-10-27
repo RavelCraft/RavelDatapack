@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items.nope;
 
+import com.connexal.raveldatapack.CustomRegistry;
 import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
 import com.github.imdabigboss.easydatapack.api.items.CustomItem;
@@ -15,7 +16,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import java.util.Random;
 
 public class StormbreakerItem {
-    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomToolItem.Builder(customModelData, "stormbreaker", ChatColor.RED.toString() + ChatColor.BOLD + "Stormbreaker", Material.NETHERITE_AXE, 60, 1)
                 .itemUseEvent(StormbreakerItem::itemUseEvent)
                 .lore("Thor's weapon", "- Summon lightning", "- Very strong")
@@ -24,13 +25,12 @@ public class StormbreakerItem {
                 .hideFlags(true)
                 .build();
 
-        adder.register(item);
-
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
         recipe.shape(" NN", " BN", "B  ");
         recipe.setIngredient('N', Material.NETHER_STAR);
         recipe.setIngredient('B', Material.BLAZE_ROD);
-        adder.register(recipe);
+
+        adder.register(item, recipe);
     }
 
     private static void itemUseEvent(PlayerInteractEvent event) {

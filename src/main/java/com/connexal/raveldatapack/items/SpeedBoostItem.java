@@ -1,5 +1,6 @@
 package com.connexal.raveldatapack.items;
 
+import com.connexal.raveldatapack.CustomRegistry;
 import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
 import com.github.imdabigboss.easydatapack.api.items.CustomItem;
@@ -19,7 +20,7 @@ public class SpeedBoostItem {
     private static final int COOLDOWN_TIME = 120;
     private static final Map<UUID, Long> lastUseEvent = new HashMap<>();
 
-    public static void register(CustomAdder adder, int customModelData) throws EasyDatapackException {
+    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomItem.Builder(customModelData, "speed_boost", ChatColor.RED.toString() + ChatColor.BOLD + "Speed Boost", Material.SUGAR)
                 .itemUseEvent(SpeedBoostItem::itemUseEvent)
                 .lore("Don't do drugs, they", "aren't good for you.", "Luckily, this is not a", "drug.")
