@@ -1,7 +1,6 @@
 package com.connexal.raveldatapack.items.hats;
 
 import com.connexal.raveldatapack.CustomRegistry;
-import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
 import com.github.imdabigboss.easydatapack.api.items.CustomHatItem;
 import com.github.imdabigboss.easydatapack.api.items.CustomItem;

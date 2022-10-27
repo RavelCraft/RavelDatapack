@@ -1,7 +1,6 @@
 package com.connexal.raveldatapack.enchantments;
 
 import com.connexal.raveldatapack.CustomRegistry;
-import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
 import com.github.imdabigboss.easydatapack.api.exceptions.CustomEnchantmentException;
 import com.github.imdabigboss.easydatapack.api.utils.ItemsUtil;
