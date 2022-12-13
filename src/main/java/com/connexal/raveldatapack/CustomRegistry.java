@@ -4,12 +4,9 @@ import com.connexal.raveldatapack.dimensions.aether.AetherDimension;
 import com.connexal.raveldatapack.enchantments.BlazingArmorEnchantment;
 import com.connexal.raveldatapack.enchantments.PoisonBladeEnchantment;
 import com.connexal.raveldatapack.enchantments.TelekinesisEnchantment;
-import com.connexal.raveldatapack.items.FireballItem;
-import com.connexal.raveldatapack.items.SpeedBoostItem;
-import com.connexal.raveldatapack.items.SuperHammerItem;
+import com.connexal.raveldatapack.items.misc.*;
 import com.connexal.raveldatapack.items.enderite.*;
 import com.connexal.raveldatapack.items.hats.*;
-import com.connexal.raveldatapack.items.nope.*;
 import com.connexal.raveldatapack.items.plate.PlateItem;
 import com.connexal.raveldatapack.items.plate.TurkeyOnAPlateItem;
 import com.connexal.raveldatapack.items.warhammer.*;
@@ -62,6 +59,9 @@ public class CustomRegistry {
         ThunderHammerItem.register(adder, 426754);
         FireballItem.register(adder, 367026);
         PikeItem.register(adder, 209846);
+        SuperHammerItem.register(adder, 79786);
+        SpeedBoostItem.register(adder, 202483);
+        Scythe.register(adder, 843269);
 
         PlateItem.register(adder, 256289);
         TurkeyOnAPlateItem.register(adder, 259822);
@@ -72,10 +72,6 @@ public class CustomRegistry {
         EnderitePickaxeItem.register(adder, 246062);
         EnderiteShovelItem.register(adder, 246063);
         EnderiteSwordItem.register(adder, 246064);
-
-        SuperHammerItem.register(adder, 79786);
-
-        SpeedBoostItem.register(adder, 202483);
 
         WoodenWarHammer.register(adder, 738351);
         StoneWarHammer.register(adder, 738352);

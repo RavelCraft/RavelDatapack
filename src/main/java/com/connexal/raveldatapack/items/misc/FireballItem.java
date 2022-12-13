@@ -1,12 +1,9 @@
-package com.connexal.raveldatapack.items.nope;
+package com.connexal.raveldatapack.items.misc;
 
 import com.connexal.raveldatapack.CustomRegistry;
 import com.connexal.raveldatapack.RavelDatapack;
-import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
 import com.github.imdabigboss.easydatapack.api.items.CustomItem;
-import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
-import com.github.imdabigboss.easydatapack.api.utils.AmoUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,30 +14,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ShapedRecipe;
 
-public class BolterItem {
+public class FireballItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "bolter", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolter", Material.CLOCK, 20, 1)
-                .itemUseEvent(BolterItem::itemUseEvent)
-                .hideFlags(true)
+        CustomItem item = new CustomItem.Builder(customModelData, "fireball", ChatColor.WHITE + "Fireball", Material.FIRE_CHARGE)
+                .itemUseEvent(FireballItem::itemUseEvent)
+                .lore("Right click to shoot")
                 .build();
 
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
-        recipe.shape(" NB", "NNN", "IN ");
-        recipe.setIngredient('N', Material.NETHERITE_INGOT);
-        recipe.setIngredient('B', Material.BLAZE_POWDER);
-        recipe.setIngredient('I', Material.IRON_INGOT);
+        recipe.shape("FF", "FF");
+        recipe.setIngredient('F', Material.FIRE_CHARGE);
 
         adder.register(item, recipe);
     }
 
     private static void itemUseEvent(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        if (!AmoUtil.usePlayerAmo(player, EasyDatapackAPI.getItemManager().getCustomItem("bolt").getCustomModelData())) {
-            return;
-        }
+        event.getItem().setAmount(event.getItem().getAmount() - 1);
 
+        Player player = event.getPlayer();
         for (Player tmp : RavelDatapack.getInstance().getServer().getOnlinePlayers()) {
-            tmp.playSound(player.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
+            tmp.playSound(player.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 1);
         }
 
         Location eye = player.getEyeLocation();
@@ -48,6 +41,5 @@ public class BolterItem {
         Fireball fireball = (Fireball) loc.getWorld().spawnEntity(loc, EntityType.FIREBALL);
         fireball.setVelocity(loc.getDirection().normalize().multiply(2));
         fireball.setShooter(player);
-        fireball.setYield(20f);
     }
 }

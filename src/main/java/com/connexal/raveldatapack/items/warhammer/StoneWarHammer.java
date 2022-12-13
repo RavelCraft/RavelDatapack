@@ -6,11 +6,13 @@ import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ShapedRecipe;
 
 public class StoneWarHammer {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomToolItem.Builder(customModelData, "stone_war_hammer", ChatColor.WHITE + "Stone War Hammer", Material.STONE_PICKAXE, 9, 0.6)
+                .allowedEnchantment(Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_UNDEAD, Enchantment.DAMAGE_ARTHROPODS)
                 .build();
 
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());

@@ -7,6 +7,7 @@ import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingRecipe;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.SmithingRecipe;
 public class NetheriteWarHammer {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomToolItem.Builder(customModelData, "netherite_war_hammer", ChatColor.WHITE + "Netherite War Hammer", Material.NETHERITE_PICKAXE, 13, 0.4)
+                .allowedEnchantment(Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_UNDEAD, Enchantment.DAMAGE_ARTHROPODS)
                 .build();
 
         ItemStack diamondWarHammer = EasyDatapackAPI.getItemManager().getItemStack("diamond_war_hammer");

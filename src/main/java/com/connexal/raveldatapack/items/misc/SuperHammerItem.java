@@ -1,4 +1,4 @@
-package com.connexal.raveldatapack.items;
+package com.connexal.raveldatapack.items.misc;
 
 import com.connexal.raveldatapack.CustomRegistry;
 import com.connexal.raveldatapack.RavelDatapack;

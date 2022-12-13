@@ -1,40 +1,39 @@
-package com.connexal.raveldatapack.items.nope;
+package com.connexal.raveldatapack.items.misc;
 
 import com.connexal.raveldatapack.CustomRegistry;
+import com.connexal.raveldatapack.RavelDatapack;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
 import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
-public class PowerSwordItem {
+public class ThunderHammerItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "powersword", ChatColor.GOLD.toString() + ChatColor.BOLD + "Power Sword", Material.NETHERITE_SWORD, 18, 1)
-                .playerHitEntityEvent(PowerSwordItem::playerHitEntityEvent)
-                .lore("The sword of the gods", "- Summons lighting", "- Gives blindness")
-                .enchantment(Enchantment.SWEEPING_EDGE, 1)
+        CustomItem item = new CustomToolItem.Builder(customModelData, "thunderhammer", ChatColor.RED.toString() + ChatColor.BOLD + "Thunder Hammer", Material.CLOCK, 35, 0.5)
+                .playerHitEntityEvent(ThunderHammerItem::playerHitEntityEvent)
+                .lore("Show off", "- Slow but strong", "- Knockback 5")
+                .enchantment(Enchantment.KNOCKBACK, 5)
                 .unbreakable(true)
                 .hideFlags(true)
                 .build();
 
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
-        recipe.shape(" N ", " N ", " B ");
-        recipe.setIngredient('N', Material.NETHERITE_INGOT);
+        recipe.shape("  N", " B ", "B  ");
+        recipe.setIngredient('N', Material.NETHERITE_BLOCK);
         recipe.setIngredient('B', Material.BLAZE_ROD);
 
         adder.register(item, recipe);
     }
 
     private static void playerHitEntityEvent(EntityDamageByEntityEvent event) {
-        event.getEntity().getWorld().strikeLightning(event.getEntity().getLocation());
-        if (event.getEntity() instanceof Player target) {
-            target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 3 * 20, 255, false, false));
+        for (Player tmp : RavelDatapack.getInstance().getServer().getOnlinePlayers()) {
+            tmp.playSound(event.getEntity().getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 1);
         }
     }
 }

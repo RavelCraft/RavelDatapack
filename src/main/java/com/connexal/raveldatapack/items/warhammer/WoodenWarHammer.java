@@ -6,12 +6,14 @@ import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 
 public class WoodenWarHammer {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
         CustomItem item = new CustomToolItem.Builder(customModelData, "wooden_war_hammer", ChatColor.WHITE + "Wooden War Hammer", Material.WOODEN_PICKAXE, 6, 0.65)
+                .allowedEnchantment(Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_UNDEAD, Enchantment.DAMAGE_ARTHROPODS)
                 .build();
 
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
