@@ -1,6 +1,7 @@
 package com.connexal.raveldatapack.items.misc;
 
 import com.connexal.raveldatapack.CustomRegistry;
+import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
 import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
@@ -44,5 +45,7 @@ public class StormbreakerItem {
 
             player.getWorld().strikeLightning(strikeLocation);
         }
+
+        EasyDatapackAPI.getPacketUtil().sendPlayerArmAnimation(player);
     }
 }

@@ -2,6 +2,7 @@ package com.connexal.raveldatapack.items.misc;
 
 import com.connexal.raveldatapack.CustomRegistry;
 import com.connexal.raveldatapack.RavelDatapack;
+import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
 import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import org.bukkit.ChatColor;
@@ -41,5 +42,7 @@ public class FireballItem {
         Fireball fireball = (Fireball) loc.getWorld().spawnEntity(loc, EntityType.FIREBALL);
         fireball.setVelocity(loc.getDirection().normalize().multiply(2));
         fireball.setShooter(player);
+
+        EasyDatapackAPI.getPacketUtil().sendPlayerArmAnimation(player);
     }
 }

@@ -61,7 +61,8 @@ public class CustomRegistry {
         PikeItem.register(adder, 209846);
         SuperHammerItem.register(adder, 79786);
         SpeedBoostItem.register(adder, 202483);
-        Scythe.register(adder, 843269);
+        ScytheItem.register(adder, 843269);
+        GrapplingHookItem.register(adder, 456329);
 
         PlateItem.register(adder, 256289);
         TurkeyOnAPlateItem.register(adder, 259822);

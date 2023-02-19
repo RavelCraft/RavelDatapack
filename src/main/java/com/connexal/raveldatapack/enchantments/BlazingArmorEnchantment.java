@@ -20,7 +20,7 @@ public class BlazingArmorEnchantment implements Listener {
     }
 
     public static void register(CustomRegistry.CustomRegistryAdder adder) throws CustomEnchantmentException {
-        CustomEnchantment enchantment = new CustomEnchantment.Builder("Blazing Armor", "balzing_armor", BlazingArmorEnchantment::canEnchantItem, EnchantmentTarget.ARMOR)
+        CustomEnchantment enchantment = new CustomEnchantment.Builder("Blazing Armor", "balzing_armor", ItemsUtil::isItemArmor, EnchantmentTarget.ARMOR)
                 .anvilMergeCost(level -> 10 * level)
                 .tradeCost(level -> 14 * level)
                 .tradeable(false)
@@ -31,10 +31,6 @@ public class BlazingArmorEnchantment implements Listener {
                 .build();
 
         adder.register(enchantment);
-    }
-
-    private static boolean canEnchantItem(ItemStack item) {
-        return ItemsUtil.isItemArmor(item);
     }
 
     @EventHandler

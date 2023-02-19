@@ -23,7 +23,7 @@ public class PoisonBladeEnchantment implements Listener {
     }
 
     public static void register(CustomRegistry.CustomRegistryAdder adder) throws CustomEnchantmentException {
-        CustomEnchantment enchantment = new CustomEnchantment.Builder("Poison Blade", "poison_blade", PoisonBladeEnchantment::canEnchantItem, EnchantmentTarget.WEAPON)
+        CustomEnchantment enchantment = new CustomEnchantment.Builder("Poison Blade", "poison_blade", ItemsUtil::isItemASword, EnchantmentTarget.WEAPON)
                 .anvilMergeCost(level -> 10 * level)
                 .tradeCost(level -> 12 * level)
                 .tradeable(false)
@@ -34,10 +34,6 @@ public class PoisonBladeEnchantment implements Listener {
                 .build();
 
         adder.register(enchantment);
-    }
-
-    private static boolean canEnchantItem(ItemStack item) {
-        return ItemsUtil.isItemASword(item);
     }
 
     @EventHandler
