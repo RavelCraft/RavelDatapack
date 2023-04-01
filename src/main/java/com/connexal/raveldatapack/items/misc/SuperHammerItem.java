@@ -25,7 +25,7 @@ public class SuperHammerItem {
     private static final Server server = RavelDatapack.getInstance().getServer();
 
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "super_hammer", ChatColor.RED.toString() + ChatColor.BOLD + "Super Hammer", Material.NETHERITE_PICKAXE, 5, 1)
+        CustomItem item = CustomToolItem.builder(customModelData, "super_hammer", ChatColor.RED.toString() + ChatColor.BOLD + "Super Hammer", Material.NETHERITE_PICKAXE, 5, 1)
                 .playerBreakBlockEvent(SuperHammerItem::blockBreakEvent)
                 .lore("Break a 3x3x3 area of blocks")
                 .hideFlags(true)

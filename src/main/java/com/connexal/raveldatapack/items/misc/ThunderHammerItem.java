@@ -15,7 +15,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class ThunderHammerItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "thunderhammer", ChatColor.RED.toString() + ChatColor.BOLD + "Thunder Hammer", Material.CLOCK, 35, 0.5)
+        CustomItem item = CustomToolItem.builder(customModelData, "thunderhammer", ChatColor.RED.toString() + ChatColor.BOLD + "Thunder Hammer", Material.CLOCK, 35, 0.5)
                 .playerHitEntityEvent(ThunderHammerItem::playerHitEntityEvent)
                 .lore("Show off", "- Slow but strong", "- Knockback 5")
                 .enchantment(Enchantment.KNOCKBACK, 5)

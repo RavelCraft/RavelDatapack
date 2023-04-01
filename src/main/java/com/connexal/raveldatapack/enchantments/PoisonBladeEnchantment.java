@@ -23,7 +23,7 @@ public class PoisonBladeEnchantment implements Listener {
     }
 
     public static void register(CustomRegistry.CustomRegistryAdder adder) throws CustomEnchantmentException {
-        CustomEnchantment enchantment = new CustomEnchantment.Builder("Poison Blade", "poison_blade", ItemsUtil::isItemASword, EnchantmentTarget.WEAPON)
+        CustomEnchantment enchantment = CustomEnchantment.builder("Poison Blade", "poison_blade", ItemsUtil::isItemASword, EnchantmentTarget.WEAPON)
                 .anvilMergeCost(level -> 10 * level)
                 .tradeCost(level -> 12 * level)
                 .tradeable(false)

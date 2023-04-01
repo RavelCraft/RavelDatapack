@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class StormbreakerItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "stormbreaker", ChatColor.RED.toString() + ChatColor.BOLD + "Stormbreaker", Material.NETHERITE_AXE, 60, 1)
+        CustomItem item = CustomToolItem.builder(customModelData, "stormbreaker", ChatColor.RED.toString() + ChatColor.BOLD + "Stormbreaker", Material.NETHERITE_AXE, 60, 1)
                 .itemUseEvent(StormbreakerItem::itemUseEvent)
                 .lore("Thor's weapon", "- Summon lightning", "- Very strong")
                 .enchantment(Enchantment.DURABILITY, 1)
@@ -46,6 +46,6 @@ public class StormbreakerItem {
             player.getWorld().strikeLightning(strikeLocation);
         }
 
-        EasyDatapackAPI.getPacketUtil().sendPlayerArmAnimation(player);
+        player.swingMainHand();
     }
 }

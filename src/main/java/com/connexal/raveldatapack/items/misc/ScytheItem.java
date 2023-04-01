@@ -15,7 +15,7 @@ import org.bukkit.util.Vector;
 
 public class ScytheItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "scythe", ChatColor.GOLD.toString() + ChatColor.BOLD + "Scythe", Material.DIAMOND_HOE, 8, 0.5)
+        CustomItem item = CustomToolItem.builder(customModelData, "scythe", ChatColor.GOLD.toString() + ChatColor.BOLD + "Scythe", Material.DIAMOND_HOE, 8, 0.5)
                 .playerHitEntityEvent(ScytheItem::playerHitEntityEvent)
                 .allowedEnchantment(Enchantment.FIRE_ASPECT, Enchantment.LOOT_BONUS_MOBS, Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_UNDEAD, Enchantment.DAMAGE_ARTHROPODS, Enchantment.KNOCKBACK)
                 .lore("Harvest your enemies'", "souls!", "(and your crops)")

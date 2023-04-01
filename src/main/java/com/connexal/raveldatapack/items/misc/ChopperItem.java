@@ -16,7 +16,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class ChopperItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "chopper", ChatColor.GOLD.toString() + ChatColor.BOLD + "Chopper", Material.CLOCK, 8, 1)
+        CustomItem item = CustomToolItem.builder(customModelData, "chopper", ChatColor.GOLD.toString() + ChatColor.BOLD + "Chopper", Material.CLOCK, 8, 1)
                 .playerHitEntityEvent(ChopperItem::playerHitEntityEvent)
                 .lore("Slice up your enemies")
                 .attributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier("generic.movementSpeed", 1.3, AttributeModifier.Operation.MULTIPLY_SCALAR_1))

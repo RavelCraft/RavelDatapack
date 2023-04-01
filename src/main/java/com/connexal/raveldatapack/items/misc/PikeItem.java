@@ -12,7 +12,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class PikeItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "pike", ChatColor.GOLD.toString() + ChatColor.BOLD + "Pike", Material.CLOCK, 6, 1)
+        CustomItem item = CustomToolItem.builder(customModelData, "pike", ChatColor.GOLD.toString() + ChatColor.BOLD + "Pike", Material.CLOCK, 6, 1)
                 .playerHitEntityEvent(PikeItem::playerHitEntityEvent)
                 .lore("Pierce your enemies' armor")
                 .build();

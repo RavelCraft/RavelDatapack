@@ -9,7 +9,7 @@ import org.bukkit.inventory.ShapelessRecipe;
 
 public class BoltItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomItem.Builder(customModelData, "bolt", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt", Material.CLOCK)
+        CustomItem item = CustomItem.builder(customModelData, "bolt", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt", Material.CLOCK)
                 .lore("Amo for the Bolter")
                 .hideFlags(true)
                 .build();

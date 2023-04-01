@@ -9,7 +9,7 @@ import org.bukkit.Material;
 
 public class Antlers {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomHatItem.Builder(customModelData, "antlers", ChatColor.AQUA.toString() + ChatColor.BOLD + "Antlers", Material.CLOCK)
+        CustomItem item = CustomHatItem.builder(customModelData, "antlers", ChatColor.AQUA.toString() + ChatColor.BOLD + "Antlers", Material.CLOCK)
                 .lore("Antlers go brrr")
                 .build();
 

@@ -10,7 +10,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class PlateItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomItem.Builder(customModelData, "plate", ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Plate", Material.CLOCK)
+        CustomItem item = CustomItem.builder(customModelData, "plate", ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Plate", Material.CLOCK)
                 .build();
 
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());

@@ -1,9 +1,12 @@
 package com.connexal.raveldatapack;
 
 import com.connexal.raveldatapack.dimensions.aether.AetherDimension;
+import com.connexal.raveldatapack.dimensions.love.LoveDimension;
 import com.connexal.raveldatapack.enchantments.BlazingArmorEnchantment;
 import com.connexal.raveldatapack.enchantments.PoisonBladeEnchantment;
 import com.connexal.raveldatapack.enchantments.TelekinesisEnchantment;
+import com.connexal.raveldatapack.entities.BlockyEntity;
+import com.connexal.raveldatapack.entities.TestEntity;
 import com.connexal.raveldatapack.items.misc.*;
 import com.connexal.raveldatapack.items.enderite.*;
 import com.connexal.raveldatapack.items.hats.*;
@@ -14,10 +17,8 @@ import com.github.imdabigboss.easydatapack.api.CustomAdder;
 import com.github.imdabigboss.easydatapack.api.blocks.CustomBlock;
 import com.github.imdabigboss.easydatapack.api.dimentions.CustomDimension;
 import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
-import com.github.imdabigboss.easydatapack.api.exceptions.CustomDimensionException;
-import com.github.imdabigboss.easydatapack.api.exceptions.CustomEnchantmentException;
-import com.github.imdabigboss.easydatapack.api.exceptions.CustomRecipeException;
-import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
+import com.github.imdabigboss.easydatapack.api.entities.CustomEntity;
+import com.github.imdabigboss.easydatapack.api.exceptions.*;
 import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import com.github.imdabigboss.easydatapack.api.utils.YmlConfig;
 import org.bukkit.Keyed;
@@ -38,14 +39,15 @@ public class CustomRegistry {
             registerRecipes(customRegistryAdder);
             registerEnchantments(customRegistryAdder);
             registerDimensions(customRegistryAdder);
+            registerEntities(customRegistryAdder);
         } catch (EasyDatapackException e) {
             RavelDatapack.getLog().severe("Something went wrong while adding custom content: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private static void registerBlocks(CustomRegistryAdder event) {
-        event.register(new CustomBlock.Builder("Test Block", "test_block", 68295, false, false, false, false, false, true, CustomBlock.Parent.MUSHROOM_STEM)
+    private static void registerBlocks(CustomRegistryAdder event) throws EasyDatapackException {
+        event.register(CustomBlock.builder("Test Block", "test_block", 68295, false, false, false, false, false, true, CustomBlock.Parent.MUSHROOM_STEM)
                 .build());
     }
 
@@ -105,6 +107,12 @@ public class CustomRegistry {
 
     private static void registerDimensions(CustomRegistryAdder adder) throws CustomDimensionException {
         adder.register(new AetherDimension());
+        adder.register(new LoveDimension());
+    }
+
+    private static void registerEntities(CustomRegistryAdder adder) throws CustomEntityException {
+        TestEntity.register(adder, 271847);
+        BlockyEntity.register(adder, 156385);
     }
 
     public static class CustomRegistryAdder {
@@ -173,6 +181,14 @@ public class CustomRegistry {
             }
 
             this.adder.register(recipe);
+        }
+
+        public void register(CustomEntity entity) throws CustomEntityException {
+            if (this.cantRegister("entity." + entity.getNamespaceKey())) {
+                return;
+            }
+
+            this.adder.register(entity);
         }
     }
 }

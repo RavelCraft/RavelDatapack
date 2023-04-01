@@ -35,7 +35,7 @@ public class GrapplingHookItem implements Listener {
     }
 
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomItem.Builder(customModelData, "grappling_hook", ChatColor.GOLD.toString() + ChatColor.BOLD + "Grappling Hook", Material.FISHING_ROD)
+        CustomItem item = CustomItem.builder(customModelData, "grappling_hook", ChatColor.GOLD.toString() + ChatColor.BOLD + "Grappling Hook", Material.FISHING_ROD)
                 .eventListener(GrapplingHookItem.class)
                 .forbiddenEnchantment(Enchantment.LURE, Enchantment.LUCK)
                 .lore("Right click to attach the", "hook to a block and click", "again to pull yourself", "towards it!")

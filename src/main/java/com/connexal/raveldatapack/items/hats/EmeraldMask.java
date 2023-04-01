@@ -9,7 +9,7 @@ import org.bukkit.Material;
 
 public class EmeraldMask {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomHatItem.Builder(customModelData, "emerald_mask", ChatColor.AQUA.toString() + ChatColor.BOLD + "Emerald Mask", Material.CLOCK)
+        CustomItem item = CustomHatItem.builder(customModelData, "emerald_mask", ChatColor.AQUA.toString() + ChatColor.BOLD + "Emerald Mask", Material.CLOCK)
                 .lore("You got that drip")
                 .build();
 

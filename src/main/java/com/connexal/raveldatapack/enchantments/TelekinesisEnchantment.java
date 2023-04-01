@@ -22,7 +22,7 @@ public class TelekinesisEnchantment implements Listener {
     }
 
     public static void register(CustomRegistry.CustomRegistryAdder adder) throws CustomEnchantmentException {
-        CustomEnchantment enchantment = new CustomEnchantment.Builder("Telekinesis", "telekinesis", ItemsUtil::isItemATool, EnchantmentTarget.TOOL)
+        CustomEnchantment enchantment = CustomEnchantment.builder("Telekinesis", "telekinesis", ItemsUtil::isItemATool, EnchantmentTarget.TOOL)
                 .anvilMergeCost(level -> 10 * level)
                 .tradeCost(level -> 10 * level)
                 .tradeable(false)

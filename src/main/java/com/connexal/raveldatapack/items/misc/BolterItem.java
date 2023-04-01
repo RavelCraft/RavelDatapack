@@ -19,7 +19,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class BolterItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "bolter", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolter", Material.CLOCK, 20, 1)
+        CustomItem item = CustomToolItem.builder(customModelData, "bolter", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolter", Material.CLOCK, 20, 1)
                 .itemUseEvent(BolterItem::itemUseEvent)
                 .hideFlags(true)
                 .build();

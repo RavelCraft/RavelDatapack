@@ -9,7 +9,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class EnderiteIngotItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomItem.Builder(customModelData, "enderite_ingot", ChatColor.WHITE + "Enderite Ingot", Material.NETHERITE_INGOT)
+        CustomItem item = CustomItem.builder(customModelData, "enderite_ingot", ChatColor.WHITE + "Enderite Ingot", Material.NETHERITE_INGOT)
                 .build();
 
         ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());

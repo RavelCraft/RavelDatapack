@@ -3,6 +3,7 @@ package com.connexal.raveldatapack.commands;
 import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
 import com.github.imdabigboss.easydatapack.api.blocks.CustomBlock;
 import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
+import com.github.imdabigboss.easydatapack.api.entities.CustomEntity;
 import com.github.imdabigboss.easydatapack.api.items.CustomItem;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -43,6 +44,9 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
             }
             for (CustomBlock block : EasyDatapackAPI.getBlockManager().getCustomBlocks()) {
                 player.getWorld().dropItem(player.getEyeLocation(), block.createBlockItem());
+            }
+            for (CustomEntity entity : EasyDatapackAPI.getEntityManager().getCustomEntities()) {
+                player.getWorld().dropItem(player.getEyeLocation(), entity.getSpawnEgg());
             }
 
             sender.sendMessage(ChatColor.AQUA + "You were given all the items.");

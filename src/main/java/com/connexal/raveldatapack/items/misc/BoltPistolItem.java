@@ -18,7 +18,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class BoltPistolItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "boltpistol", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt Pistol", Material.CLOCK, 5, 1)
+        CustomItem item = CustomToolItem.builder(customModelData, "boltpistol", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt Pistol", Material.CLOCK, 5, 1)
                 .itemUseEvent(BoltPistolItem::itemUseEvent)
                 .lore("Shoots arrows with no", "recharge time!")
                 .hideFlags(true)

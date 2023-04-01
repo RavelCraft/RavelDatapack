@@ -2,7 +2,7 @@ package com.connexal.raveldatapack.dimensions.aether.biomes;
 
 import com.connexal.raveldatapack.RavelDatapack;
 import com.github.imdabigboss.easydatapack.api.exceptions.SchematicException;
-import com.github.imdabigboss.easydatapack.api.utils.ExtraMath;
+import com.github.imdabigboss.easydatapack.api.utils.math.ExtraMath;
 import com.github.imdabigboss.easydatapack.api.utils.schematics.Schematic;
 import com.github.imdabigboss.easydatapack.api.utils.schematics.Schematics;
 import org.bukkit.Location;

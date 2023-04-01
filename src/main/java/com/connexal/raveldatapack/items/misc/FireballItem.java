@@ -17,7 +17,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class FireballItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomItem.Builder(customModelData, "fireball", ChatColor.WHITE + "Fireball", Material.FIRE_CHARGE)
+        CustomItem item = CustomItem.builder(customModelData, "fireball", ChatColor.WHITE + "Fireball", Material.FIRE_CHARGE)
                 .itemUseEvent(FireballItem::itemUseEvent)
                 .lore("Right click to shoot")
                 .build();
@@ -43,6 +43,6 @@ public class FireballItem {
         fireball.setVelocity(loc.getDirection().normalize().multiply(2));
         fireball.setShooter(player);
 
-        EasyDatapackAPI.getPacketUtil().sendPlayerArmAnimation(player);
+        player.swingMainHand();
     }
 }

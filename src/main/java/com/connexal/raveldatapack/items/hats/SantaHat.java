@@ -9,7 +9,7 @@ import org.bukkit.Material;
 
 public class SantaHat {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomHatItem.Builder(customModelData, "santa_hat", ChatColor.AQUA.toString() + ChatColor.BOLD + "Santa Hat", Material.CLOCK)
+        CustomItem item = CustomHatItem.builder(customModelData, "santa_hat", ChatColor.AQUA.toString() + ChatColor.BOLD + "Santa Hat", Material.CLOCK)
                 .lore("Become Santa")
                 .build();
 

@@ -11,7 +11,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class IronWarHammer {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "iron_war_hammer", ChatColor.WHITE + "Iron War Hammer", Material.IRON_PICKAXE, 10, 0.55)
+        CustomItem item = CustomToolItem.builder(customModelData, "iron_war_hammer", ChatColor.WHITE + "Iron War Hammer", Material.IRON_PICKAXE, 10, 0.55)
                 .allowedEnchantment(Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_UNDEAD, Enchantment.DAMAGE_ARTHROPODS)
                 .build();
 

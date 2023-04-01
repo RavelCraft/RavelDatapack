@@ -13,7 +13,7 @@ import org.bukkit.inventory.SmithingRecipe;
 
 public class EnderiteShovelItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "enderite_shovel", ChatColor.WHITE + "Enderite Shovel", Material.NETHERITE_SHOVEL, 7.5, 1)
+        CustomItem item = CustomToolItem.builder(customModelData, "enderite_shovel", ChatColor.WHITE + "Enderite Shovel", Material.NETHERITE_SHOVEL, 7.5, 1)
                 .build();
 
         ItemStack ingot = EasyDatapackAPI.getItemManager().getItemStack("enderite_ingot");

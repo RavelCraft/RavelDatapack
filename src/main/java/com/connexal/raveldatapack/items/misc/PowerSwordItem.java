@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class PowerSwordItem {
     public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = new CustomToolItem.Builder(customModelData, "powersword", ChatColor.GOLD.toString() + ChatColor.BOLD + "Power Sword", Material.NETHERITE_SWORD, 18, 1)
+        CustomItem item = CustomToolItem.builder(customModelData, "powersword", ChatColor.GOLD.toString() + ChatColor.BOLD + "Power Sword", Material.NETHERITE_SWORD, 18, 1)
                 .playerHitEntityEvent(PowerSwordItem::playerHitEntityEvent)
                 .lore("The sword of the gods", "- Summons lighting", "- Gives blindness")
                 .enchantment(Enchantment.SWEEPING_EDGE, 1)
