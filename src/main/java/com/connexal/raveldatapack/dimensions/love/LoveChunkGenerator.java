@@ -1,7 +1,7 @@
 package com.connexal.raveldatapack.dimensions.love;
 
 import com.connexal.raveldatapack.dimensions.love.populators.*;
-import com.github.imdabigboss.easydatapack.api.dimentions.CustomChunkGenerator;
+import com.github.imdabigboss.easydatapack.api.types.dimentions.CustomChunkGenerator;
 import org.bukkit.Material;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.WorldInfo;

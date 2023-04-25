@@ -4,7 +4,7 @@ import com.connexal.raveldatapack.CustomRegistry;
 import com.connexal.raveldatapack.RavelDatapack;
 import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
-import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.types.items.CustomItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,13 +16,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ShapedRecipe;
 
 public class FireballItem {
-    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = CustomItem.builder(customModelData, "fireball", ChatColor.WHITE + "Fireball", Material.FIRE_CHARGE)
+    public static void register(CustomRegistry.CustomRegistryAdder adder, String namespaceKey) throws EasyDatapackException {
+        CustomItem item = CustomItem.builder(EasyDatapackAPI.getTexturePackManager().reserveItemCMD(Material.FIRE_CHARGE), namespaceKey, ChatColor.WHITE + "Fireball", Material.FIRE_CHARGE)
                 .itemUseEvent(FireballItem::itemUseEvent)
                 .lore("Right click to shoot")
                 .build();
 
-        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
+        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.createItemStack());
         recipe.shape("FF", "FF");
         recipe.setIngredient('F', Material.FIRE_CHARGE);
 

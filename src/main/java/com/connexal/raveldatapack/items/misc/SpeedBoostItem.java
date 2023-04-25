@@ -1,8 +1,9 @@
 package com.connexal.raveldatapack.items.misc;
 
 import com.connexal.raveldatapack.CustomRegistry;
+import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
-import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.types.items.CustomItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -19,8 +20,8 @@ public class SpeedBoostItem {
     private static final int COOLDOWN_TIME = 120;
     private static final Map<UUID, Long> lastUseEvent = new HashMap<>();
 
-    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = CustomItem.builder(customModelData, "speed_boost", ChatColor.RED.toString() + ChatColor.BOLD + "Speed Boost", Material.SUGAR)
+    public static void register(CustomRegistry.CustomRegistryAdder adder, String namespaceKey) throws EasyDatapackException {
+        CustomItem item = CustomItem.builder(EasyDatapackAPI.getTexturePackManager().reserveItemCMD(Material.SUGAR), namespaceKey, ChatColor.RED.toString() + ChatColor.BOLD + "Speed Boost", Material.SUGAR)
                 .itemUseEvent(SpeedBoostItem::itemUseEvent)
                 .lore("Don't do drugs, they", "aren't good for you.", "Luckily, this is not a", "drug.")
                 .hideFlags(true)

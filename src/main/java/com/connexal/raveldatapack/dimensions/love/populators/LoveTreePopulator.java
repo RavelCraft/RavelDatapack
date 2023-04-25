@@ -1,7 +1,7 @@
 package com.connexal.raveldatapack.dimensions.love.populators;
 
 import com.connexal.raveldatapack.dimensions.love.assets.LoveTreeSpawner;
-import com.github.imdabigboss.easydatapack.api.dimentions.CustomChunkPopulator;
+import com.github.imdabigboss.easydatapack.api.types.dimentions.CustomChunkPopulator;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.LimitedRegion;

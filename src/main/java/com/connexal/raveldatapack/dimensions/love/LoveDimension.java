@@ -1,8 +1,8 @@
 package com.connexal.raveldatapack.dimensions.love;
 
 import com.connexal.raveldatapack.RavelDatapack;
-import com.github.imdabigboss.easydatapack.api.dimentions.CustomChunkGenerator;
-import com.github.imdabigboss.easydatapack.api.dimentions.CustomDimension;
+import com.github.imdabigboss.easydatapack.api.types.dimentions.CustomChunkGenerator;
+import com.github.imdabigboss.easydatapack.api.types.dimentions.CustomDimension;
 
 import net.kyori.adventure.text.Component;
 

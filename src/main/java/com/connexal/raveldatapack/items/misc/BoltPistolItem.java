@@ -1,10 +1,11 @@
 package com.connexal.raveldatapack.items.misc;
 
 import com.connexal.raveldatapack.CustomRegistry;
+import com.connexal.raveldatapack.utils.TexturePath;
 import com.connexal.raveldatapack.RavelDatapack;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
-import com.github.imdabigboss.easydatapack.api.items.CustomItem;
-import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
+import com.github.imdabigboss.easydatapack.api.types.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.types.items.CustomToolItem;
 import com.github.imdabigboss.easydatapack.api.utils.AmmunitionUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -17,14 +18,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ShapedRecipe;
 
 public class BoltPistolItem {
-    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = CustomToolItem.builder(customModelData, "boltpistol", ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt Pistol", Material.CLOCK, 5, 1)
+    public static void register(CustomRegistry.CustomRegistryAdder adder, String namespaceKey) throws EasyDatapackException {
+        CustomItem item = CustomToolItem.builder(namespaceKey, ChatColor.GOLD.toString() + ChatColor.BOLD + "Bolt Pistol", Material.CLOCK, TexturePath.item(namespaceKey), 5, 1)
                 .itemUseEvent(BoltPistolItem::itemUseEvent)
                 .lore("Shoots arrows with no", "recharge time!")
                 .hideFlags(true)
                 .build();
 
-        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
+        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.createItemStack());
         recipe.shape(" IB", "III", " I ");
         recipe.setIngredient('B', Material.BLAZE_POWDER);
         recipe.setIngredient('I', Material.IRON_INGOT);

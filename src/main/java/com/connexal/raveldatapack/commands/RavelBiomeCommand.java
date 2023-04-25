@@ -1,7 +1,7 @@
 package com.connexal.raveldatapack.commands;
 
 import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
-import com.github.imdabigboss.easydatapack.api.dimentions.CustomDimension;
+import com.github.imdabigboss.easydatapack.api.types.dimentions.CustomDimension;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

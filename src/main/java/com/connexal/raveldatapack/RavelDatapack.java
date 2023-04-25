@@ -9,6 +9,8 @@ import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
 import com.github.imdabigboss.easydatapack.api.utils.YmlConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 public final class RavelDatapack extends JavaPlugin {
@@ -27,6 +29,18 @@ public final class RavelDatapack extends JavaPlugin {
         configManager = new ConfigManager();
 
         EasyDatapackAPI.registerCustomAdder(CustomRegistry::register);
+        EasyDatapackAPI.getTexturePackManager().enableTexturePack((path) -> {
+            try {
+                Path out = Path.of("/Volumes/www/test-ssl/texturepack.zip");
+                if (Files.exists(out)) {
+                    Files.delete(out);
+                }
+                Files.copy(path, out);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "http://static.test.alnet/texturepack.zip";
+        });
     }
 
     @Override

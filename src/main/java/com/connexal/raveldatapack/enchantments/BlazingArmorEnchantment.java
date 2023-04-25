@@ -1,7 +1,7 @@
 package com.connexal.raveldatapack.enchantments;
 
 import com.connexal.raveldatapack.CustomRegistry;
-import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
+import com.github.imdabigboss.easydatapack.api.types.enchantments.CustomEnchantment;
 import com.github.imdabigboss.easydatapack.api.exceptions.CustomEnchantmentException;
 import com.github.imdabigboss.easydatapack.api.utils.ItemsUtil;
 import io.papermc.paper.enchantments.EnchantmentRarity;
@@ -41,22 +41,22 @@ public class BlazingArmorEnchantment implements Listener {
             ItemStack item3 = player.getInventory().getChestplate();
             ItemStack item4 = player.getInventory().getHelmet();
 
-            int fire_time = 0;
+            int fireTime = 0;
 
-            if (this.enchantment.hasEnchantment(item1)) {
-                fire_time += this.enchantment.getEnchantmentLevel(item1);
+            if (item1 != null && this.enchantment.hasEnchantment(item1)) {
+                fireTime += this.enchantment.getEnchantmentLevel(item1);
             }
-            if (this.enchantment.hasEnchantment(item2)) {
-                fire_time += this.enchantment.getEnchantmentLevel(item2);
+            if (item2 != null && this.enchantment.hasEnchantment(item2)) {
+                fireTime += this.enchantment.getEnchantmentLevel(item2);
             }
-            if (this.enchantment.hasEnchantment(item3)) {
-                fire_time += this.enchantment.getEnchantmentLevel(item3);
+            if (item3 != null && this.enchantment.hasEnchantment(item3)) {
+                fireTime += this.enchantment.getEnchantmentLevel(item3);
             }
-            if (this.enchantment.hasEnchantment(item4)) {
-                fire_time += this.enchantment.getEnchantmentLevel(item4);
+            if (item4 != null && this.enchantment.hasEnchantment(item4)) {
+                fireTime += this.enchantment.getEnchantmentLevel(item4);
             }
 
-            event.getDamager().setFireTicks(fire_time * 20);
+            event.getDamager().setFireTicks(fireTime * 20);
         }
     }
 }

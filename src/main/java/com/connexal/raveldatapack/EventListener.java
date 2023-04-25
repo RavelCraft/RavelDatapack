@@ -1,8 +1,8 @@
 package com.connexal.raveldatapack;
 
 import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
-import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
-import com.github.imdabigboss.easydatapack.api.managers.EnchantmentManager;
+import com.github.imdabigboss.easydatapack.api.types.enchantments.CustomEnchantment;
+import com.github.imdabigboss.easydatapack.api.types.enchantments.EnchantmentManager;
 import org.bukkit.Material;
 import org.bukkit.entity.WanderingTrader;
 import org.bukkit.event.EventHandler;

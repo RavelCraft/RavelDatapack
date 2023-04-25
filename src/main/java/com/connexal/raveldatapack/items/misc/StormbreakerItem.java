@@ -1,10 +1,11 @@
 package com.connexal.raveldatapack.items.misc;
 
 import com.connexal.raveldatapack.CustomRegistry;
+import com.connexal.raveldatapack.utils.TexturePath;
 import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
-import com.github.imdabigboss.easydatapack.api.items.CustomItem;
-import com.github.imdabigboss.easydatapack.api.items.CustomToolItem;
+import com.github.imdabigboss.easydatapack.api.types.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.types.items.CustomToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,8 +17,8 @@ import org.bukkit.inventory.ShapedRecipe;
 import java.util.Random;
 
 public class StormbreakerItem {
-    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = CustomToolItem.builder(customModelData, "stormbreaker", ChatColor.RED.toString() + ChatColor.BOLD + "Stormbreaker", Material.NETHERITE_AXE, 60, 1)
+    public static void register(CustomRegistry.CustomRegistryAdder adder, String namespaceKey) throws EasyDatapackException {
+        CustomItem item = CustomToolItem.builder(namespaceKey, ChatColor.RED.toString() + ChatColor.BOLD + "Stormbreaker", Material.NETHERITE_AXE, TexturePath.item(namespaceKey), 60, 1)
                 .itemUseEvent(StormbreakerItem::itemUseEvent)
                 .lore("Thor's weapon", "- Summon lightning", "- Very strong")
                 .enchantment(Enchantment.DURABILITY, 1)
@@ -25,7 +26,7 @@ public class StormbreakerItem {
                 .hideFlags(true)
                 .build();
 
-        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.getItemStack());
+        ShapedRecipe recipe = new ShapedRecipe(item.getNamespacedKey(), item.createItemStack());
         recipe.shape(" NN", " BN", "B  ");
         recipe.setIngredient('N', Material.NETHER_STAR);
         recipe.setIngredient('B', Material.BLAZE_ROD);

@@ -1,10 +1,10 @@
 package com.connexal.raveldatapack.commands;
 
 import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
-import com.github.imdabigboss.easydatapack.api.blocks.CustomBlock;
-import com.github.imdabigboss.easydatapack.api.enchantments.CustomEnchantment;
-import com.github.imdabigboss.easydatapack.api.entities.CustomEntity;
-import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.types.blocks.CustomBlock;
+import com.github.imdabigboss.easydatapack.api.types.enchantments.CustomEnchantment;
+import com.github.imdabigboss.easydatapack.api.types.entities.CustomEntity;
+import com.github.imdabigboss.easydatapack.api.types.items.CustomItem;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,13 +37,10 @@ public class RavelDatapackCommand implements CommandExecutor, TabExecutor {
             }
 
             for (CustomItem item : EasyDatapackAPI.getItemManager().getCustomItems()) {
-                player.getWorld().dropItem(player.getEyeLocation(), item.getItemStack());
+                player.getWorld().dropItem(player.getEyeLocation(), item.createItemStack());
             }
             for (CustomEnchantment enchantment : EasyDatapackAPI.getEnchantmentManager().getEnchantments()) {
                 player.getWorld().dropItem(player.getEyeLocation(), enchantment.getBook(enchantment.getMaxLevel()));
-            }
-            for (CustomBlock block : EasyDatapackAPI.getBlockManager().getCustomBlocks()) {
-                player.getWorld().dropItem(player.getEyeLocation(), block.createBlockItem());
             }
             for (CustomEntity entity : EasyDatapackAPI.getEntityManager().getCustomEntities()) {
                 player.getWorld().dropItem(player.getEyeLocation(), entity.getSpawnEgg());

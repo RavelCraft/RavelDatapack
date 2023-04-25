@@ -2,8 +2,8 @@ package com.connexal.raveldatapack.dimensions.aether;
 
 import com.connexal.raveldatapack.RavelDatapack;
 import com.connexal.raveldatapack.dimensions.aether.biomes.AetherBiome;
-import com.github.imdabigboss.easydatapack.api.dimentions.CustomChunkGenerator;
-import com.github.imdabigboss.easydatapack.api.dimentions.CustomDimension;
+import com.github.imdabigboss.easydatapack.api.types.dimentions.CustomChunkGenerator;
+import com.github.imdabigboss.easydatapack.api.types.dimentions.CustomDimension;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;

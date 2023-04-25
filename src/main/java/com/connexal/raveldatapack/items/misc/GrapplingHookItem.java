@@ -9,7 +9,7 @@ import com.connexal.raveldatapack.CustomRegistry;
 import com.connexal.raveldatapack.RavelDatapack;
 import com.github.imdabigboss.easydatapack.api.EasyDatapackAPI;
 import com.github.imdabigboss.easydatapack.api.exceptions.EasyDatapackException;
-import com.github.imdabigboss.easydatapack.api.items.CustomItem;
+import com.github.imdabigboss.easydatapack.api.types.items.CustomItem;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -34,14 +34,14 @@ public class GrapplingHookItem implements Listener {
     public GrapplingHookItem(CustomItem customItem) {
     }
 
-    public static void register(CustomRegistry.CustomRegistryAdder adder, int customModelData) throws EasyDatapackException {
-        CustomItem item = CustomItem.builder(customModelData, "grappling_hook", ChatColor.GOLD.toString() + ChatColor.BOLD + "Grappling Hook", Material.FISHING_ROD)
+    public static void register(CustomRegistry.CustomRegistryAdder adder, String namespaceKey) throws EasyDatapackException {
+        CustomItem item = CustomItem.builder(EasyDatapackAPI.getTexturePackManager().reserveItemCMD(Material.FISHING_ROD), namespaceKey, ChatColor.GOLD.toString() + ChatColor.BOLD + "Grappling Hook", Material.FISHING_ROD)
                 .eventListener(GrapplingHookItem.class)
                 .forbiddenEnchantment(Enchantment.LURE, Enchantment.LUCK)
                 .lore("Right click to attach the", "hook to a block and click", "again to pull yourself", "towards it!")
                 .build();
 
-        ShapelessRecipe recipe = new ShapelessRecipe(item.getNamespacedKey(), item.getItemStack())
+        ShapelessRecipe recipe = new ShapelessRecipe(item.getNamespacedKey(), item.createItemStack())
                 .addIngredient(Material.DIAMOND)
                 .addIngredient(Material.SLIME_BALL)
                 .addIngredient(Material.FISHING_ROD);
@@ -150,8 +150,8 @@ public class GrapplingHookItem implements Listener {
             return;
         }
 
-        CustomItem customItem = EasyDatapackAPI.getItemManager().getCustomItem(item.getItemMeta().getCustomModelData());
-        if (customItem == null || !customItem.getNamespacedKey().getKey().equals("grappling_hook")) {
+        CustomItem customItem = EasyDatapackAPI.getItemManager().getCustomItem("grappling_hook");
+        if (customItem == null || customItem.getBaseMaterial() != item.getType() || customItem.getCustomModelData() != item.getItemMeta().getCustomModelData()) {
             return;
         }
 

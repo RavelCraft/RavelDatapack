@@ -5,7 +5,7 @@ import com.connexal.raveldatapack.dimensions.aether.populators.AetherOrePopulato
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherPlantPopulator;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherStructurePopulator;
 import com.connexal.raveldatapack.dimensions.aether.populators.AetherTreePopulator;
-import com.github.imdabigboss.easydatapack.api.dimentions.CustomChunkGenerator;
+import com.github.imdabigboss.easydatapack.api.types.dimentions.CustomChunkGenerator;
 import com.github.imdabigboss.easydatapack.api.utils.math.ExtraMath;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
